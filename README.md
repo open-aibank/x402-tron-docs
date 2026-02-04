@@ -45,43 +45,9 @@ docker run -d --name x402-tron-docs-container -p 8080:80 x402-tron-docs
 docker run -d --name x402-tron-docs-container -p 3000:80 x402-tron-docs
 ```
 
-#### Docker Management
-
-```bash
-# Stop container
-docker stop x402-tron-docs-container
-
-# Start container
-docker start x402-tron-docs-container
-
-# Remove container
-docker rm x402-tron-docs-container
-
-# View logs
-docker logs x402-tron-docs-container
-
-# View logs in real-time
-docker logs -f x402-tron-docs-container
-```
-
 ### GitHub Pages Deployment
 
 Push to `main` branch will automatically deploy to GitHub Pages via GitHub Actions.
-
-### Nginx Deployment
-
-```bash
-# Build
-yarn build
-
-# Copy to Nginx
-sudo cp -r build/* /usr/share/nginx/html/
-
-# Configure Nginx (optional)
-sudo cp nginx.conf /etc/nginx/nginx.conf
-sudo cp default.conf /etc/nginx/conf.d/default.conf
-sudo nginx -s reload
-```
 
 ## Links
 

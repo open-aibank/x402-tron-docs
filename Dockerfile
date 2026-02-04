@@ -1,5 +1,5 @@
 # Stage 1: Build the Docusaurus application
-FROM node:18 AS build
+FROM node:20.18.1 AS build
 
 ARG APP_ENV
 
@@ -17,7 +17,13 @@ ENV NODE_OPTIONS=--openssl-legacy-provider
 RUN node -v
 
 # Install dependencies
-RUN yarn install --frozen-lockfile
+RUN yarn config set network-timeout 600000 -g \
+    && i=0 \
+    && until yarn install --frozen-lockfile; do \
+          i=$((i+1)); \
+          if [ "$i" -ge 3 ]; then exit 1; fi; \
+          sleep 10; \
+        done
 
 # Copy the rest of the application code
 COPY . .
