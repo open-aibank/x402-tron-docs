@@ -76,7 +76,7 @@ html[data-theme='light'] {
   --ifm-navbar-background-color: #ffffff;
   
   /* Improve inline code background in light mode */
-  --ifm-code-background: #f5f5f5;
+  --ifm-code-background: #e5e7eb;
   --ifm-code-color: #1c1e21;
 
   background-position: 0px -30vh;
@@ -89,9 +89,9 @@ html[data-theme='light'] {
 
 /* Force better inline code styling in light mode */
 html[data-theme='light'] code:not([class*='language-']) {
-  background-color: #f5f5f5 !important;
+  background-color: #e5e7eb !important;
   color: #1c1e21 !important;
-  border: 1px solid #e0e0e0;
+  border: 1px solid #d1d5db;
   padding: 0.1rem 0.3rem;
   border-radius: 0.2rem;
 }
