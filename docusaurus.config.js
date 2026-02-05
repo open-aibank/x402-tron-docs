@@ -8,7 +8,6 @@ module.exports = {
   // url: 'https://docs.x402-tron.org/',
   url: 'https://x402-tron-docs-demo.sunagent.ai',
   baseUrl: '/',
-  baseUrl: '/',
   trailingSlash: true,
   i18n: {
     defaultLocale: 'en',
