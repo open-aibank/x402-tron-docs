@@ -1,142 +1,83 @@
----
-title: "Facilitator"
-description: "This page explains the role of the **facilitator** in the x402-tron protocol."
----
+# 促进者
 
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
+促进者是一个可选但推荐的服务，它简化了在 TRON 区块链上客户端（买家）和服务器（卖家）之间验证和结算支付的过程。
 
-The facilitator is an optional but recommended service that simplifies the process of verifying and settling payments between clients (buyers) and servers (sellers) on TRON blockchain.
+## 什么是促进者？
 
-### What is a Facilitator?
+促进者是一个服务，它：
 
-The facilitator is a service that:
+- 验证客户端提交的支付负载（TIP-712 签名）
+- 代表服务器在 TRON 区块链上结算支付
+- 使用 transferFrom 机制管理代币转账
 
-* Verifies payment payloads (TIP-712 signatures) submitted by clients.
-* Settles payments on the TRON blockchain on behalf of servers.
-* Manages token transfers using the `transferFrom` mechanism.
+通过使用促进者，服务器无需维护直接的 TRON 区块链连接或自行实现支付验证逻辑。
 
-By using a facilitator, servers do not need to maintain direct TRON blockchain connectivity or implement payment verification logic themselves. This reduces operational complexity and ensures accurate, real-time validation of transactions.
+## 促进者职责
 
-### Facilitator Responsibilities
+- **验证支付**：确认客户端的 TIP-712 签名支付负载符合服务器声明的支付要求
+- **结算支付**：将验证的支付提交到 TRON 区块链并监控确认
+- **费用管理**：可选择性地收取促进支付的费用
+- **提供响应**：将验证和结算结果返回给服务器
 
-* **Verify payments:** Confirm that the client's TIP-712 signed payment payload meets the server's declared payment requirements.
-* **Settle payments:** Submit validated payments to the TRON blockchain and monitor for confirmation.
-* **Fee management:** Optionally charge a fee for facilitating payments.
-* **Provide responses:** Return verification and settlement results to the server, allowing the server to decide whether to fulfill the client's request.
+促进者不持有资金或充当托管人。
 
-The facilitator does not hold funds or act as a custodian - it performs verification and execution of onchain transactions based on signed payloads provided by clients.
+## 为什么使用促进者？
 
-### Why Use a Facilitator?
+使用促进者提供：
 
-Using a facilitator provides:
+- **降低运营复杂性**：服务器无需直接与 TRON 节点交互
+- **协议一致性**：跨服务的标准化验证和结算流程
+- **更快的集成**：服务可以以最少的 TRON 特定开发开始接受支付
+- **能量/带宽管理**：促进者处理交易执行的 TRX 成本
 
-* **Reduced operational complexity:** Servers do not need to interact directly with TRON nodes.
-* **Protocol consistency:** Standardized verification and settlement flows across services.
-* **Faster integration:** Services can start accepting payments with minimal TRON-specific development.
-* **Energy/Bandwidth management:** Facilitator handles TRX costs for transaction execution.
+## 运行您自己的促进者
 
-While it is possible to implement verification and settlement locally, using a facilitator accelerates adoption and ensures correct protocol behavior.
+x402-tron 在演示仓库中包含一个即用型促进者实现。
 
-### Running Your Own Facilitator
+### 促进者端点
 
-x402-tron includes a ready-to-use facilitator implementation in the [demo repository](https://github.com/open-aibank/x402-tron-demo):
+- **GET /** - 服务信息
+- **GET /supported** - 支持的功能
+- **POST /fee/quote** - 获取支付的费用报价
+- **POST /verify** - 验证支付负载
+- **POST /settle** - 在链上结算支付
 
-```bash
-git clone https://github.com/open-aibank/x402-tron-demo.git
-cd x402-tron-demo/python/facilitator
+## 交互流程
 
-# Configure environment variables (copy .env.example to .env and set your keys)
-cp .env.example .env
+1. 客户端向资源服务器发起 HTTP 请求
+2. 资源服务器响应 402 Payment Required 状态
+3. 客户端根据要求创建 TIP-712 签名的支付负载
+4. 客户端使用 PAYMENT-SIGNATURE 头发送 HTTP 请求
+5. 资源服务器通过 /verify 端点验证支付负载
+6. 促进者服务器验证 TIP-712 签名
+7. 资源服务器执行工作以完成请求
+8. 资源服务器通过 /settle 端点结算支付
+9. 促进者服务器在 TRON 区块链上执行 transferFrom
+10. 促进者服务器返回带有交易哈希的结算响应
+11. 资源服务器返回 200 OK 响应及内容
 
-python main.py
-```
+## 费用结构
 
-The facilitator requires:
+促进者可以为其服务收取费用：
 
-* **TRON_PRIVATE_KEY**: Private key for the facilitator wallet
-* **TRX balance**: For energy and bandwidth costs
+- **基础费用**：每笔交易的固定费用
+- **百分比费用**：交易金额的百分比
+- **无费用**：一些促进者无费用运营
 
-#### Facilitator Endpoints
+## 信任模型
 
-| Endpoint | Method | Description |
-|----------|--------|-------------|
-| `/` | GET | Service info |
-| `/supported` | GET | Supported capabilities |
-| `/fee/quote` | POST | Get fee quote for a payment |
-| `/verify` | POST | Verify a payment payload |
-| `/settle` | POST | Settle payment on-chain |
+x402-tron 协议旨在最小化信任：
 
-### Interaction Flow
+- **客户端签署授权**：促进者只能转移授权金额
+- **支付直接给卖家**：资金从客户端转移到卖家
+- **链上验证**：所有交易都可在 TRON 区块链上验证
 
-1. `Client` makes an HTTP request to a `resource server`
-2. `Resource server` responds with a `402 Payment Required` status and payment requirements.
-3. `Client` creates a TIP-712 signed `Payment Payload` based on the requirements.
-4. `Client` sends the HTTP request with the `PAYMENT-SIGNATURE` header to the `resource server`.
-5. `Resource server` verifies the `Payment Payload` by POSTing to the `/verify` endpoint of the `facilitator server`.
-6. `Facilitator server` verifies the TIP-712 signature and returns a `Verification Response`.
-7. If valid, the resource server performs the work to fulfill the request.
-8. `Resource server` settles the payment by POSTing to the `/settle` endpoint of the `facilitator server`.
-9. `Facilitator server` executes `transferFrom` on the TRON blockchain.
-10. `Facilitator server` waits for the transaction to be confirmed.
-11. `Facilitator server` returns a `Settlement Response` with the transaction hash.
-12. `Resource server` returns a `200 OK` response with the content and `PAYMENT-RESPONSE` header.
+恶意促进者不能：
 
-### Facilitator Configuration
+- 转移超过客户端授权的金额
+- 转移到指定以外的接收者
+- 修改签名的支付条款
 
-<Tabs>
-  <TabItem value="python" label="Python">
+## 总结
 
-```python
-from x402.mechanisms.facilitator import UptoTronFacilitatorMechanism
-from x402.signers.facilitator import TronFacilitatorSigner
-
-# Initialize facilitator signer
-facilitator_signer = TronFacilitatorSigner.from_private_key(
-    "your-private-key",
-    network="nile",  # or "mainnet"
-)
-
-# Initialize facilitator mechanism
-facilitator_mechanism = UptoTronFacilitatorMechanism(
-    facilitator_signer,
-    fee_to=facilitator_signer.get_address(),
-    base_fee=1_000_000,  # 1 USDT fee
-)
-```
-
-  </TabItem>
-</Tabs>
-
-### Fee Structure
-
-Facilitators can charge fees for their services:
-
-* **Base fee**: Fixed fee per transaction (e.g., 1 USDT)
-* **Percentage fee**: Percentage of transaction amount
-* **No fee**: Some facilitators operate without fees
-
-The fee is specified in the `/fee/quote` response and included in the payment requirements sent to clients.
-
-### Trust Model
-
-The x402-tron protocol is designed to be trust-minimizing:
-
-* **Client signs the authorization**: The facilitator can only transfer up to the authorized amount.
-* **Payment goes directly to seller**: Funds are transferred from client to seller (and optionally fee to facilitator).
-* **On-chain verification**: All transactions are verifiable on TRON blockchain.
-
-A malicious facilitator cannot:
-* Transfer more than the client authorized
-* Transfer to a different recipient than specified
-* Modify the signed payment terms
-
-### Summary
-
-The facilitator acts as an independent verification and settlement layer within the x402-tron protocol on TRON blockchain. It helps servers confirm payments and submit transactions without requiring direct TRON infrastructure.
-
-Next, explore:
-
-* [Client / Server](client-server) — understand the roles and responsibilities of clients and servers
-* [HTTP 402](http-402) — understand how payment requirements are communicated to clients
-* [Network Support](network-and-token-support) — see supported TRON networks and tokens
+促进者在 TRON 区块链上的 x402-tron 协议中充当独立的验证和结算层。

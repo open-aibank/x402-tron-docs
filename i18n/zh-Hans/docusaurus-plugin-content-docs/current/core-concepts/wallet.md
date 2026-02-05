@@ -1,156 +1,77 @@
----
-title: "Wallet"
-description: "This page explains the role of the **wallet** in the x402-tron protocol."
----
+# 钱包
 
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
+在 x402-tron 中，TRON 钱包既是支付机制，也是买家和卖家的唯一身份形式。钱包地址用于发送、接收和验证支付，同时也作为协议内的标识符。
 
-In x402-tron, a TRON wallet is both a payment mechanism and a form of unique identity for buyers and sellers. Wallet addresses are used to send, receive, and verify payments, while also serving as identifiers within the protocol.
+## 钱包的角色
 
-### Role of the Wallet
+### 对于买家
 
-#### For Buyers
+买家使用 TRON 钱包来：
 
-Buyers use TRON wallets to:
+- 存储 USDT/TRC-20 代币
+- 签署 TIP-712 支付负载
+- 以编程方式授权链上支付
+- 管理促进者的代币授权
 
-* Store USDT/TRC-20 tokens
-* Sign TIP-712 payment payloads
-* Authorize onchain payments programmatically
-* Manage token allowances for facilitators
+钱包使买家（包括 AI 代理）能够在无需创建账户或凭证管理的情况下进行交易。
 
-Wallets enable buyers, including AI agents, to transact without account creation or credential management.
+### 对于卖家
 
-#### For Sellers
+卖家使用 TRON 钱包来：
 
-Sellers use TRON wallets to:
+- 接收 USDT/TRC-20 支付
+- 在服务器配置中定义其支付目标
 
-* Receive USDT/TRC-20 payments
-* Define their payment destination within server configurations
+卖家的 TRON 钱包地址包含在提供给买家的支付要求中。
 
-A seller's TRON wallet address is included in the payment requirements provided to buyers.
+## TRON 钱包地址
 
-### TRON Wallet Addresses
+TRON 使用以 'T' 开头的 base58 编码地址。例如：
 
-TRON uses base58-encoded addresses that start with 'T'. For example:
-- `TDhj8uX7SVJwvhCUrMaiQHqPgrB6wRb3eG`
-
-### Creating a Wallet Signer
-
-<Tabs>
-  <TabItem value="python" label="Python">
-
-```python
-from x402.signers.client import TronClientSigner
-
-# From private key
-signer = TronClientSigner.from_private_key(
-    private_key="your-private-key",
-    network="nile"  # or "mainnet", "shasta"
-)
-
-print(f"Address: {signer.get_address()}")
+```
+TDhj8uX7SVJwvhCUrMaiQHqPgrB6wRb3eG
 ```
 
-  </TabItem>
-  <TabItem value="typescript" label="TypeScript">
+## TIP-712 签名
 
-```typescript
-import { TronWeb } from 'tronweb';
-import { TronClientSigner } from '@open-aibank/x402-tron';
+x402-tron 使用 TIP-712（TRON 对 EIP-712 的实现）进行结构化数据签名。这提供了：
 
-const tronWeb = new TronWeb({
-  fullHost: 'https://nile.trongrid.io',
-  privateKey: 'your-private-key',
-});
+- **人类可读的签名**：用户可以看到他们正在授权的内容
+- **域分离**：签名绑定到特定的合约/域
+- **重放保护**：签名包含随机数和过期时间
 
-const signer = TronClientSigner.withPrivateKey(
-  tronWeb,
-  'your-private-key',
-  'nile'
-);
+签名流程：
 
-console.log(`Address: ${signer.getAddress()}`);
-```
+1. 客户端从服务器接收支付要求
+2. 客户端构建 TIP-712 类型数据结构
+3. 客户端使用其私钥签署数据
+4. 签名包含在 PAYMENT-SIGNATURE 头中
 
-  </TabItem>
-</Tabs>
+## 代币授权
 
-### TIP-712 Signing
+对于 upto 支付方案，客户端必须批准促进者代表其支出代币。这通过标准的 TRC-20 approve 函数完成。
 
-x402-tron uses TIP-712 (TRON's implementation of EIP-712) for structured data signing. This provides:
+## 网络特定端点
 
-* **Human-readable signing**: Users can see what they're authorizing
-* **Domain separation**: Signatures are bound to specific contracts/domains
-* **Replay protection**: Signatures include nonces and expiration
+每个网络的 TRON 全节点 / API 端点：
 
-The signing flow:
-1. Client receives payment requirements from server
-2. Client constructs a TIP-712 typed data structure
-3. Client signs the data with their private key
-4. Signature is included in the `PAYMENT-SIGNATURE` header
+| 网络 | 端点 |
+|------|------|
+| 主网 | https://api.trongrid.io |
+| Nile（测试网） | https://nile.trongrid.io |
+| Shasta（测试网） | https://api.shasta.trongrid.io |
 
-### Token Allowances
+## 安全最佳实践
 
-For the `upto` payment scheme, clients must approve the facilitator to spend tokens on their behalf. This is done via the standard TRC-20 `approve` function.
+- **永远不要暴露私钥**：使用环境变量存储密钥
+- **使用测试网进行开发**：在主网之前在 Nile 或 Shasta 上测试
+- **限制授权**：仅批准支付所需的金额
+- **监控交易**：在 TronScan 上跟踪支付和授权
 
-The x402-tron client SDK handles this automatically, but you can also manage allowances manually:
+## 总结
 
-<Tabs>
-  <TabItem value="python" label="Python">
-
-```python
-async def check_my_allowance():
-    # Check if approval is needed
-    allowance = await signer.check_allowance(
-        token_address="TXYZopYRdj2D9XRtbG411XZZ3kM5VkAeBf",
-        required_amount=1000000,
-        network="nile"  # or "mainnet", "shasta"
-    )
-
-    if allowance < required_amount:
-        # SDK will auto-approve when needed
-        pass
-```
-
-  </TabItem>
-  <TabItem value="typescript" label="TypeScript">
-
-```typescript
-// Check if approval is needed
-const allowance = await signer.checkAllowance(
-  'TXYZopYRdj2D9XRtbG411XZZ3kM5VkAeBf',
-  BigInt(1000000),
-  'nile'  // or 'mainnet', 'shasta'
-);
-
-// SDK will auto-approve when needed
-```
-
-  </TabItem>
-</Tabs>
-
-### Network-Specific Endpoints
-
-TRON full nodes / API endpoints for each network:
-
-| Network | Endpoint |
-|---------|----------|
-| Mainnet | `https://api.trongrid.io` |
-| Nile (Testnet) | `https://nile.trongrid.io` |
-| Shasta (Testnet) | `https://api.shasta.trongrid.io` |
-
-### Security Best Practices
-
-* **Never expose private keys**: Use environment variables for key storage
-* **Use testnet for development**: Test on Nile or Shasta before mainnet
-* **Limit allowances**: Only approve the amount needed for payments
-* **Monitor transactions**: Track payments and allowances on TronScan
-
-### Summary
-
-* TRON wallets enable programmatic, permissionless payments in x402-tron.
-* Buyers use wallets to pay for services via TIP-712 signed authorizations.
-* Sellers use wallets to receive payments.
-* Wallet addresses also act as unique identifiers within the protocol.
-* The SDK handles token allowances automatically.
+- TRON 钱包在 x402-tron 中实现程序化、无需许可的支付
+- 买家使用钱包通过 TIP-712 签名授权支付服务费用
+- 卖家使用钱包接收支付
+- 钱包地址也充当协议内的唯一标识符
+- SDK 自动处理代币授权

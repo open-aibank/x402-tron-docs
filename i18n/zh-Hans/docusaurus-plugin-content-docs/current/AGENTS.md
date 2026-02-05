@@ -1,108 +1,113 @@
-# Documentation Agent Instructions
+# 文档代理指引
 
-## Package Identity
+## 包身份
 
-- Docusaurus documentation source for x402-tron
-- MDX/Markdown files with `sidebars.js` as navigation configuration
+- x402-tron 的 Docusaurus 文档源码
+- 使用 `sidebars.js` 作为导航配置的 MDX / Markdown 文件
 
-## Directory Structure
+## 目录结构
 
-- `docs/core-concepts/` — Protocol explanations (HTTP 402, client-server, facilitator, wallet, network support)
-- `docs/getting-started/` — Quickstart guides for buyers and sellers (MD files with tabs)
-- `docs/index.md` — Welcome/landing page
-- `docs/faq.md` — Frequently asked questions
-- `sidebars.js` — Docusaurus sidebar navigation configuration
-- `docusaurus.config.js` — Main Docusaurus configuration
-- `docs/sdk-features.md` - Feature list of Python and TypeScript SDKs
+- `docs/core-concepts/` — 协议说明（HTTP 402、客户端-服务器、促成者、钱包、网络支持）
+- `docs/getting-started/` — 买方与卖方的快速上手指南（包含 Tabs 的 MD 文件）
+- `docs/index.md` — 欢迎页 / 着陆页
+- `docs/faq.md` — 常见问题
+- `sidebars.js` — Docusaurus 侧边栏导航配置
+- `docusaurus.config.js` — Docusaurus 主配置文件
+- `docs/sdk-features.md` — Python 与 TypeScript SDK 的功能列表
 
-## Code-to-Doc Mapping
+## 代码与文档映射
 
-- Changes to `typescript/packages/` affect TypeScript SDK references
-- Changes to `python/x402/` affect Python SDK references
-- Changes to facilitator endpoints affect quickstart guides
-- Changes to mechanisms affect core-concepts docs
+- 对 `typescript/packages/` 的修改会影响 TypeScript SDK 相关文档
+- 对 `python/x402/` 的修改会影响 Python SDK 相关文档
+- 对 facilitator 端点的修改会影响快速上手指南
+- 对机制（mechanisms）的修改会影响 core-concepts 文档
 
-## Style Guidelines
+## 风格规范
 
-- Use Python for primary code examples (it's the most complete SDK)
-- Include TypeScript examples where available
-- Include error handling in all API examples
-- Write for developers with 2-5 years experience
-- Use Docusaurus MDX components (`<Tabs>`, `<TabItem>`) for multi-language code examples
-- Import Tabs at top of files using them: `import Tabs from '@theme/Tabs'; import TabItem from '@theme/TabItem';`
-- Show both success and error response examples for API endpoints
-- Use real-world parameter values in examples (not foo/bar placeholders)
+- 以 **Python** 作为主要代码示例（功能最完整的 SDK）
+- 在可用的情况下补充 **TypeScript** 示例
+- 所有 API 示例必须包含错误处理
+- 面向具有 **2–5 年经验** 的开发者编写
+- 使用 Docusaurus MDX 组件（`<Tabs>`、`<TabItem>`）展示多语言代码示例
+- 使用 Tabs 的文件需在文件顶部引入：
+  ```js
+  import Tabs from '@theme/Tabs';
+  import TabItem from '@theme/TabItem';
+  ```
+- 所有 API 端点需同时展示 **成功** 与 **失败** 的响应示例
+- 示例中使用真实世界的参数值（避免使用 foo/bar 占位符）
 
-## Conventions
+## 约定
 
-- DO: Add new pages to `sidebars.js` navigation
-- DO: Include code examples from real SDK files
-- DO: Use `<Tabs>` and `<TabItem>` for multi-language code examples
-- DO: Add frontmatter (title, description) to all pages
-- DON'T: Add pages without updating `sidebars.js`
-- **Git: Create PRs for review; NEVER commit directly to main**
+- **应当（DO）**：将新增页面加入 `sidebars.js` 导航
+- **应当（DO）**：包含来自真实 SDK 文件的代码示例
+- **应当（DO）**：使用 `<Tabs>` / `<TabItem>` 展示多语言代码
+- **应当（DO）**：为所有页面添加 frontmatter（title、description）
+- **不要（DON'T）**：新增页面却不更新 `sidebars.js`
+- **Git**：通过 PR 提交以供评审；**严禁**直接提交到 main 分支
 
-## TRON-Specific Content
+## TRON 专属内容
 
-- Network identifiers use format `tron:<network>` (mainnet, nile, shasta)
-- Use TIP-712 (not EIP-712) for TRON signing references
-- Token addresses are base58-encoded (start with 'T')
-- Reference TronGrid endpoints for node access
-- Example token: USDT at `TXYZopYRdj2D9XRtbG411XZZ3kM5VkAeBf` (Nile)
+- 网络标识使用 `tron:<network>` 格式（`mainnet`、`nile`、`shasta`）
+- TRON 签名引用 **TIP-712**（而非 EIP-712）
+- Token 地址为 Base58 编码（以 `T` 开头）
+- 节点访问需引用 TronGrid 端点
+- 示例 Token：Nile 网络 USDT：`TXYZopYRdj2D9XRtbG411XZZ3kM5VkAeBf`
 
-## Touch Points / Key Files
+## 关键文件 / 触点（Touch Points / Key Files）
 
-- `docs/index.md` — Landing page
-- `docs/faq.md` — Frequently asked questions
-- `sidebars.js` — Navigation configuration (MUST update when adding pages)
-- `docusaurus.config.js` — Main site configuration
-- `docs/core-concepts/*.md` — Conceptual documentation
-- `docs/getting-started/*.md` — Quickstart guides (MDX for tab components)
-- `docs/sdk-features.md` — Update when SDK capabilities change
+- `docs/index.md` — 着陆页
+- `docs/faq.md` — 常见问题
+- `sidebars.js` — 导航配置（新增页面 **必须** 更新）
+- `docusaurus.config.js` — 站点主配置
+- `docs/core-concepts/*.md` — 概念性文档
+- `docs/getting-started/*.md` — 快速上手指南（使用 Tabs 的 MDX）
+- `docs/sdk-features.md` — SDK 能力变更时需同步更新
 
-## File Extensions
+## 文件扩展名
 
-- Use `.md` for all pages (Docusaurus parses MDX in standard `.md` files)
-- Avoid using `.mdx` extension for better editor compatibility
+- 所有页面使用 `.md`（Docusaurus 可解析 `.md` 中的 MDX）
+- 避免使用 `.mdx` 扩展名以获得更好的编辑器兼容性
 
-## Common Gotchas
+## 常见坑点
 
-- `sidebars.js` controls Docusaurus navigation; pages not listed won't appear in sidebar
-- Links between pages should omit file extensions
-- TRON addresses are case-sensitive and base58-encoded
-- Files with tabs must import Tabs components before using them
+- `sidebars.js` 控制 Docusaurus 导航；未列入的页面不会显示在侧边栏
+- 页面间链接应省略文件扩展名
+- TRON 地址区分大小写，且为 Base58 编码
+- 使用 Tabs 的文件必须在使用前引入 Tabs 组件
 
-## Pre-PR Checks
+## 提交前检查
 
-- All links work (no broken references)
-- New pages added to `sidebars.js` navigation
-- Code examples compile and run
-- Frontmatter present on all pages (title, description)
-- MDX syntax is valid
-- Run `yarn build` to verify no build errors
+- 所有链接可用（无断链）
+- 新页面已加入 `sidebars.js` 导航
+- 代码示例可编译并运行
+- 所有页面均包含 frontmatter（title、description）
+- MDX 语法有效
+- 运行 `yarn build` 确认无构建错误
 
-## SDK Feature Parity Document
+## SDK 功能对齐文档
 
-When SDK code changes involve:
+当 SDK 代码涉及以下变更时：
 
-- New mechanisms in `*/mechanisms/`
-- New signers in `*/signers/`
-- New client/server features
+- `*/mechanisms/` 中新增机制
+- `*/signers/` 中新增签名器
+- 新的客户端 / 服务端功能
 
-Update `sdk-features.md` to reflect the current state. Check both SDKs (python/, typescript/) when updating.
+需同步更新 `sdk-features.md` 以反映当前状态。更新时需同时检查 **Python** 与 **TypeScript** 两个 SDK。
 
-## Development Commands
+## 开发命令（Development Commands）
 
 ```bash
-# Install dependencies
+# 安装依赖
 yarn install
 
-# Start development server
+# 启动开发服务器
 yarn start
 
-# Build for production
+# 构建生产版本
 yarn build
 
-# Serve production build locally
+# 本地服务生产构建
 yarn serve
 ```
+

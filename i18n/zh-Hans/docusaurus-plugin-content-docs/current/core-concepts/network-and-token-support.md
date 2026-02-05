@@ -1,183 +1,102 @@
----
-title: 'Networks & Token Support'
-description: 'This page explains which blockchain networks and tokens are supported by x402-tron, and how to extend support to additional networks.'
----
+# 网络与代币支持
 
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
+## TRON 网络标识符
 
-## TRON Network Identifiers
+x402-tron 使用简单的网络标识符格式：`tron:<network_name>`，其中 network_name 是 mainnet、shasta 或 nile 之一。
 
-x402-tron uses a simple network identifier format: `tron:<network_name>` where network_name is one of `mainnet`, `shasta`, or `nile`.
+### 网络标识符参考
 
-### Network Identifier Reference
+| 网络名称 | x402-tron ID | 描述 |
+|---------|--------------|------|
+| TRON 主网 | tron:mainnet | TRON 主网 |
+| TRON Shasta | tron:shasta | TRON Shasta 测试网 |
+| TRON Nile | tron:nile | TRON Nile 测试网 |
 
-| Network Name | x402-tron ID   | Description         |
-| ------------ | -------------- | ------------------- |
-| TRON Mainnet | `tron:mainnet` | TRON mainnet        |
-| TRON Shasta  | `tron:shasta`  | TRON Shasta testnet |
-| TRON Nile    | `tron:nile`    | TRON Nile testnet   |
+## 概述
 
-## Overview
+x402-tron 专为 TRON 区块链设计，支付验证和结算原生实现于 TRON 网络。该协议利用 TRON 的 TIP-712 进行安全消息签名。
 
-x402-tron is specifically designed for the TRON blockchain, with payment verification and settlement implemented natively for TRON networks. The protocol leverages TRON's TIP-712 for secure message signing.
+## 支持的网络
 
-### Supported Networks
+| 网络 | 状态 | 说明 |
+|------|------|------|
+| TRON Nile 测试网 | ✓ | 推荐用于开发和测试 |
+| TRON Shasta 测试网 | ✓ | 替代测试网 |
+| TRON 主网 | ✓ | 生产网络 |
 
-| Network      | Status      | Notes                                   |
-| ------------ | ----------- | --------------------------------------- |
-| TRON Mainnet | **Mainnet** | Production network                      |
-| TRON Nile    | **Testnet** | Recommended for development and testing |
-| TRON Shasta  | **Testnet** | Alternative testnet for testing         |
+## 代币支持
 
-### Token Support
+x402-tron 支持 TRON 网络上的 TRC-20 代币。主要支持的代币是 USDT。
 
-x402-tron supports TRC-20 tokens on TRON networks. The primary supported token is USDT.
+### 支持的代币
 
-#### Supported Tokens
+| 代币 | 网络 | 合约地址 |
+|------|------|---------|
+| USDT | tron:nile | TXYZopYRdj2D9XRtbG411XZZ3kM5VkAeBf |
+| USDT | tron:mainnet | TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t |
 
-| Token | Network      | Contract Address                   |
-| ----- | ------------ | ---------------------------------- |
-| USDT  | tron:nile    | TXYZopYRdj2D9XRtbG411XZZ3kM5VkAeBf |
-| USDT  | tron:mainnet | TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t |
+**注意**：可以通过在 TokenRegistry 中注册来支持自定义 TRC-20 代币。
 
-**Note**: Custom TRC-20 tokens can be supported by registering them in the TokenRegistry.
+## TIP-712 安全签名
 
-#### TIP-712 for Secure Signing
+x402-tron 使用 TIP-712（TRON 对 EIP-712 的实现）进行结构化数据签名。这实现了：
 
-x402-tron uses TIP-712 (TRON's implementation of EIP-712) for structured data signing. This enables:
+- **安全授权**：买家离线签署转账授权
+- **最小化信任**：促进者不能在客户端意图之外移动资金
+- **可验证**：所有签名都可以在链上验证
 
-- **Secure authorization**: Buyers sign transfer authorizations off-chain
-- **Trust-minimizing**: Facilitators cannot move funds outside client intentions
-- **Verifiable**: All signatures can be verified on-chain
+## 代币配置
 
-### Token Configuration
+配置支付要求时，您需要指定：
 
-When configuring payment requirements, you specify:
+- **网络**：TRON 网络标识符（例如 tron:nile）
+- **资产**：TRC-20 代币合约地址
+- **金额**：代币最小单位的支付金额（例如，1 USDT = 1000000，6 位小数）
 
-1. **Network**: The TRON network identifier (e.g., `tron:nile`)
-2. **Asset**: The TRC-20 token contract address
-3. **Amount**: The payment amount in the token's smallest unit (e.g., 1 USDT = 1000000 with 6 decimals)
+## 支付方案
 
-#### Example Configuration
+### Upto 方案
 
-<Tabs>
-  <TabItem value="python" label="Python (FastAPI)">
+upto 方案允许支付最多指定金额，适用于：
 
-```python
-from x402.server import X402Server
-from x402.fastapi import x402_protected
-from x402.config import NetworkConfig
+- 按使用付费的 API（LLM 代币生成、数据处理）
+- 计量资源（计算时间、带宽）
+- 基于实际使用量的动态定价
 
-server = X402Server()
+upto 方案的工作原理：
 
-@app.get("/protected")
-@x402_protected(
-    server=server,
-    price="1 USDT",  # 1 USDT = 1000000 (6 decimals)
-    network=NetworkConfig.TRON_NILE,
-    pay_to="TDhj8uX7SVJwvhCUrMaiQHqPgrB6wRb3eG",
-)
-async def protected_endpoint():
-    return {"data": "secret content"}
-```
+1. 客户端签署授权，允许最多一定金额
+2. 服务器执行工作并确定实际成本
+3. 促进者结算实际金额（最多授权的最大值）
 
-  </TabItem>
-  <TabItem value="typescript" label="TypeScript">
+## 运行您自己的促进者
 
-```typescript
-import { X402Client, UptoTronClientMechanism, TronClientSigner } from '@open-aibank/x402-tron'
-import { TronWeb } from 'tronweb'
+您可以运行自己的促进者来验证和结算 TRON 上的支付。促进者：
 
-const tronWeb = new TronWeb({
-  fullHost: 'https://nile.trongrid.io',
-  privateKey: 'your-private-key',
-})
+- 验证支付负载（TIP-712 签名）
+- 将交易提交到 TRON 区块链
+- 监控交易确认
 
-const signer = TronClientSigner.withPrivateKey(tronWeb, 'your-private-key', 'nile')
+### 前提条件
 
-const client = new X402Client().register('tron:*', new UptoTronClientMechanism(signer))
-```
+- 访问 TRON 节点（例如 TronGrid）
+- 拥有 TRX 用于 gas/能量费用的钱包
+- x402-tron 促进者代码
 
-  </TabItem>
-</Tabs>
+## 快速参考
 
-### Payment Schemes
+| 组件 | TRON 支持 |
+|------|----------|
+| 网络 | tron:mainnet, tron:shasta, tron:nile |
+| 代币 | TRC-20 代币（默认支持 USDT） |
+| 签名 | TIP-712 结构化数据签名 |
+| 方案 | upto（exact 方案开发中） |
 
-#### Upto Scheme
+## 总结
 
-The `upto` scheme allows payments up to a specified amount, useful for:
+x402-tron 的网络支持专为 TRON 区块链设计，具有原生 TRC-20 代币支持和 TIP-712 签名。关键要点：
 
-- Pay-per-use APIs (LLM token generation, data processing)
-- Metered resources (compute time, bandwidth)
-- Dynamic pricing based on actual usage
-
-The upto scheme in x402-tron works by:
-
-1. Client signs an authorization allowing up to a maximum amount
-2. Server performs work and determines actual cost
-3. Facilitator settles the actual amount (up to the authorized maximum)
-
-### Running Your Own Facilitator
-
-You can run your own facilitator to verify and settle payments on TRON. The facilitator:
-
-1. Verifies payment payloads (TIP-712 signatures)
-2. Submits transactions to TRON blockchain
-3. Monitors transaction confirmation
-
-**Prerequisites**
-
-1. Access to a TRON node (e.g., TronGrid)
-2. A wallet with TRX for gas/energy fees
-3. The x402-tron facilitator code
-
-See the [Facilitator](facilitator) documentation for more details.
-
-### Quick Reference
-
-| Component | TRON Support                               |
-| --------- | ------------------------------------------ |
-| Networks  | `tron:mainnet`, `tron:shasta`, `tron:nile` |
-| Tokens    | TRC-20 tokens (USDT supported by default)  |
-| Signing   | TIP-712 structured data signing            |
-| Schemes   | `upto` (exact scheme in development)       |
-
-### Adding Custom Tokens
-
-To add support for custom TRC-20 tokens:
-
-<Tabs>
-  <TabItem value="python" label="Python">
-
-```python
-from x402.tokens import TokenRegistry, TokenInfo
-
-# Register a custom token
-TokenRegistry.register_token(
-    network="tron:nile",
-    symbol="MYTOKEN",
-    info=TokenInfo(
-        address="TYourTokenContractAddress",
-        decimals=18,
-    )
-)
-```
-
-  </TabItem>
-</Tabs>
-
-### Summary
-
-x402-tron's network support is designed specifically for TRON blockchain with native TRC-20 token support and TIP-712 signing. Key takeaways:
-
-- TRON Nile testnet is recommended for development
-- USDT is the primary supported token with pre-configured addresses
-- TIP-712 provides secure, trust-minimizing payment authorization
-- Custom TRC-20 tokens can be added via TokenRegistry
-
-Next, explore:
-
-- [Quickstart for Sellers](../getting-started/quickstart-for-sellers) — Start accepting payments on TRON
-- [Core Concepts](http-402) — Learn how x402-tron works under the hood
-- [Facilitator](facilitator) — Understand the role of facilitators
+- 推荐使用 TRON Nile 测试网进行开发
+- USDT 是主要支持的代币，具有预配置的地址
+- TIP-712 提供安全、最小化信任的支付授权
+- 可以通过 TokenRegistry 添加自定义 TRC-20 代币

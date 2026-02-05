@@ -6,72 +6,65 @@ description: >-
   并帮助你快速开始构建或集成相关服务。
 ---
 
-# x402-tron
+x402-tron 是 x402 开放支付标准在 TRON 区块链上的实现，使服务能够直接通过 HTTP 对其 API 和内容访问收费。它基于 HTTP 402 Payment Required 状态码构建，允许客户端以编程方式支付资源费用，无需账户、会话或凭证管理。
 
-x402-tron is the TRON implementation of the x402 open payment standard that enables services to charge for access to their APIs and content directly over HTTP. It is built around the HTTP `402 Payment Required` status code and allows clients to programmatically pay for resources without accounts, sessions, or credential management.
+通过 x402-tron，任何 Web 服务都可以在提供响应之前要求付款，利用 TRON 区块链支付实现速度、隐私和效率。
 
-With x402-tron, any web service can require payment before serving a response, using TRON blockchain payments for speed, privacy, and efficiency.
+想为我们的文档做贡献？GitHub 仓库欢迎 PR！我们唯一的要求是将这些文档保持为中立资源，除了适当链接到其他资源外，不包含品牌内容。
 
-**Want to contribute to our docs?** [The GitHub repo is open to PRs!](https://github.com/open-aibank/x402-tron-docs) Our only ask is that you keep these docs as a neutral resource, with no branded content other than linking out to other resources where appropriate.
+寻找可运行的示例？查看 x402-tron-demo 仓库以获取完整的可运行示例。
 
-**Looking for working examples?** Check out the [x402-tron-demo repository](https://github.com/open-aibank/x402-tron-demo) for complete, runnable examples.
+## 为什么使用 x402-tron？
 
-### Why Use x402-tron?
+x402-tron 解决了现有支付系统的关键局限：
 
-x402-tron addresses key limitations of existing payment systems:
+- 传统信用卡和法币支付处理器的高额费用和摩擦
+- 与机器对机器支付（如 AI 代理）不兼容
+- 缺乏对小额支付的支持，难以实现基于使用量的服务货币化
+- TRON 区块链上快速且低成本的交易
 
-- **High fees and friction** with traditional credit cards and fiat payment processors
-- **Incompatibility with machine-to-machine payments**, such as AI agents
-- **Lack of support for micropayments**, making it difficult to monetize usage-based services
-- **Fast and low-cost transactions** on TRON blockchain
+## x402-tron 适合谁？
 
-### Who is x402-tron for?
+**卖家**：希望将其 API 或内容货币化的服务提供商。x402-tron 能够以最少的设置实现客户端的直接程序化支付。
 
-- **Sellers:** Service providers who want to monetize their APIs or content. x402-tron enables direct, programmatic payments from clients with minimal setup.
-- **Buyers:** Human developers and AI agents seeking to access paid services without accounts or manual payment flows.
+**买家**：寻求访问付费服务而无需账户或手动支付流程的人类开发者和 AI 代理。
 
-Both sellers and buyers interact directly through HTTP requests, with payment handled transparently through the protocol on TRON blockchain.
+买家和卖家通过 HTTP 请求直接交互，支付通过 TRON 区块链上的协议透明处理。
 
-### What Can You Build?
+## 你可以构建什么？
 
-x402-tron enables a range of use cases, including:
+x402-tron 支持多种用例，包括：
 
-- API services paid per request
-- AI agents that autonomously pay for API access
-- Paywalls for digital content
-- Microservices and tooling monetized via microtransactions
-- Proxy services that aggregate and resell API capabilities
+- 按请求付费的 API 服务
+- 自主支付 API 访问费用的 AI 代理
+- 数字内容付费墙
+- 通过微交易货币化的微服务和工具
+- 聚合和转售 API 能力的代理服务
 
-### How Does It Work?
+## 它是如何工作的？
 
-At a high level, the flow is simple:
+从高层次来看，流程很简单：
 
-1. A buyer requests a resource from a server.
-2. If payment is required, the server responds with `402 Payment Required`, including payment instructions.
-3. The buyer prepares and submits a payment payload (signed using TIP-712).
-4. The server verifies and settles the payment using an x402 facilitator's /verify and /settle endpoints.
-5. If payment is valid, the server provides the requested resource.
+1. 买家向服务器请求资源
+2. 如果需要付款，服务器响应 402 Payment Required，包含支付说明
+3. 买家准备并提交支付负载（使用 TIP-712 签名）
+4. 服务器使用 x402 促进者的 /verify 和 /settle 端点验证和结算支付
+5. 如果支付有效，服务器提供请求的资源
 
-For more detail, see:
+目标是使程序化商务在 TRON 区块链上变得可访问、无需许可且对开发者友好。
 
-- [Client / Server](core-concepts/client-server)
-- [Facilitator](core-concepts/facilitator)
-- [HTTP 402](core-concepts/http-402)
+## 支持的网络
 
-The goal is to make programmatic commerce accessible, permissionless, and developer-friendly on TRON blockchain.
+x402-tron 支持以下 TRON 网络：
 
-### Supported Networks
+- TRON 主网 (tron:mainnet)
+- TRON Shasta 测试网 (tron:shasta)
+- TRON Nile 测试网 (tron:nile)
 
-x402-tron supports the following TRON networks:
+## 开始使用
 
-- **TRON Mainnet** (`tron:mainnet`)
-- **TRON Shasta Testnet** (`tron:shasta`)
-- **TRON Nile Testnet** (`tron:nile`)
+准备好构建了吗？从这里开始：
 
-### Get Started
-
-Ready to build? Start here:
-
-- [Quickstart for Sellers](getting-started/quickstart-for-sellers)
-- [Quickstart for Buyers](getting-started/quickstart-for-buyers)
-- [Explore Core Concepts](core-concepts/http-402)
+- 卖家快速入门
+- 买家快速入门
+- 探索核心概念

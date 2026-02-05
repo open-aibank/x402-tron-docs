@@ -1,92 +1,47 @@
----
-title: "HTTP 402"
-description: "For decades, HTTP 402 Payment Required has been reserved for future use. x402-tron unlocks it for TRON blockchain payments."
----
+# HTTP 402
 
-### What is HTTP 402?
+## 什么是 HTTP 402？
 
-[HTTP 402](https://datatracker.ietf.org/doc/html/rfc7231#section-6.5.2) is a standard, but rarely used, HTTP response status code indicating that payment is required to access a resource.
+HTTP 402 是一个标准但很少使用的 HTTP 响应状态码，表示访问资源需要付款。
 
-In x402-tron, this status code is activated to:
+在 x402-tron 中，此状态码用于：
 
-* Inform clients (buyers or agents) that payment is required.
-* Communicate the details of the payment, such as amount, token, and destination TRON address.
-* Provide the information necessary to complete the payment programmatically via TIP-712 signing.
+- 通知客户端（买家或代理）需要付款
+- 传达支付详情，如金额、代币和目标 TRON 地址
+- 提供通过 TIP-712 签名以编程方式完成支付所需的信息
 
-### Why x402-tron Uses HTTP 402
+## 为什么 x402-tron 使用 HTTP 402
 
-The primary purpose of HTTP 402 is to enable frictionless, API-native payments for accessing web resources, especially for:
+HTTP 402 的主要目的是为访问 Web 资源启用无摩擦的、API 原生的支付，特别适用于：
 
-* Machine-to-machine (M2M) payments (e.g., AI agents).
-* Pay-per-use models such as API calls or paywalled content.
-* Micropayments without account creation or traditional payment rails.
-* TRON-based stablecoin (USDT) payments for global accessibility.
+- 机器对机器 (M2M) 支付（例如 AI 代理）
+- 按使用付费模型，如 API 调用或付费内容
+- 无需账户创建或传统支付渠道的小额支付
+- 基于 TRON 的稳定币 (USDT) 支付，实现全球可访问性
 
-Using the 402 status code keeps x402-tron protocol natively web-compatible and easy to integrate into any HTTP-based service.
+使用 402 状态码使 x402-tron 协议保持原生 Web 兼容性，并易于集成到任何基于 HTTP 的服务中。
 
-### Payment Headers
+## 支付头
 
-x402-tron uses standardized headers for payment communication:
+x402-tron 使用标准化的头进行支付通信：
 
-* **`PAYMENT-REQUIRED`**: Contains the Base64-encoded payment requirements from the server. This header is returned in the 402 response, telling the client what payment is required.
-* **`PAYMENT-SIGNATURE`**: Contains the Base64-encoded payment payload from the client. This header is sent by the client when retrying a request after receiving a 402 response, proving they have authorized payment.
-* **`PAYMENT-RESPONSE`**: Contains the Base64-encoded settlement response from the server. This header is returned by the server in the successful response, confirming the payment was verified and settled, including the TRON transaction hash.
+- **PAYMENT-REQUIRED**：包含来自服务器的 Base64 编码的支付要求
+- **PAYMENT-SIGNATURE**：包含来自客户端的 Base64 编码的支付负载
+- **PAYMENT-RESPONSE**：包含来自服务器的 Base64 编码的结算响应
 
-Both headers must contain valid Base64-encoded JSON strings. This encoding ensures compatibility across different HTTP implementations and prevents issues with special characters in JSON payloads.
+## 支付要求结构
 
-### Payment Requirements Structure
+当服务器返回 402 响应时，PAYMENT-REQUIRED 头包含支付详情，包括方案、网络、金额、资产、payTo 地址和费用信息。
 
-When a server returns a 402 response, the `PAYMENT-REQUIRED` header contains:
+## 支付签名结构
 
-```json
-{
-  "x402Version": 1,
-  "accepts": [
-    {
-      "scheme": "upto",
-      "network": "tron:nile",
-      "amount": "1000000",
-      "asset": "TXYZopYRdj2D9XRtbG411XZZ3kM5VkAeBf",
-      "payTo": "TDhj8uX7SVJwvhCUrMaiQHqPgrB6wRb3eG",
-      "extra": {
-        "fee": {
-          "feeAmount": "100000",
-          "feeTo": "TFacilitatorAddress..."
-        }
-      }
-    }
-  ]
-}
-```
+客户端在 PAYMENT-SIGNATURE 头中使用 TIP-712 签名的负载进行响应，包含签名和授权详情。
 
-### Payment Signature Structure
+## 总结
 
-The client responds with a TIP-712 signed payload in the `PAYMENT-SIGNATURE` header:
+HTTP 402 是 x402-tron 协议的基础，使服务能够直接在 HTTP 响应中声明支付要求。它：
 
-```json
-{
-  "x402Version": 1,
-  "scheme": "upto",
-  "network": "tron:nile",
-  "payload": {
-    "signature": "0x...",
-    "authorization": {
-      "from": "TClientAddress...",
-      "to": "TSellerAddress...",
-      "value": "1000000",
-      "validAfter": 0,
-      "validBefore": 1738678164,
-      "nonce": "0x..."
-    }
-  }
-}
-```
-
-### Summary
-
-HTTP 402 is the foundation of the x402-tron protocol, enabling services to declare payment requirements directly within HTTP responses. It:
-
-* Signals payment is required
-* Communicates necessary payment details (amount, token, TRON addresses)
-* Integrates seamlessly with standard HTTP workflows
-* Enables programmatic payments on TRON blockchain
+- 发出需要付款的信号
+- 传达必要的支付详情（金额、代币、TRON 地址）
+- 与标准 HTTP 工作流无缝集成
+- 在 TRON 区块链上启用程序化支付

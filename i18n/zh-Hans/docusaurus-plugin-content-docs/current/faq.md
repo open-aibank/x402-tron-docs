@@ -1,164 +1,134 @@
----
-title: 'FAQ 中文'
----
+# 常见问题
 
-### General
+## 常规问题
 
-#### What _is_ x402-tron in a single sentence?
+### 用一句话说明什么是 x402-tron？
 
-x402-tron is a TRON implementation of the x402 open payment protocol that turns the dormant HTTP `402 Payment Required` status code into a fully-featured, on-chain payment layer for APIs, websites, and autonomous agents on TRON blockchain.
+x402-tron 是 x402 开放支付协议在 TRON 区块链上的实现，它将休眠的 HTTP 402 Payment Required 状态码转变为一个功能齐全的链上支付层，用于 API、网站和 TRON 区块链上的自主代理。
 
-#### Is x402-tron a commercial product?
+### x402-tron 是商业产品吗？
 
-_No._ x402-tron is an open-source implementation of the x402 protocol for TRON blockchain, released under the MIT license. You don't need any commercial products to use it.
+不是。x402-tron 是 x402 协议在 TRON 区块链上的开源实现，根据 MIT 许可证发布。您无需任何商业产品即可使用它。
 
-#### Why not use traditional payment rails or API keys?
+### 为什么不使用传统支付渠道或 API 密钥？
 
-Traditional rails require credit-card networks, user accounts, and multi-step UI flows. x402-tron removes those dependencies, enabling programmatic, HTTP-native payments (perfect for AI agents) while leveraging TRON's fast and low-cost transactions.
+传统渠道需要信用卡网络、用户账户和多步骤 UI 流程。x402-tron 消除了这些依赖，实现程序化、HTTP 原生支付（非常适合 AI 代理），同时利用 TRON 的快速和低成本交易。
 
-#### Is x402-tron only for crypto-native projects?
+### x402-tron 仅适用于加密原生项目吗？
 
-No. Any web API or content provider—crypto or web2—can integrate x402-tron if it wants a lower-cost, friction-free payment path using TRON blockchain.
+不是。任何 Web API 或内容提供商——加密或 web2——如果想要使用 TRON 区块链实现低成本、无摩擦的支付路径，都可以集成 x402-tron。
 
-### Language & Framework Support
+## 语言和框架支持
 
-#### What languages and frameworks are supported?
+### 支持哪些语言和框架？
 
-x402-tron provides SDKs for:
+x402-tron 提供以下 SDK：
 
-- **Python**: With FastAPI and Flask integration
-- **TypeScript**: With fetch client support
+- **Python**：支持 FastAPI 和 Flask 集成
+- **TypeScript**：支持 fetch 客户端
 
-Both languages support client, server, and facilitator implementations.
+两种语言都支持客户端、服务器和促进者实现。
 
-### Facilitators
+## 促进者
 
-#### Who runs facilitators?
+### 谁运行促进者？
 
-You run your own facilitator. x402-tron is designed to be self-hosted. The facilitator included in the repository is ready to run.
+您运行自己的促进者。x402-tron 设计为自托管。仓库中包含的促进者已准备好运行。
 
-#### What stops a malicious facilitator from stealing funds or lying about settlement?
+### 什么能阻止恶意促进者窃取资金或谎报结算？
 
-Every payment payload is **signed by the buyer using TIP-712** and settles **directly on TRON blockchain**. A facilitator that tampers with the transaction will fail signature checks. The facilitator can only transfer:
+每个支付负载都由买家使用 TIP-712 签名，并直接在 TRON 区块链上结算。篡改交易的促进者将无法通过签名检查。
 
-- The exact amount authorized by the buyer
-- To the exact recipient specified in the signed payload
+## 定价和方案
 
-### Pricing & Schemes
+### 我应该如何为端点定价？
 
-#### How should I price my endpoint?
+常见模式包括：
 
-Common patterns include:
+- 固定每次调用费用（例如，每次请求 1 USDT）
+- 分层定价（/basic 与 /pro 端点具有不同价格）
+- Upto 方案：支付最多一个最大值，最终成本等于使用量
 
-- **Flat per-call** (e.g., `1 USDT` per request)
-- **Tiered** (`/basic` vs `/pro` endpoints with different prices)
-- **Upto scheme**: Pay up to a maximum where the final cost equals usage
+### x402-tron 支持哪些支付方案？
 
-#### What payment schemes does x402-tron support?
+目前 x402-tron 支持 upto 方案。
 
-Currently x402-tron supports the `upto` scheme, which allows:
+## 资产、网络和费用
 
-- Client authorizes up to a maximum amount
-- Server settles the actual amount used (up to the maximum)
-- Useful for metered billing, LLM token usage, etc.
+### 支持哪些资产和网络？
 
-### Assets, Networks & Fees
+| 网络 | 代币 | 状态 |
+|------|------|------|
+| TRON 主网 (tron:mainnet) | USDT (TRC-20) | 主网 |
+| TRON Nile (tron:nile) | USDT (TRC-20) | 测试网 |
+| TRON Shasta (tron:shasta) | USDT (TRC-20) | 测试网 |
 
-#### Which assets and networks are supported?
+可以通过 TokenRegistry 添加自定义 TRC-20 代币。
 
-| Network                       | Token         | Status      |
-| ----------------------------- | ------------- | ----------- |
-| TRON Mainnet (`tron:mainnet`) | USDT (TRC-20) | **Mainnet** |
-| TRON Nile (`tron:nile`)       | USDT (TRC-20) | **Testnet** |
-| TRON Shasta (`tron:shasta`)   | USDT (TRC-20) | **Testnet** |
+### 费用是多少？
 
-Custom TRC-20 tokens can be added via the TokenRegistry.
+- **TRON 网络费用**：能量/带宽的 TRX（由促进者支付）
+- **促进者费用**：每个促进者可配置（可以为零）
 
-#### What are the fees?
+## 安全
 
-- **TRON network fees**: TRX for energy/bandwidth (paid by facilitator)
-- **Facilitator fees**: Configurable per facilitator (can be zero)
+### 我必须向后端暴露我的私钥吗？
 
-### Security
+不需要。推荐的模式是：
 
-#### Do I have to expose my private key to my backend?
+- 买家（客户端/代理）在其运行时本地签名
+- 卖家从不持有买家的密钥；他们只验证签名
+- 促进者仅使用自己的密钥进行交易提交
 
-No. The recommended pattern is:
+### 退款如何工作？
 
-1. **Buyers (clients/agents)** sign locally in their runtime (browser, serverless, agent VM).
-2. **Sellers** never hold the buyer's key; they only verify signatures.
-3. **Facilitators** use their own keys for transaction submission only.
+upto 方案是推送支付——一旦执行就不可逆。退款选项：
 
-#### How do refunds work?
+- **业务逻辑退款**：卖家向买家发送新的 USDT 转账
+- **部分结算**：服务器仅结算实际使用的金额（upto 方案）
 
-The `upto` scheme is a _push payment_—irreversible once executed. Refund options:
+## AI 代理的使用
 
-1. **Business-logic refunds:** Seller sends a new USDT transfer back to the buyer.
-2. **Partial settlement:** Server only settles the amount actually used (upto scheme).
+### 代理如何知道要支付什么？
 
-### Usage by AI Agents
+代理遵循与人类相同的流程：
 
-#### How does an agent know what to pay?
+1. 发起请求
+2. 解析 PAYMENT-REQUIRED 头
+3. 通过 x402-tron 客户端 SDK 签署 TIP-712 支付负载
+4. 使用 PAYMENT-SIGNATURE 头重试
 
-Agents follow the same flow as humans:
+### 代理需要钱包吗？
 
-1. Make a request.
-2. Parse the `PAYMENT-REQUIRED` header.
-3. Sign a TIP-712 payment payload via the x402-tron client SDKs.
-4. Retry with the `PAYMENT-SIGNATURE` header.
+是的。程序化 TRON 钱包让代理能够签署 TIP-712 负载而不暴露种子短语。
 
-#### Do agents need wallets?
+## 开发
 
-Yes. Programmatic TRON wallets (via TronWeb or the x402-tron signer classes) let agents sign TIP-712 payloads without exposing seed phrases.
+### 如何在本地运行 x402-tron？
 
-### Development
+1. 克隆 x402-tron-demo 仓库
+2. 安装依赖
+3. 使用您的 TRON 私钥配置 .env 文件
+4. 启动促进者
+5. 启动服务器
+6. 运行客户端
 
-#### How do I run x402-tron locally?
+### 我应该使用哪个测试网？
 
-1. Clone the [x402-tron-demo repository](https://github.com/open-aibank/x402-tron-demo)
-2. Install dependencies (`pip install -r requirements.txt` for Python)
-3. Configure `.env` file with your TRON private keys (see `.env.example`)
-4. Start the facilitator: `python facilitator/main.py`
-5. Start the server: `python server/main.py`
-6. Run the client: `python client/main.py`
+推荐使用 TRON Nile 进行测试。它稳定且有良好的水龙头支持。
 
-#### What testnet should I use?
+## 故障排除
 
-**TRON Nile** is recommended for testing. It's stable and has good faucet support.
+### 即使在附加 PAYMENT-SIGNATURE 后，我仍然收到 402 Payment Required。为什么？
 
-- Nile Faucet: https://nileex.io/join/getJoinPage
-- Nile Explorer: https://nile.tronscan.org
+- TIP-712 签名无效
+- 支付金额少于所需金额
+- 促进者的代币授权不足
+- 客户端地址的 USDT 余额不足
 
-### Troubleshooting
+### 我的测试在 Nile 上有效但在主网上失败——发生了什么变化？
 
-#### I keep getting `402 Payment Required`, even after attaching `PAYMENT-SIGNATURE`. Why?
-
-1. TIP-712 signature is invalid (wrong domain or payload fields).
-2. Payment amount is less than the required amount.
-3. Token allowance is insufficient for the facilitator.
-4. Client address has insufficient USDT balance.
-
-Check the `error` field in the server's JSON response for details.
-
-#### My test works on Nile but fails on mainnet—what changed?
-
-- Ensure you set `network: "tron:mainnet"` instead of `"tron:nile"`.
-- Confirm your wallet has _mainnet_ USDT.
-- Ensure the facilitator wallet has TRX for energy costs.
-- Token contract addresses differ between networks.
-
-#### How do I check token allowance?
-
-```python
-allowance = await signer.check_allowance(
-    token_address="TXYZopYRdj2D9XRtbG411XZZ3kM5VkAeBf",
-    required_amount=1000000,
-    network="tron:nile"
-)
-print(f"Current allowance: {allowance}")
-```
-
-### Still have questions?
-
-• Open a GitHub Issue in the [x402-tron repo](https://github.com/open-aibank/x402-tron)
-• Check the [x402-tron-demo](https://github.com/open-aibank/x402-tron-demo) for working examples
+- 确保设置 network: "tron:mainnet" 而不是 "tron:nile"
+- 确认您的钱包有主网 USDT
+- 确保促进者钱包有 TRX 用于能量成本
+- 代币合约地址在不同网络之间不同

@@ -1,86 +1,81 @@
----
-title: SDK Features
-description: Feature parity across Python and TypeScript SDKs for x402-tron
----
+# SDK 功能
 
-# SDK Features
+本页面跟踪 x402-tron 的各个 SDK（Python、TypeScript）中实现的功能。
 
-This page tracks which features are implemented in each SDK (Python, TypeScript) for x402-tron.
+## 核心
 
-## Core
-
-| Component | Python | TypeScript |
-|-----------|--------|------------|
-| Server | ✅ | ⏳ |
-| Client | ✅ | ✅ |
-| Facilitator | ✅ | ⏳ |
-
-### HTTP Framework Integrations
-
-| Role | Python | TypeScript |
+| 组件 | Python | TypeScript |
 |------|--------|------------|
-| Server | FastAPI, Flask | - |
-| Client | httpx | fetch |
+| 服务器 | ✅ | ⏳ |
+| 客户端 | ✅ | ✅ |
+| 促进者 | ✅ | ⏳ |
 
-## Networks
+## HTTP 框架集成
 
-| Network | Python | TypeScript |
-|---------|--------|------------|
+| 角色 | Python | TypeScript |
+|------|--------|------------|
+| 服务器 | FastAPI, Flask | - |
+| 客户端 | httpx | fetch |
+
+## 网络
+
+| 网络 | Python | TypeScript |
+|------|--------|------------|
 | tron:mainnet | ✅ | ✅ |
 | tron:nile | ✅ | ✅ |
 | tron:shasta | ✅ | ✅ |
 
-## Mechanisms
+## 机制
 
-| Mechanism | Python | TypeScript |
-|-----------|--------|------------|
+| 机制 | Python | TypeScript |
+|------|--------|------------|
 | upto/tron (TIP-712) | ✅ | ✅ |
 
-## Signers
+## 签名器
 
-| Signer | Python | TypeScript |
+| 签名器 | Python | TypeScript |
 |--------|--------|------------|
 | TronClientSigner | ✅ | ✅ |
 | TronFacilitatorSigner | ✅ | ⏳ |
 
-## Client Features
+## 客户端功能
 
-| Feature | Python | TypeScript |
-|---------|--------|------------|
-| Auto 402 handling | ✅ | ✅ |
-| Auto token approval | ✅ | ✅ |
-| Allowance checking | ✅ | ✅ |
-| TIP-712 signing | ✅ | ✅ |
+| 功能 | Python | TypeScript |
+|------|--------|------------|
+| 自动 402 处理 | ✅ | ✅ |
+| 自动代币批准 | ✅ | ✅ |
+| 授权检查 | ✅ | ✅ |
+| TIP-712 签名 | ✅ | ✅ |
 
-## Server Features
+## 服务器功能
 
-| Feature | Python | TypeScript |
-|---------|--------|------------|
-| @x402_protected decorator | ✅ | ⏳ |
-| Payment verification | ✅ | ⏳ |
-| Payment settlement | ✅ | ⏳ |
-| Fee support | ✅ | ⏳ |
+| 功能 | Python | TypeScript |
+|------|--------|------------|
+| @x402_protected 装饰器 | ✅ | ⏳ |
+| 支付验证 | ✅ | ⏳ |
+| 支付结算 | ✅ | ⏳ |
+| 费用支持 | ✅ | ⏳ |
 
-## Facilitator Features
+## 促进者功能
 
-| Feature | Python | TypeScript |
-|---------|--------|------------|
-| /verify endpoint | ✅ | ⏳ |
-| /settle endpoint | ✅ | ⏳ |
-| /fee/quote endpoint | ✅ | ⏳ |
-| /supported endpoint | ✅ | ⏳ |
-| Transaction submission | ✅ | ⏳ |
-| Transaction confirmation | ✅ | ⏳ |
+| 功能 | Python | TypeScript |
+|------|--------|------------|
+| /verify 端点 | ✅ | ⏳ |
+| /settle 端点 | ✅ | ⏳ |
+| /fee/quote 端点 | ✅ | ⏳ |
+| /supported 端点 | ✅ | ⏳ |
+| 交易提交 | ✅ | ⏳ |
+| 交易确认 | ✅ | ⏳ |
 
-## Token Support
+## 代币支持
 
-| Token | Python | TypeScript |
-|-------|--------|------------|
+| 代币 | Python | TypeScript |
+|------|--------|------------|
 | USDT (TRC-20) | ✅ | ✅ |
-| Custom TRC-20 | ✅ | ✅ |
+| 自定义 TRC-20 | ✅ | ✅ |
 
-## Legend
+## 图例
 
-- ✅ = Implemented
-- ⏳ = Planned / In Development
-- ❌ = Not Planned
+- ✅ = 已实现
+- ⏳ = 计划中 / 开发中
+- ❌ = 未计划

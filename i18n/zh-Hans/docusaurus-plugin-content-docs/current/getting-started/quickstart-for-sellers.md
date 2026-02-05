@@ -1,216 +1,103 @@
----
-title: "Quickstart for Sellers"
-description: "This guide walks you through integrating with **x402-tron** to enable payments for your API or service on TRON blockchain. By the end, your API will be able to charge buyers and AI agents for access."
----
+# 卖家快速入门
 
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
+**注意**：本快速入门从测试网配置（TRON Nile）开始以便安全测试。当您准备好投入生产时，请参阅"在主网上运行"部分，了解在 TRON 主网上接受真实支付所需的简单更改。
 
-**Note:** This quickstart begins with testnet configuration (TRON Nile) for safe testing. When you're ready for production, see [Running on Mainnet](#running-on-mainnet) for the simple changes needed to accept real payments on TRON mainnet.
+## 前提条件
 
-### Prerequisites
+在开始之前，请确保您具备：
 
-Before you begin, ensure you have:
+- 用于接收资金的 TRON 钱包（任何兼容 TRON 的钱包）
+- 已安装 Python 3.10+ 和 pip（用于 Python SDK）
+- 已安装 Node.js 18+ 和 npm（用于 TypeScript SDK）
+- 现有的 API 或服务器
 
-* A TRON wallet to receive funds (any TRON-compatible wallet)
-* Python 3.10+ and pip installed (for Python SDK)
-* Node.js 18+ and npm installed (for TypeScript SDK)
-* An existing API or server
+## 1. 安装依赖
 
-### 1. Install Dependencies
-
-<Tabs>
-  <TabItem value="python" label="Python (FastAPI)">
-Install the x402-tron Python package with FastAPI support:
+安装带有 FastAPI 支持的 x402-tron Python 包：
 
 ```bash
 pip install x402-tron[fastapi]
 ```
-  </TabItem>
-  <TabItem value="typescript" label="TypeScript">
-Install the x402-tron TypeScript package:
 
-```bash
-npm install @open-aibank/x402-tron tronweb
-```
-  </TabItem>
-</Tabs>
+## 2. 添加支付中间件
 
-### 2. Add Payment Middleware
+将支付中间件集成到您的应用程序中。您需要提供：
 
-Integrate the payment middleware into your application. You will need to provide:
+- 促进者 URL。用于测试时，运行您自己的本地促进者或使用托管的促进者
+- 您想要保护的路由
+- 您的 TRON 接收钱包地址
 
-* The Facilitator URL. For testing, run your own local facilitator or use a hosted one.
-* The routes you want to protect.
-* Your TRON receiving wallet address.
+### 路由配置
 
-<Tabs>
-  <TabItem value="python" label="Python (FastAPI)">
-Full example in the demo repo [here](https://github.com/open-aibank/x402-tron-demo/tree/main/python/server).
+配置受保护路由时，您需要指定：
 
-```python
-import os
-from fastapi import FastAPI
-from x402.server import X402Server
-from x402.fastapi import x402_protected
-from x402.facilitator import FacilitatorClient
-from x402.config import NetworkConfig
+- **price**：支付金额（例如 "1 USDT" 或原始金额如 "1000000"）
+- **network**：TRON 网络标识符（例如 tron:nile, tron:mainnet）
+- **pay_to**：您用于接收支付的 TRON 钱包地址
 
-app = FastAPI()
+## 3. 运行促进者
 
-# Your TRON receiving wallet address
-PAY_TO_ADDRESS = "TDhj8uX7SVJwvhCUrMaiQHqPgrB6wRb3eG"
+x402-tron 需要促进者来验证和结算支付。您可以运行自己的促进者。
 
-# Facilitator URL (run locally or use hosted)
-FACILITATOR_URL = "http://localhost:8001"
+这将在 http://localhost:8001 上启动促进者，提供以下端点：
 
-# Initialize x402 server (TRON mechanisms auto-registered)
-server = X402Server()
-facilitator = FacilitatorClient(base_url=FACILITATOR_URL)
-server.add_facilitator(facilitator)
+- **GET /** - 服务信息
+- **GET /supported** - 支持的功能
+- **POST /verify** - 验证支付负载
+- **POST /settle** - 在链上结算支付
+- **POST /fee/quote** - 获取费用报价
 
-@app.get("/protected")
-@x402_protected(
-    server=server,
-    price="1 USDT",  # 1 USDT = 1000000 (6 decimals)
-    network=NetworkConfig.TRON_NILE,
-    pay_to=PAY_TO_ADDRESS,
-)
-async def protected_endpoint():
-    return {"data": "secret content"}
+## 4. 测试您的集成
 
+验证步骤：
 
-if __name__ == "__main__":
-    import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8000)
-```
+1. 向您的端点发起请求
+2. 服务器响应 402 Payment Required，包含支付说明
+3. 使用兼容的客户端完成支付
+4. 使用 PAYMENT-SIGNATURE 头重试请求
+5. 服务器通过促进者验证支付并返回您的 API 响应
 
-  </TabItem>
-</Tabs>
+## 5. 错误处理
 
-**Route Configuration:**
+- 确保促进者正在运行且可访问
+- 检查您的 TRON 钱包地址是否有效
 
-When configuring protected routes, you specify:
+## 在主网上运行
 
-* **price**: Payment amount (e.g., "1 USDT", or raw amount like "1000000")
-* **network**: TRON network identifier (e.g., `tron:nile`, `tron:mainnet`)
-* **pay_to**: Your TRON wallet address to receive payments
+### 1. 更新网络配置
 
-When a request is made to these routes without payment, your server will respond with the HTTP 402 Payment Required code and payment instructions.
+从测试网更改为主网
 
-### 3. Run a Facilitator
+### 2. 更新您的促进者
 
-x402-tron requires a facilitator to verify and settle payments. You can run your own:
+- 更新环境变量以使用主网凭证
+- 确保促进者钱包有 TRX 用于能量/带宽费用
+- 更新促进者网络配置
 
-```bash
-# Clone the demo repository first
-git clone https://github.com/open-aibank/x402-tron-demo.git
-cd x402-tron-demo/python/facilitator
+### 3. 更新您的钱包
 
-# Configure environment variables (copy .env.example to .env and set your keys)
-cp .env.example .env
+确保您的接收钱包地址是真实的主网地址
 
-python main.py
-```
+### 4. 使用真实支付进行测试
 
-This starts a facilitator on `http://localhost:8001` with endpoints:
+- 首先使用小额进行测试
+- 验证支付是否到达您的钱包
+- 监控促进者是否有任何问题
 
-* `GET /` - Service info
-* `GET /supported` - Supported capabilities
-* `POST /verify` - Verify payment payload
-* `POST /settle` - Settle payment on-chain
-* `POST /fee/quote` - Get fee quote
+## 网络标识符
 
-### 4. Test Your Integration
+- **TRON 主网**：tron:mainnet
+- **TRON Nile 测试网**：tron:nile
+- **TRON Shasta 测试网**：tron:shasta
 
-To verify:
+## 总结
 
-1. Make a request to your endpoint (e.g., `curl http://localhost:8000/protected`).
-2. The server responds with a 402 Payment Required, including payment instructions in the `PAYMENT-REQUIRED` header.
-3. Complete the payment using a compatible client. This typically involves signing a TIP-712 payment payload, which is handled by the client SDK detailed in the [Quickstart for Buyers](quickstart-for-buyers).
-4. Retry the request with the `PAYMENT-SIGNATURE` header containing the signed payment payload.
-5. The server verifies the payment via the facilitator and, if valid, returns your actual API response.
+本快速入门涵盖了：
 
-### 5. Error Handling
+- 安装 x402-tron SDK
+- 为您的 API 端点添加支付保护
+- 运行促进者以进行支付验证和结算
+- 在测试网上测试您的集成
+- 部署到 TRON 主网
 
-* If you run into trouble, check out the examples in the [demo repo](https://github.com/open-aibank/x402-tron-demo) for more context and full code.
-* Ensure the facilitator is running and accessible
-* Check that your TRON wallet address is valid
-
----
-
-## Running on Mainnet
-
-Once you've tested your integration on testnet (Nile), you're ready to accept real payments on TRON mainnet.
-
-### 1. Update Network Configuration
-
-Change from testnet to mainnet:
-
-<Tabs>
-  <TabItem value="python" label="Python">
-
-```python
-from x402.config import NetworkConfig
-
-# Testnet → Mainnet
-network=NetworkConfig.TRON_MAINNET  # was TRON_NILE
-```
-
-  </TabItem>
-</Tabs>
-
-### 2. Update Your Facilitator
-
-If running your own facilitator:
-
-1. Update environment variables to use mainnet credentials
-2. Ensure the facilitator wallet has TRX for energy/bandwidth fees
-3. Update the facilitator network configuration
-
-### 3. Update Your Wallet
-
-Make sure your receiving wallet address is a real mainnet address where you want to receive USDT payments.
-
-### 4. Test with Real Payments
-
-Before going live:
-1. Test with small amounts first
-2. Verify payments are arriving in your wallet
-3. Monitor the facilitator for any issues
-
-**Warning:** Mainnet transactions involve real money. Always test thoroughly on testnet first and start with small amounts on mainnet.
-
----
-
-## Network Identifiers
-
-x402-tron uses simple network identifiers:
-
-| Network | Identifier |
-|---------|------------|
-| TRON Mainnet | `tron:mainnet` |
-| TRON Nile Testnet | `tron:nile` |
-| TRON Shasta Testnet | `tron:shasta` |
-
-See [Network Support](../core-concepts/network-and-token-support) for the full list.
-
----
-
-### Next Steps
-
-* Check out the [demo examples](https://github.com/open-aibank/x402-tron-demo) for more complex payment flows
-* Explore [Core Concepts](../core-concepts/http-402) to understand how x402-tron works
-* Get started as a [buyer](quickstart-for-buyers)
-
-### Summary
-
-This quickstart covered:
-
-* Installing the x402-tron SDK
-* Adding payment protection to your API endpoints
-* Running a facilitator for payment verification and settlement
-* Testing your integration on testnet
-* Deploying to TRON mainnet
-
-Your API is now ready to accept TRON-based payments through x402-tron.
+您的 API 现在已准备好通过 x402-tron 接受基于 TRON 的支付。
