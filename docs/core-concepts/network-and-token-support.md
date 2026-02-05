@@ -26,9 +26,9 @@ x402-tron is specifically designed for the TRON blockchain, with payment verific
 
 | Network | Status | Notes |
 |---------|--------|-------|
+| TRON Mainnet | **Mainnet** | Production network |
 | TRON Nile | **Testnet** | Recommended for development and testing |
 | TRON Shasta | **Testnet** | Alternative testnet for testing |
-| TRON Mainnet | **Mainnet** | Production network |
 
 ### Token Support
 
@@ -38,10 +38,10 @@ x402-tron supports TRC-20 tokens on TRON networks. The primary supported tokens 
 
 | Token | Network | Contract Address |
 |-------|---------|------------------|
-| USDT | tron:nile | TXYZopYRdj2D9XRtbG411XZZ3kM5VkAeBf |
 | USDT | tron:mainnet | TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t |
-| USDD | tron:nile | TGjgvdTWWrybVLaVeFqSyVqJQWjxqRYbaK |
+| USDT | tron:nile | TXYZopYRdj2D9XRtbG411XZZ3kM5VkAeBf |
 | USDD | tron:mainnet | TXDk8mbtRbXeYuMNS83CfKPaYYT8XWv9Hz |
+| USDD | tron:nile | TGjgvdTWWrybVLaVeFqSyVqJQWjxqRYbaK |
 
 **Note**: Custom TRC-20 tokens can be supported by registering them in the TokenRegistry.
 
