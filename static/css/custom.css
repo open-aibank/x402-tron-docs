@@ -57,13 +57,12 @@ html[data-theme='dark'] {
   /* --ifm-color-secondary: black; */
 
   --ifm-background-color: #0a0118;
-  --ifm-navbar-background-color: #0a0118;
+  --ifm-navbar-background-color: #11151a;
   --ifm-global-shadow-md: 0 5px 4px rgba(255, 255, 255, 0.448);
 
   background-position: 0px -30vh;
   background-repeat: no-repeat;
-  background-image: radial-gradient(50% 50% at 50% 50%, rgba(0, 57, 155, 0.5) 0%, rgba(0, 57, 155, 0) 100%);
-  /* background-image: radial-gradient(50% 50% at 50% 50%, rgba(81, 92, 163, 0.1) 0%, rgba(118, 0, 191, 0) 100%); */
+  /* background-image: radial-gradient(50% 50% at 50% 50%, rgba(0, 57, 155, 0.5) 0%, rgba(0, 57, 155, 0) 100%); */
 
   background-color: #0a0118;
   /* any other colors you wish to overwrite */
@@ -74,15 +73,14 @@ html[data-theme='light'] {
   /* --ifm-color-secondary: white; */
   --ifm-background-color: #ffffff;
   --ifm-navbar-background-color: #ffffff;
-  
+
   /* Improve inline code background in light mode */
   --ifm-code-background: #e5e7eb;
   --ifm-code-color: #1c1e21;
 
   background-position: 0px -30vh;
   background-repeat: no-repeat;
-  background-image: radial-gradient(50% 50% at 50% 50%, rgba(82, 186, 255, 0.5) 0%, rgba(82, 186, 255, 0) 100%);
-  /* background-image: radial-gradient(50% 50% at 50% 50%, rgba(201, 207, 255, 0.1) 0%, rgba(255, 154, 253, 0) 100%); */
+  /* background-image: radial-gradient(50% 50% at 50% 50%, rgba(82, 186, 255, 0.5) 0%, rgba(82, 186, 255, 0) 100%); */
   background-color: #ffffff;
   /* any other colors you wish to overwrite */
 }
@@ -115,12 +113,12 @@ body {
 
 html[data-theme='dark'] .markdown a,
 html[data-theme='dark'] .theme-doc-markdown a {
-  color: #bfabff;
+  color: #2458ff;
 }
 
 html[data-theme='light'] .markdown a,
 html[data-theme='light'] .theme-doc-markdown a {
-  color: #6400ff;
+  color: #2458ff;
 }
 
 html[data-theme='dark'] .markdown a:hover,
@@ -138,7 +136,7 @@ html[data-theme='light'] .tabs__item {
 
 html[data-theme='light'] .tabs__item--active {
   color: var(--ifm-color-emphasis-900);
-  border-bottom-color: #6400ff;
+  border-bottom-color: #2458ff;
 }
 
 html[data-theme='dark'] .tabs__item {
@@ -147,8 +145,8 @@ html[data-theme='dark'] .tabs__item {
 }
 
 html[data-theme='dark'] .tabs__item--active {
-  color: var(--ifm-color-emphasis-0);
-  border-bottom-color: #bfabff;
+  color: #e3e3e3;
+  border-bottom-color: #2458ff;
 }
 
 .blog {
@@ -480,11 +478,13 @@ html[data-theme='dark'] .DocSearch-Hit a {
   font-weight: 600;
 }
 
-.table-of-contents {
-  opacity: 0.4;
+/* 目录默认整体略淡，仅悬停的那一项高亮 */
+.table-of-contents__link {
+  opacity: 0.5;
 }
 
-.table-of-contents:hover {
+.table-of-contents__link:hover,
+.table-of-contents__link--active {
   opacity: 1;
 }
 
@@ -618,9 +618,9 @@ button[class*='tocCollapsibleButton'] {
 
 /* Custom highlight link colors */
 html[data-theme='light'] .highlight-link {
-  color: #0090F0 !important;
+  color: #0090f0 !important;
 }
 
 html[data-theme='dark'] .highlight-link {
-  color: #29AAFF !important;
+  color: #29aaff !important;
 }

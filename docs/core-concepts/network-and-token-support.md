@@ -1,6 +1,6 @@
 ---
-title: "Networks & Token Support"
-description: "This page explains which blockchain networks and tokens are supported by x402-tron, and how to extend support to additional networks."
+title: 'Networks & Token Support'
+description: 'This page explains which blockchain networks and tokens are supported by x402-tron, and how to extend support to additional networks.'
 ---
 
 import Tabs from '@theme/Tabs';
@@ -12,11 +12,11 @@ x402-tron uses a simple network identifier format: `tron:<network_name>` where n
 
 ### Network Identifier Reference
 
-| Network Name | x402-tron ID | Description |
-|--------------|--------------|-------------|
-| TRON Mainnet | `tron:mainnet` | TRON mainnet |
-| TRON Shasta | `tron:shasta` | TRON Shasta testnet |
-| TRON Nile | `tron:nile` | TRON Nile testnet |
+| Network Name | x402-tron ID   | Description         |
+| ------------ | -------------- | ------------------- |
+| TRON Mainnet | `tron:mainnet` | TRON mainnet        |
+| TRON Shasta  | `tron:shasta`  | TRON Shasta testnet |
+| TRON Nile    | `tron:nile`    | TRON Nile testnet   |
 
 ## Overview
 
@@ -24,11 +24,11 @@ x402-tron is specifically designed for the TRON blockchain, with payment verific
 
 ### Supported Networks
 
-| Network | Status | Notes |
-|---------|--------|-------|
-| TRON Nile | **Testnet** | Recommended for development and testing |
-| TRON Shasta | **Testnet** | Alternative testnet for testing |
-| TRON Mainnet | **Mainnet** | Production network |
+| Network      | Status      | Notes                                   |
+| ------------ | ----------- | --------------------------------------- |
+| TRON Mainnet | **Mainnet** | Production network                      |
+| TRON Nile    | **Testnet** | Recommended for development and testing |
+| TRON Shasta  | **Testnet** | Alternative testnet for testing         |
 
 ### Token Support
 
@@ -36,10 +36,10 @@ x402-tron supports TRC-20 tokens on TRON networks. The primary supported token i
 
 #### Supported Tokens
 
-| Token | Network | Contract Address |
-|-------|---------|------------------|
-| USDT | tron:nile | TXYZopYRdj2D9XRtbG411XZZ3kM5VkAeBf |
-| USDT | tron:mainnet | TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t |
+| Token | Network      | Contract Address                   |
+| ----- | ------------ | ---------------------------------- |
+| USDT  | tron:nile    | TXYZopYRdj2D9XRtbG411XZZ3kM5VkAeBf |
+| USDT  | tron:mainnet | TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t |
 
 **Note**: Custom TRC-20 tokens can be supported by registering them in the TokenRegistry.
 
@@ -47,9 +47,9 @@ x402-tron supports TRC-20 tokens on TRON networks. The primary supported token i
 
 x402-tron uses TIP-712 (TRON's implementation of EIP-712) for structured data signing. This enables:
 
-* **Secure authorization**: Buyers sign transfer authorizations off-chain
-* **Trust-minimizing**: Facilitators cannot move funds outside client intentions
-* **Verifiable**: All signatures can be verified on-chain
+- **Secure authorization**: Buyers sign transfer authorizations off-chain
+- **Trust-minimizing**: Facilitators cannot move funds outside client intentions
+- **Verifiable**: All signatures can be verified on-chain
 
 ### Token Configuration
 
@@ -86,24 +86,17 @@ async def protected_endpoint():
   <TabItem value="typescript" label="TypeScript">
 
 ```typescript
-import { X402Client, UptoTronClientMechanism, TronClientSigner } from '@open-aibank/x402-tron';
-import { TronWeb } from 'tronweb';
+import { X402Client, UptoTronClientMechanism, TronClientSigner } from '@open-aibank/x402-tron'
+import { TronWeb } from 'tronweb'
 
 const tronWeb = new TronWeb({
   fullHost: 'https://nile.trongrid.io',
   privateKey: 'your-private-key',
-});
+})
 
-const signer = TronClientSigner.withPrivateKey(
-  tronWeb,
-  'your-private-key', 
-  'nile'
-);
+const signer = TronClientSigner.withPrivateKey(tronWeb, 'your-private-key', 'nile')
 
-const client = new X402Client().register(
-  'tron:*',
-  new UptoTronClientMechanism(signer)
-);
+const client = new X402Client().register('tron:*', new UptoTronClientMechanism(signer))
 ```
 
   </TabItem>
@@ -114,11 +107,13 @@ const client = new X402Client().register(
 #### Upto Scheme
 
 The `upto` scheme allows payments up to a specified amount, useful for:
+
 - Pay-per-use APIs (LLM token generation, data processing)
 - Metered resources (compute time, bandwidth)
 - Dynamic pricing based on actual usage
 
 The upto scheme in x402-tron works by:
+
 1. Client signs an authorization allowing up to a maximum amount
 2. Server performs work and determines actual cost
 3. Facilitator settles the actual amount (up to the authorized maximum)
@@ -141,12 +136,12 @@ See the [Facilitator](facilitator) documentation for more details.
 
 ### Quick Reference
 
-| Component | TRON Support |
-|-----------|-------------|
-| Networks | `tron:mainnet`, `tron:shasta`, `tron:nile` |
-| Tokens | TRC-20 tokens (USDT supported by default) |
-| Signing | TIP-712 structured data signing |
-| Schemes | `upto` (exact scheme in development) |
+| Component | TRON Support                               |
+| --------- | ------------------------------------------ |
+| Networks  | `tron:mainnet`, `tron:shasta`, `tron:nile` |
+| Tokens    | TRC-20 tokens (USDT supported by default)  |
+| Signing   | TIP-712 structured data signing            |
+| Schemes   | `upto` (exact scheme in development)       |
 
 ### Adding Custom Tokens
 
@@ -176,13 +171,13 @@ TokenRegistry.register_token(
 
 x402-tron's network support is designed specifically for TRON blockchain with native TRC-20 token support and TIP-712 signing. Key takeaways:
 
-* TRON Nile testnet is recommended for development
-* USDT is the primary supported token with pre-configured addresses
-* TIP-712 provides secure, trust-minimizing payment authorization
-* Custom TRC-20 tokens can be added via TokenRegistry
+- TRON Nile testnet is recommended for development
+- USDT is the primary supported token with pre-configured addresses
+- TIP-712 provides secure, trust-minimizing payment authorization
+- Custom TRC-20 tokens can be added via TokenRegistry
 
 Next, explore:
 
-* [Quickstart for Sellers](../getting-started/quickstart-for-sellers) — Start accepting payments on TRON
-* [Core Concepts](http-402) — Learn how x402-tron works under the hood
-* [Facilitator](facilitator) — Understand the role of facilitators
+- [Quickstart for Sellers](../getting-started/quickstart-for-sellers) — Start accepting payments on TRON
+- [Core Concepts](http-402) — Learn how x402-tron works under the hood
+- [Facilitator](facilitator) — Understand the role of facilitators
