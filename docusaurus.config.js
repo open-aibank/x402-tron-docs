@@ -5,8 +5,11 @@ require('dotenv').config()
 module.exports = {
   title: 'x402-tron Docs | Developer Guide',
   tagline: 'HTTP 402 Payment Protocol for TRON',
-  url: 'https://docs.x402-tron.org/',
+  // url: 'https://docs.x402-tron.org/',
+  url: 'https://x402-tron-docs-demo.sunagent.ai',
   baseUrl: '/',
+  baseUrl: '/',
+  trailingSlash: true,
   i18n: {
     defaultLocale: 'en',
     locales: ['en', 'zh-Hans'],
@@ -98,17 +101,17 @@ module.exports = {
   ],
   plugins: [
     require.resolve('./docusaurus-plugin-global-style'),
-    [
-      '@docusaurus/plugin-client-redirects',
-      {
-        redirects: [
-          {
-            from: '/overview',
-            to: '/',
-          },
-        ],
-      },
-    ],
+    // [
+    //   '@docusaurus/plugin-client-redirects',
+    //   {
+    //     redirects: [
+    //       {
+    //         from: '/overview',
+    //         to: '/',
+    //       },
+    //     ],
+    //   },
+    // ],
     function webpackFallbackPlugin() {
       return {
         name: 'custom-webpack-fallback-plugin',
