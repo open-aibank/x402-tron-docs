@@ -5,8 +5,7 @@ require('dotenv').config()
 module.exports = {
   title: 'x402-tron Docs | Developer Guide',
   tagline: 'HTTP 402 Payment Protocol for TRON',
-  // url: 'https://docs.x402-tron.org/',
-  url: 'https://x402-tron-docs-demo.sunagent.ai',
+  url: 'https://docs.x402-tron.org/',
   baseUrl: '/',
   trailingSlash: true,
   i18n: {
