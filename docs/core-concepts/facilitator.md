@@ -95,7 +95,7 @@ The facilitator requires:
   <TabItem value="python" label="Python">
 
 ```python
-from x402.mechanisms.facilitator import UptoTronFacilitatorMechanism
+from x402.mechanisms.facilitator import ExactTronFacilitatorMechanism
 from x402.signers.facilitator import TronFacilitatorSigner
 
 # Initialize facilitator signer
@@ -105,7 +105,7 @@ facilitator_signer = TronFacilitatorSigner.from_private_key(
 )
 
 # Initialize facilitator mechanism
-facilitator_mechanism = UptoTronFacilitatorMechanism(
+facilitator_mechanism = ExactTronFacilitatorMechanism(
     facilitator_signer,
     fee_to=facilitator_signer.get_address(),
     base_fee=1_000_000,  # 1 USDT fee

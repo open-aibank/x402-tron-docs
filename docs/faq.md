@@ -53,11 +53,11 @@ Common patterns include:
 
 * **Flat per-call** (e.g., `1 USDT` per request)
 * **Tiered** (`/basic` vs `/pro` endpoints with different prices)
-* **Upto scheme**: Pay up to a maximum where the final cost equals usage
+* **Exact scheme**: Pay the exact amount specified for the service
 
 #### What payment schemes does x402-tron support?
 
-Currently x402-tron supports the `upto` scheme, which allows:
+Currently x402-tron supports the `exact` scheme, which allows:
 * Client authorizes up to a maximum amount
 * Server settles the actual amount used (up to the maximum)
 * Useful for metered billing, LLM token usage, etc.
@@ -93,10 +93,10 @@ No. The recommended pattern is:
 
 #### How do refunds work?
 
-The `upto` scheme is a _push payment_—irreversible once executed. Refund options:
+The `exact` scheme is a _push payment_—irreversible once executed. Refund options:
 
 1. **Business-logic refunds:** Seller sends a new USDT transfer back to the buyer.
-2. **Partial settlement:** Server only settles the amount actually used (upto scheme).
+2. **Partial settlement:** Server only settles the amount actually used (exact scheme).
 
 ### Usage by AI Agents
 

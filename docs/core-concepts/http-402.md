@@ -43,7 +43,7 @@ When a server returns a 402 response, the `PAYMENT-REQUIRED` header contains:
   "x402Version": 1,
   "accepts": [
     {
-      "scheme": "upto",
+      "scheme": "exact",
       "network": "tron:nile",
       "amount": "1000000",
       "asset": "TXYZopYRdj2D9XRtbG411XZZ3kM5VkAeBf",
@@ -66,7 +66,7 @@ The client responds with a TIP-712 signed payload in the `PAYMENT-SIGNATURE` hea
 ```json
 {
   "x402Version": 1,
-  "scheme": "upto",
+  "scheme": "exact",
   "network": "tron:nile",
   "payload": {
     "signature": "0x...",

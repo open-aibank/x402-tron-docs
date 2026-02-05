@@ -94,7 +94,7 @@ import os
 import httpx
 
 from x402.clients import X402Client, X402HttpClient
-from x402.mechanisms.client import UptoTronClientMechanism
+from x402.mechanisms.client import ExactTronClientMechanism
 from x402.signers.client import TronClientSigner
 
 
@@ -108,7 +108,7 @@ async def main():
     # Create x402 client and register TRON mechanism
     x402_client = X402Client().register(
         "tron:nile",
-        UptoTronClientMechanism(signer)
+        ExactTronClientMechanism(signer)
     )
 
     async with httpx.AsyncClient(timeout=60.0) as http_client:
@@ -140,7 +140,7 @@ asyncio.run(main())
 
 ```typescript
 import { TronWeb } from 'tronweb'
-import { X402Client, X402FetchClient, UptoTronClientMechanism, TronClientSigner } from '@open-aibank/x402-tron'
+import { X402Client, X402FetchClient, ExactTronClientMechanism, TronClientSigner } from '@open-aibank/x402-tron'
 
 const TRON_PRIVATE_KEY = process.env.TRON_PRIVATE_KEY!
 
@@ -155,7 +155,7 @@ async function main(): Promise<void> {
   const signer = TronClientSigner.withPrivateKey(tronWeb, TRON_PRIVATE_KEY, 'nile')
 
   // Create x402 client and register TRON mechanism
-  const x402Client = new X402Client().register('tron:*', new UptoTronClientMechanism(signer))
+  const x402Client = new X402Client().register('tron:*', new ExactTronClientMechanism(signer))
 
   const client = new X402FetchClient(x402Client)
 
@@ -199,7 +199,7 @@ When you make a request to a protected endpoint:
 
 ### 5. Token Allowance Management
 
-For the `upto` scheme, clients need to approve the facilitator to spend tokens on their behalf. The x402-tron client SDK handles this automatically, but you can also manage allowances manually:
+For the `exact` scheme, clients need to approve the facilitator to spend tokens on their behalf. The x402-tron client SDK handles this automatically, but you can also manage allowances manually:
 
 <Tabs>
   <TabItem value="python" label="Python">
