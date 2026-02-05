@@ -111,6 +111,10 @@ body {
   font-family: 'Poppins';
 }
 
+html[data-theme='dark'] #__docusaurus {
+  background-color: #0b0e12;
+}
+
 html[data-theme='dark'] .markdown a,
 html[data-theme='dark'] .theme-doc-markdown a {
   color: #2458ff;
@@ -145,7 +149,7 @@ html[data-theme='dark'] .tabs__item {
 }
 
 html[data-theme='dark'] .tabs__item--active {
-  color: #e3e3e3;
+  color: #ffffff;
   border-bottom-color: #2458ff;
 }
 
@@ -475,12 +479,21 @@ html[data-theme='dark'] .DocSearch-Hit a {
 }
 
 .menu__link--active {
-  font-weight: 600;
+  font-weight: 500;
 }
 
 /* 目录默认整体略淡，仅悬停的那一项高亮 */
+html[data-theme='dark'] .table-of-contents__link {
+  color: #ffffff;
+}
+
+html[data-theme='light'] .table-of-contents__link {
+  color: #000000;
+}
+
 .table-of-contents__link {
   opacity: 0.5;
+  font-size: 14px;
 }
 
 .table-of-contents__link:hover,
