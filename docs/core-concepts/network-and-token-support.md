@@ -32,14 +32,16 @@ x402-tron is specifically designed for the TRON blockchain, with payment verific
 
 ### Token Support
 
-x402-tron supports TRC-20 tokens on TRON networks. The primary supported token is USDT.
+x402-tron supports TRC-20 tokens on TRON networks. The primary supported tokens are USDT and USDD.
 
 #### Supported Tokens
 
 | Token | Network      | Contract Address                   |
 | ----- | ------------ | ---------------------------------- |
-| USDT  | tron:nile    | TXYZopYRdj2D9XRtbG411XZZ3kM5VkAeBf |
 | USDT  | tron:mainnet | TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t |
+| USDT  | tron:nile    | TXYZopYRdj2D9XRtbG411XZZ3kM5VkAeBf |
+| USDD  | tron:mainnet | TXDk8mbtRbXeYuMNS83CfKPaYYT8XWv9Hz |
+| USDD  | tron:nile    | TGjgvdTWWrybVLaVeFqSyVqJQWjxqRYbaK |
 
 **Note**: Custom TRC-20 tokens can be supported by registering them in the TokenRegistry.
 
@@ -136,12 +138,22 @@ See the [Facilitator](facilitator) documentation for more details.
 
 ### Quick Reference
 
-| Component | TRON Support                               |
+<<<<<<< HEAD
+| Component | TRON Support |
 | --------- | ------------------------------------------ |
-| Networks  | `tron:mainnet`, `tron:shasta`, `tron:nile` |
-| Tokens    | TRC-20 tokens (USDT supported by default)  |
-| Signing   | TIP-712 structured data signing            |
-| Schemes   | `upto` (exact scheme in development)       |
+| Networks | `tron:mainnet`, `tron:shasta`, `tron:nile` |
+| Tokens | TRC-20 tokens (USDT supported by default) |
+| Signing | TIP-712 structured data signing |
+| Schemes | `upto` (exact scheme in development) |
+=======
+| Component | TRON Support |
+|-----------|-------------|
+| Networks | `tron:mainnet`, `tron:shasta`, `tron:nile` |
+| Tokens | TRC-20 tokens (USDT & USDD supported by default) |
+| Signing | TIP-712 structured data signing |
+| Schemes | `upto` (exact scheme in development) |
+
+> > > > > > > origin/main
 
 ### Adding Custom Tokens
 
@@ -171,10 +183,18 @@ TokenRegistry.register_token(
 
 x402-tron's network support is designed specifically for TRON blockchain with native TRC-20 token support and TIP-712 signing. Key takeaways:
 
+<<<<<<< HEAD
+
 - TRON Nile testnet is recommended for development
 - USDT is the primary supported token with pre-configured addresses
 - TIP-712 provides secure, trust-minimizing payment authorization
-- Custom TRC-20 tokens can be added via TokenRegistry
+- # Custom TRC-20 tokens can be added via TokenRegistry
+
+* TRON Nile testnet is recommended for development
+* USDT and USDD are the primary supported tokens with pre-configured addresses
+* TIP-712 provides secure, trust-minimizing payment authorization
+* Custom TRC-20 tokens can be added via TokenRegistry
+  > > > > > > > origin/main
 
 Next, explore:
 

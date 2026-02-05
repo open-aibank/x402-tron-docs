@@ -38,6 +38,13 @@ Using a facilitator provides:
 
 While it is possible to implement verification and settlement locally, using a facilitator accelerates adoption and ensures correct protocol behavior.
 
+### Facilitator Options
+
+To use x402-tron, you need access to a facilitator service. You have two options:
+
+1. **Run Your Own Facilitator (Self-Hosted):** You can deploy and manage your own facilitator instance. This gives you full control over fees and energy management.
+2. **Use Official Facilitator (Coming Soon):** We are working on a hosted, official facilitator service that you can use without managing infrastructure. Stay tuned for updates!
+
 ### Running Your Own Facilitator
 
 x402-tron includes a ready-to-use facilitator implementation in the [demo repository](https://github.com/open-aibank/x402-tron-demo):
