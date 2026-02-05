@@ -3,16 +3,13 @@ const sidebars = {
   docsSidebar: [
     {
       type: 'doc',
-      id: 'introduction',
+      id: 'index',
       label: 'Introduction',
     },
     {
       type: 'category',
       label: 'Getting Started',
-      items: [
-        'getting-started/quickstart-for-buyers',
-        'getting-started/quickstart-for-sellers',
-      ],
+      items: ['getting-started/quickstart-for-buyers', 'getting-started/quickstart-for-sellers'],
     },
     {
       type: 'category',

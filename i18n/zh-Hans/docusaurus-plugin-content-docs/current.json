@@ -1,0 +1,26 @@
+{
+  "version.label": {
+    "message": "Next",
+    "description": "The label for version current"
+  },
+  "sidebar.docsSidebar.category.Getting Started": {
+    "message": "Getting Started",
+    "description": "The label for category Getting Started in sidebar docsSidebar"
+  },
+  "sidebar.docsSidebar.category.Core Concepts": {
+    "message": "Core Concepts",
+    "description": "The label for category Core Concepts in sidebar docsSidebar"
+  },
+  "sidebar.docsSidebar.doc.index": {
+    "message": "Introduction",
+    "description": "The label for the doc item Introduction in sidebar docsSidebar, linking to the doc introduction"
+  },
+  "sidebar.docsSidebar.doc.SDK Features": {
+    "message": "SDK Features",
+    "description": "The label for the doc item SDK Features in sidebar docsSidebar, linking to the doc sdk-features"
+  },
+  "sidebar.docsSidebar.doc.FAQ": {
+    "message": "FAQ",
+    "description": "The label for the doc item FAQ in sidebar docsSidebar, linking to the doc faq"
+  }
+}

@@ -7,14 +7,24 @@ module.exports = {
   tagline: 'HTTP 402 Payment Protocol for TRON',
   url: 'https://docs.x402-tron.org/',
   baseUrl: '/',
+  i18n: {
+    defaultLocale: 'en',
+    locales: ['en', 'zh-Hans'],
+    localeConfigs: {
+      en: {
+        label: 'English',
+      },
+      'zh-Hans': {
+        label: '中文',
+      },
+    },
+  },
   onBrokenLinks: 'warn',
   onBrokenMarkdownLinks: 'ignore',
   favicon: 'img/logo.png',
   organizationName: 'open-aibank',
   projectName: 'x402-tron',
-  scripts: [
-    { src: '/hideErrorBanner.js', async: false },
-  ],
+  scripts: [{ src: '/hideErrorBanner.js', async: false }],
   themeConfig: {
     image: 'img/twitter_card_bg.jpg',
     prism: {
@@ -30,6 +40,10 @@ module.exports = {
         href: '/',
       },
       items: [
+        {
+          type: 'localeDropdown',
+          position: 'right',
+        },
         {
           label: 'GitHub',
           href: 'https://github.com/open-aibank/x402-tron',
@@ -78,8 +92,7 @@ module.exports = {
     {
       href: 'https://cdn.jsdelivr.net/npm/katex@0.13.24/dist/katex.min.css',
       type: 'text/css',
-      integrity:
-        'sha384-odtC+0UGzzFL/6PNoE8rX/SPcQDXBJ+uRepguP4QkPCm2LBxH3FA3y+fKSiJ+AmM',
+      integrity: 'sha384-odtC+0UGzzFL/6PNoE8rX/SPcQDXBJ+uRepguP4QkPCm2LBxH3FA3y+fKSiJ+AmM',
       crossorigin: 'anonymous',
     },
   ],

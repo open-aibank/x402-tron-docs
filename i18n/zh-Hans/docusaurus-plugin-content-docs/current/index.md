@@ -1,10 +1,12 @@
 ---
-title: "Welcome to x402-tron"
-description: >-
-  This guide will help you understand x402-tron, the open payment standard for TRON blockchain, and help
-  you get started building or integrating services with x402-tron.
+title: '欢迎使用 x402-tron'
 slug: /
+description: >-
+  本指南将帮助你理解 x402-tron —— 基于 TRON 区块链的开放支付标准，
+  并帮助你快速开始构建或集成相关服务。
 ---
+
+# x402-tron
 
 x402-tron is the TRON implementation of the x402 open payment standard that enables services to charge for access to their APIs and content directly over HTTP. It is built around the HTTP `402 Payment Required` status code and allows clients to programmatically pay for resources without accounts, sessions, or credential management.
 
@@ -18,15 +20,15 @@ With x402-tron, any web service can require payment before serving a response, u
 
 x402-tron addresses key limitations of existing payment systems:
 
-* **High fees and friction** with traditional credit cards and fiat payment processors
-* **Incompatibility with machine-to-machine payments**, such as AI agents
-* **Lack of support for micropayments**, making it difficult to monetize usage-based services
-* **Fast and low-cost transactions** on TRON blockchain
+- **High fees and friction** with traditional credit cards and fiat payment processors
+- **Incompatibility with machine-to-machine payments**, such as AI agents
+- **Lack of support for micropayments**, making it difficult to monetize usage-based services
+- **Fast and low-cost transactions** on TRON blockchain
 
 ### Who is x402-tron for?
 
-* **Sellers:** Service providers who want to monetize their APIs or content. x402-tron enables direct, programmatic payments from clients with minimal setup.
-* **Buyers:** Human developers and AI agents seeking to access paid services without accounts or manual payment flows.
+- **Sellers:** Service providers who want to monetize their APIs or content. x402-tron enables direct, programmatic payments from clients with minimal setup.
+- **Buyers:** Human developers and AI agents seeking to access paid services without accounts or manual payment flows.
 
 Both sellers and buyers interact directly through HTTP requests, with payment handled transparently through the protocol on TRON blockchain.
 
@@ -34,11 +36,11 @@ Both sellers and buyers interact directly through HTTP requests, with payment ha
 
 x402-tron enables a range of use cases, including:
 
-* API services paid per request
-* AI agents that autonomously pay for API access
-* Paywalls for digital content
-* Microservices and tooling monetized via microtransactions
-* Proxy services that aggregate and resell API capabilities
+- API services paid per request
+- AI agents that autonomously pay for API access
+- Paywalls for digital content
+- Microservices and tooling monetized via microtransactions
+- Proxy services that aggregate and resell API capabilities
 
 ### How Does It Work?
 
@@ -52,9 +54,9 @@ At a high level, the flow is simple:
 
 For more detail, see:
 
-* [Client / Server](core-concepts/client-server)
-* [Facilitator](core-concepts/facilitator)
-* [HTTP 402](core-concepts/http-402)
+- [Client / Server](core-concepts/client-server)
+- [Facilitator](core-concepts/facilitator)
+- [HTTP 402](core-concepts/http-402)
 
 The goal is to make programmatic commerce accessible, permissionless, and developer-friendly on TRON blockchain.
 
@@ -62,14 +64,14 @@ The goal is to make programmatic commerce accessible, permissionless, and develo
 
 x402-tron supports the following TRON networks:
 
-* **TRON Mainnet** (`tron:mainnet`)
-* **TRON Shasta Testnet** (`tron:shasta`)
-* **TRON Nile Testnet** (`tron:nile`)
+- **TRON Mainnet** (`tron:mainnet`)
+- **TRON Shasta Testnet** (`tron:shasta`)
+- **TRON Nile Testnet** (`tron:nile`)
 
 ### Get Started
 
 Ready to build? Start here:
 
-* [Quickstart for Sellers](getting-started/quickstart-for-sellers)
-* [Quickstart for Buyers](getting-started/quickstart-for-buyers)
-* [Explore Core Concepts](core-concepts/http-402)
+- [Quickstart for Sellers](getting-started/quickstart-for-sellers)
+- [Quickstart for Buyers](getting-started/quickstart-for-buyers)
+- [Explore Core Concepts](core-concepts/http-402)
