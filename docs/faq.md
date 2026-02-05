@@ -71,6 +71,8 @@ Currently x402-tron supports the `upto` scheme, which allows:
 | TRON Mainnet (`tron:mainnet`) | USDT (TRC-20) | **Mainnet** |
 | TRON Nile (`tron:nile`) | USDT (TRC-20) | **Testnet** |
 | TRON Shasta (`tron:shasta`) | USDT (TRC-20) | **Testnet** |
+| TRON Mainnet (`tron:mainnet`) | USDD (TRC-20) | **Mainnet** |
+| TRON Nile (`tron:nile`) | USDD (TRC-20) | **Testnet** |
 
 Custom TRC-20 tokens can be added via the TokenRegistry.
 
