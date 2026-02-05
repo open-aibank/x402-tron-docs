@@ -40,7 +40,7 @@ npm install @open-aibank/x402-tron tronweb
 
 Integrate the payment middleware into your application. You will need to provide:
 
-* The Facilitator URL. For testing, run your own local facilitator or use a hosted one.
+* The Facilitator URL. For testing, run your own local facilitator (official hosted facilitator coming soon).
 * The routes you want to protect.
 * Your TRON receiving wallet address.
 
@@ -98,9 +98,14 @@ When configuring protected routes, you specify:
 
 When a request is made to these routes without payment, your server will respond with the HTTP 402 Payment Required code and payment instructions.
 
-### 3. Run a Facilitator
+### 3. Set up a Facilitator
 
-x402-tron requires a facilitator to verify and settle payments. You can run your own:
+x402-tron requires a facilitator to verify and settle payments. You have two options:
+
+1.  **Run Your Own Facilitator:** Deploy your own instance using the demo code.
+2.  **Use Official Facilitator:** _Coming Soon_ - An official hosted service is in development.
+
+To run your own facilitator:
 
 ```bash
 # Clone the demo repository first
