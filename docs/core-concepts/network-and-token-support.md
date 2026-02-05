@@ -88,7 +88,7 @@ async def protected_endpoint():
   <TabItem value="typescript" label="TypeScript">
 
 ```typescript
-import { X402Client, UptoTronClientMechanism, TronClientSigner } from '@open-aibank/x402-tron'
+import { X402Client, ExactTronClientMechanism, TronClientSigner } from '@open-aibank/x402-tron'
 import { TronWeb } from 'tronweb'
 
 const tronWeb = new TronWeb({
@@ -98,7 +98,7 @@ const tronWeb = new TronWeb({
 
 const signer = TronClientSigner.withPrivateKey(tronWeb, 'your-private-key', 'nile')
 
-const client = new X402Client().register('tron:*', new UptoTronClientMechanism(signer))
+const client = new X402Client().register('tron:*', new ExactTronClientMechanism(signer))
 ```
 
   </TabItem>
@@ -106,15 +106,15 @@ const client = new X402Client().register('tron:*', new UptoTronClientMechanism(s
 
 ### Payment Schemes
 
-#### Upto Scheme
+#### Exact Scheme
 
-The `upto` scheme allows payments up to a specified amount, useful for:
+The `exact` scheme allows payments of a specified amount, useful for:
 
 - Pay-per-use APIs (LLM token generation, data processing)
 - Metered resources (compute time, bandwidth)
 - Dynamic pricing based on actual usage
 
-The upto scheme in x402-tron works by:
+The exact scheme in x402-tron works by:
 
 1. Client signs an authorization allowing up to a maximum amount
 2. Server performs work and determines actual cost
@@ -143,7 +143,7 @@ See the [Facilitator](facilitator) documentation for more details.
 | Networks  | `tron:mainnet`, `tron:shasta`, `tron:nile`       |
 | Tokens    | TRC-20 tokens (USDT & USDD supported by default) |
 | Signing   | TIP-712 structured data signing                  |
-| Schemes   | `upto` (exact scheme in development)             |
+| Schemes   | `exact`                                          |
 
 > > > > > > > origin/main
 

@@ -34,7 +34,7 @@ This page tracks which features are implemented in each SDK (Python, TypeScript)
 
 | Mechanism | Python | TypeScript |
 |-----------|--------|------------|
-| upto/tron (TIP-712) | ✅ | ✅ |
+| exact/tron (TIP-712) | ✅ | ✅ |
 
 ## Signers
 
