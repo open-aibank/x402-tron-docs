@@ -35,7 +35,9 @@ Both languages support client, server, and facilitator implementations.
 
 #### Who runs facilitators?
 
-You run your own facilitator. x402-tron is designed to be self-hosted. The facilitator included in the repository is ready to run.
+You typically run your own facilitator. x402-tron is designed to be self-hosted. The facilitator included in the repository is ready to run.
+
+An official hosted facilitator service is also **coming soon**, which will allow you to use x402-tron without deploying your own facilitator infrastructure.
 
 #### What stops a malicious facilitator from stealing funds or lying about settlement?
 
@@ -69,6 +71,8 @@ Currently x402-tron supports the `upto` scheme, which allows:
 | TRON Mainnet (`tron:mainnet`) | USDT (TRC-20) | **Mainnet** |
 | TRON Nile (`tron:nile`) | USDT (TRC-20) | **Testnet** |
 | TRON Shasta (`tron:shasta`) | USDT (TRC-20) | **Testnet** |
+| TRON Mainnet (`tron:mainnet`) | USDD (TRC-20) | **Mainnet** |
+| TRON Nile (`tron:nile`) | USDD (TRC-20) | **Testnet** |
 
 Custom TRC-20 tokens can be added via the TokenRegistry.
 

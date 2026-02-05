@@ -63,8 +63,8 @@ The goal is to make programmatic commerce accessible, permissionless, and develo
 x402-tron supports the following TRON networks:
 
 * **TRON Mainnet** (`tron:mainnet`)
-* **TRON Shasta Testnet** (`tron:shasta`)
 * **TRON Nile Testnet** (`tron:nile`)
+* **TRON Shasta Testnet** (`tron:shasta`)
 
 ### Get Started
 
