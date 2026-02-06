@@ -7,14 +7,25 @@ module.exports = {
   tagline: 'HTTP 402 Payment Protocol for TRON',
   url: 'https://docs.x402-tron.org/',
   baseUrl: '/',
+  trailingSlash: true,
+  // i18n: {
+  //   defaultLocale: 'en',
+  //   locales: ['en', 'zh-Hans'],
+  //   localeConfigs: {
+  //     en: {
+  //       label: 'English',
+  //     },
+  //     'zh-Hans': {
+  //       label: '中文',
+  //     },
+  //   },
+  // },
   onBrokenLinks: 'warn',
   onBrokenMarkdownLinks: 'ignore',
   favicon: 'img/logo.png',
   organizationName: 'open-aibank',
   projectName: 'x402-tron',
-  scripts: [
-    { src: '/hideErrorBanner.js', async: false },
-  ],
+  scripts: [{ src: '/hideErrorBanner.js', async: false }],
   themeConfig: {
     image: 'img/twitter_card_bg.jpg',
     prism: {
@@ -30,6 +41,11 @@ module.exports = {
         href: '/',
       },
       items: [
+        // 多语言选项
+        // {
+        //   type: 'localeDropdown',
+        //   position: 'right',
+        // },
         {
           label: 'GitHub',
           href: 'https://github.com/open-aibank/x402-tron',
@@ -78,24 +94,23 @@ module.exports = {
     {
       href: 'https://cdn.jsdelivr.net/npm/katex@0.13.24/dist/katex.min.css',
       type: 'text/css',
-      integrity:
-        'sha384-odtC+0UGzzFL/6PNoE8rX/SPcQDXBJ+uRepguP4QkPCm2LBxH3FA3y+fKSiJ+AmM',
+      integrity: 'sha384-odtC+0UGzzFL/6PNoE8rX/SPcQDXBJ+uRepguP4QkPCm2LBxH3FA3y+fKSiJ+AmM',
       crossorigin: 'anonymous',
     },
   ],
   plugins: [
     require.resolve('./docusaurus-plugin-global-style'),
-    [
-      '@docusaurus/plugin-client-redirects',
-      {
-        redirects: [
-          {
-            from: '/overview',
-            to: '/',
-          },
-        ],
-      },
-    ],
+    // [
+    //   '@docusaurus/plugin-client-redirects',
+    //   {
+    //     redirects: [
+    //       {
+    //         from: '/overview',
+    //         to: '/',
+    //       },
+    //     ],
+    //   },
+    // ],
     function webpackFallbackPlugin() {
       return {
         name: 'custom-webpack-fallback-plugin',

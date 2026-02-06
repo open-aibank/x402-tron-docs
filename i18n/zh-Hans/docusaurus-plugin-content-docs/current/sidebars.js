@@ -4,27 +4,27 @@ const sidebars = {
     {
       type: 'doc',
       id: 'index',
-      label: 'Introduction',
+      label: '简介',
     },
     {
       type: 'category',
-      label: 'Getting Started',
+      label: '快速入门',
       items: [
         'getting-started/quickstart-for-sellers',
         {
           type: 'category',
-          label: 'Quickstart for Buyers',
+          label: '买家快速入门',
           collapsed: false,
           items: [
             {
               type: 'doc',
               id: 'getting-started/quickstart-for-human',
-              label: 'Human',
+              label: '人类用户',
             },
             {
               type: 'doc',
               id: 'getting-started/quickstart-for-agent',
-              label: 'Agent',
+              label: 'AI 代理',
             },
           ],
         },
@@ -32,7 +32,7 @@ const sidebars = {
     },
     {
       type: 'category',
-      label: 'Core Concepts',
+      label: '核心概念',
       items: [
         'core-concepts/http-402',
         'core-concepts/client-server',
@@ -44,12 +44,12 @@ const sidebars = {
     {
       type: 'doc',
       id: 'sdk-features',
-      label: 'SDK Features',
+      label: 'SDK 功能',
     },
     {
       type: 'doc',
       id: 'faq',
-      label: 'FAQ',
+      label: '常见问题',
     },
   ],
 }

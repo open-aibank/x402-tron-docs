@@ -40,18 +40,28 @@ When a server returns a 402 response, the `PAYMENT-REQUIRED` header contains:
 
 ```json
 {
-  "x402Version": 1,
+  "x402Version": 2,
+  "error": "Payment required",
+  "resource": {
+    "url": "http://example.com/protected",
+    "description": null,
+    "mimeType": null
+  },
   "accepts": [
     {
-      "scheme": "upto",
+      "scheme": "exact",
       "network": "tron:nile",
-      "amount": "1000000",
+      "amount": "100",
       "asset": "TXYZopYRdj2D9XRtbG411XZZ3kM5VkAeBf",
-      "payTo": "TDhj8uX7SVJwvhCUrMaiQHqPgrB6wRb3eG",
+      "payTo": "<SELLER_TRON_ADDRESS>",
+      "maxTimeoutSeconds": 3600,
       "extra": {
+        "name": "Tether USD",
+        "version": "1",
         "fee": {
-          "feeAmount": "100000",
-          "feeTo": "TFacilitatorAddress..."
+          "facilitatorId": "<FACILITATOR_URL>",
+          "feeTo": "<FACILITATOR_FEE_RECEIVER_ADDRESS>",
+          "feeAmount": "100"
         }
       }
     }
@@ -59,24 +69,40 @@ When a server returns a 402 response, the `PAYMENT-REQUIRED` header contains:
 }
 ```
 
+**Key fields:**
+
+| Field | Description |
+|-------|-------------|
+| `x402Version` | Protocol version (currently 2) |
+| `error` | Human-readable error message |
+| `resource` | Information about the requested resource |
+| `accepts` | Array of accepted payment options |
+| `scheme` | Payment scheme (`exact` for fixed amount) |
+| `network` | TRON network identifier (`tron:nile`, `tron:mainnet`) |
+| `amount` | Payment amount in smallest unit (e.g., 100 = 0.0001 USDT) |
+| `asset` | TRC-20 token contract address |
+| `payTo` | Seller's TRON wallet address |
+| `maxTimeoutSeconds` | Maximum time for payment validity |
+| `extra.fee` | Facilitator fee information |
+
 ### Payment Signature Structure
 
 The client responds with a TIP-712 signed payload in the `PAYMENT-SIGNATURE` header:
 
 ```json
 {
-  "x402Version": 1,
-  "scheme": "upto",
+  "x402Version": 2,
+  "scheme": "exact",
   "network": "tron:nile",
   "payload": {
     "signature": "0x...",
     "authorization": {
-      "from": "TClientAddress...",
-      "to": "TSellerAddress...",
-      "value": "1000000",
-      "validAfter": 0,
-      "validBefore": 1738678164,
-      "nonce": "0x..."
+      "from": "<CLIENT_TRON_ADDRESS>",
+      "to": "<SELLER_TRON_ADDRESS>",
+      "value": "100",
+      "validAfter": 1770364361,
+      "validBefore": 1770367961,
+      "nonce": "238244758379819673006209461499601971084"
     }
   }
 }
@@ -90,3 +116,8 @@ HTTP 402 is the foundation of the x402-tron protocol, enabling services to decla
 * Communicates necessary payment details (amount, token, TRON addresses)
 * Integrates seamlessly with standard HTTP workflows
 * Enables programmatic payments on TRON blockchain
+
+Next, explore:
+
+- [Client / Server](/core-concepts/client-server) — understand the roles and responsibilities of clients and servers
+- [Facilitator](/core-concepts/facilitator) — how servers verify and settle payments

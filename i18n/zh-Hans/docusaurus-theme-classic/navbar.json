@@ -1,0 +1,22 @@
+{
+  "title": {
+    "message": "x402-tron Docs",
+    "description": "The title in the navbar"
+  },
+  "logo.alt": {
+    "message": "x402-tron Docs",
+    "description": "The alt text of navbar logo"
+  },
+  "item.label.GitHub": {
+    "message": "GitHub",
+    "description": "Navbar item with label GitHub"
+  },
+  "item.label.Demo": {
+    "message": "Demo",
+    "description": "Navbar item with label Demo"
+  },
+  "item.label.TRON": {
+    "message": "TRON",
+    "description": "Navbar item with label TRON"
+  }
+}
