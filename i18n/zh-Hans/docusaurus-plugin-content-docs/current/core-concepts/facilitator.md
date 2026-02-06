@@ -40,8 +40,8 @@ x402-tron 在 [演示仓库](https://github.com/open-aibank/x402-tron-demo) 中�
 
 
 ```bash
-git clone [https://github.com/open-aibank/x402-tron-demo.git](https://github.com/open-aibank/x402-tron-demo.git)
-cd x402-tron-demo/python/facilitator
+git clone https://github.com/open-aibank/x402-tron-demo.git
+cd x402-tron-demo/facilitator
 
 # 配置环境变量（复制 .env.example 到 .env 并设置你的密钥）
 cp .env.example .env

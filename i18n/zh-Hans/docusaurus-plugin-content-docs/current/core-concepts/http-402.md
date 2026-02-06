@@ -57,8 +57,8 @@ x402-tron 定义了一组标准化 HTTP 标头用于支付通信：
         "name": "Tether USD",
         "version": "1",
         "fee": {
-          "facilitatorId": "http://localhost:8001",
-          "feeTo": "<FACILITATOR_TRON_ADDRESS>",
+          "facilitatorId": "<FACILITATOR_URL>",
+          "feeTo": "<FACILITATOR_FEE_RECEIVER_ADDRESS>",
           "feeAmount": "100"
         }
       }
