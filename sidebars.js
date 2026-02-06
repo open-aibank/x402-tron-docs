@@ -18,6 +18,11 @@ const sidebars = {
           items: [
             {
               type: 'doc',
+              id: 'getting-started/quickstart-for-human',
+              label: 'Human',
+            },
+            {
+              type: 'doc',
               id: 'getting-started/quickstart-for-agent',
               label: 'Agent',
             },
