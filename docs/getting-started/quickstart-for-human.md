@@ -202,11 +202,8 @@ from x402_tron.exceptions import (
 try:
     response = await client.get(SERVER_URL)
     
-    if response.status_code == 200:
-        print(f"Success: {response.json()}")
-    else:
-        print(f"Request failed: {response.status_code}")
-        print(response.text)
+    print(f"Status: {response.status_code}")
+    print("Headers:", response.headers)
 
 except UnsupportedNetworkError as e:
     # No mechanism registered for the network
