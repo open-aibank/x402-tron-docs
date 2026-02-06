@@ -59,8 +59,8 @@ When a server returns a 402 response, the `PAYMENT-REQUIRED` header contains:
         "name": "Tether USD",
         "version": "1",
         "fee": {
-          "facilitatorId": "http://localhost:8001",
-          "feeTo": "<FACILITATOR_TRON_ADDRESS>",
+          "facilitatorId": "<FACILITATOR_URL>",
+          "feeTo": "<FACILITATOR_FEE_RECEIVER_ADDRESS>",
           "feeAmount": "100"
         }
       }

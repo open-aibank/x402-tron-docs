@@ -55,7 +55,7 @@ npm install @open-aibank/x402-tron tronweb
   <TabItem value="python" label="Python (httpx)">
 <b>x402-tron</b> provides async HTTP client support with automatic 402 payment handling.
 
-[Full example here](https://github.com/open-aibank/x402-tron-demo/tree/main/python/client)
+[Full example here](https://github.com/open-aibank/x402-tron-demo/tree/main/client/terminal)
 
 ```python
 import asyncio
@@ -95,7 +95,7 @@ asyncio.run(main())
 
   </TabItem>
   <TabItem value="typescript" label="TypeScript">
-[Full example here](https://github.com/open-aibank/x402-tron-demo/tree/main/typescript/client)
+[Full example here](https://github.com/open-aibank/x402-tron-demo/tree/main/client/ts)
 
 ```typescript
 import { TronWeb } from 'tronweb'

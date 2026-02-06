@@ -51,7 +51,7 @@ x402-tron includes a ready-to-use facilitator implementation in the [demo reposi
 
 ```bash
 git clone https://github.com/open-aibank/x402-tron-demo.git
-cd x402-tron-demo/python/facilitator
+cd x402-tron-demo/facilitator
 
 # Configure environment variables (copy .env.example to .env and set your keys)
 cp .env.example .env
