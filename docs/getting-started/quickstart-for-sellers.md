@@ -21,6 +21,9 @@ We have pre-configured [examples available in the demo repo](https://github.com/
 
 ### 1. Install Dependencies
 
+<Tabs>
+  <TabItem value="python" label="Python">
+  
 The x402-tron Python package is not yet published to PyPI. Install from GitHub source:
 
 ```bash
