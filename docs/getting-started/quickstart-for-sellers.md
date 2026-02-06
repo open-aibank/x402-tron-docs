@@ -38,13 +38,46 @@ Or install directly from a release tag:
 pip install "git+https://github.com/open-aibank/x402-tron.git@v0.1.6#subdirectory=python/x402[fastapi]"
 ```
 
-### 2. Add Payment Middleware
+### 2. Set up a Facilitator
 
-Integrate the payment middleware into your application. You will need to provide:
+x402-tron requires a facilitator to verify and settle payments. The server depends on a running facilitator, so you need to set this up first.
 
-* The Facilitator URL. For testing, run your own local facilitator (official hosted facilitator coming soon).
-* The routes you want to protect.
-* Your TRON receiving wallet address.
+**Options:**
+
+1.  **Run Your Own Facilitator:** Deploy your own instance using the demo code (recommended for testing).
+2.  **Use Official Facilitator:** _Coming Soon_ - An official hosted service is in development.
+
+To run your own facilitator:
+
+```bash
+# Clone the demo repository
+git clone https://github.com/open-aibank/x402-tron-demo.git
+cd x402-tron-demo/facilitator
+
+# Install dependencies
+pip install -r requirements.txt
+
+# Configure environment variables (copy .env.example to .env and set your keys)
+cp .env.example .env
+
+# Start the facilitator
+python main.py
+```
+
+This starts a facilitator on `http://localhost:8001` with endpoints:
+
+* `GET /supported` - Supported capabilities
+* `POST /verify` - Verify payment payload
+* `POST /settle` - Settle payment on-chain
+* `POST /fee/quote` - Get fee quote
+
+### 3. Add Payment Middleware
+
+With the facilitator running, integrate the payment middleware into your application. You will need to provide:
+
+* The Facilitator URL (from step 2)
+* The routes you want to protect
+* Your TRON receiving wallet address
 
 <Tabs>
   <TabItem value="python" label="Python (FastAPI)">
@@ -61,7 +94,7 @@ app = FastAPI()
 # Your TRON receiving wallet address
 PAY_TO_ADDRESS = "<YOUR_TRON_ADDRESS>"
 
-# Facilitator URL (run locally or use hosted)
+# Facilitator URL (from step 2)
 FACILITATOR_URL = "http://localhost:8001"
 
 # Initialize x402 server (TRON mechanisms auto-registered)
@@ -97,36 +130,6 @@ When configuring protected routes, you specify:
 
 When a request is made to these routes without payment, your server will respond with the HTTP 402 Payment Required code and payment instructions.
 
-### 3. Set up a Facilitator
-
-x402-tron requires a facilitator to verify and settle payments. You have two options:
-
-1.  **Run Your Own Facilitator:** Deploy your own instance using the demo code.
-2.  **Use Official Facilitator:** _Coming Soon_ - An official hosted service is in development.
-
-To run your own facilitator:
-
-```bash
-# Clone the demo repository first
-git clone https://github.com/open-aibank/x402-tron-demo.git
-cd x402-tron-demo/facilitator
-
-# Install dependencies
-pip install -r requirements.txt
-
-# Configure environment variables (copy .env.example to .env and set your keys)
-cp .env.example .env
-
-python main.py
-```
-
-This starts a facilitator on `http://localhost:8001` with endpoints:
-
-* `GET /supported` - Supported capabilities
-* `POST /verify` - Verify payment payload
-* `POST /settle` - Settle payment on-chain
-* `POST /fee/quote` - Get fee quote
-
 ### 4. Test Your Integration
 
 To verify:
@@ -137,7 +140,7 @@ To verify:
 4. Retry the request with the `PAYMENT-SIGNATURE` header containing the signed payment payload.
 5. The server verifies the payment via the facilitator and, if valid, returns your actual API response.
 
-### 5. Error Handling
+### 5. Troubleshooting
 
 * If you run into trouble, check out the [server example](https://github.com/open-aibank/x402-tron-demo/tree/main/server) and [facilitator example](https://github.com/open-aibank/x402-tron-demo/tree/main/facilitator) for more context.
 * Ensure the facilitator is running and accessible

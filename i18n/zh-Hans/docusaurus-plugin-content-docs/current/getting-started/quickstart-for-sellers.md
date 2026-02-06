@@ -36,17 +36,46 @@ pip install -e ".[fastapi]"
 pip install "git+https://github.com/open-aibank/x402-tron.git@v0.1.6#subdirectory=python/x402[fastapi]"
 ```
 
+## 2. 部署促进者服务 (Set up a Facilitator)
 
-## 2. 集成支付中间件 (Integrate Payment Middleware)
+x402-tron 协议依赖**促进者 (Facilitator)** 来负责支付签名的验证与链上结算。服务器依赖促进者运行，因此需要先完成此步骤。
 
-接下来，将支付中间件集成至您的应用程序中。配置过程中需要提供以下关键参数：
+**选项：**
 
-* **促进者服务地址 (Facilitator URL)**：指向促进者服务的端点。在开发测试阶段，您可以运行本地促进者实例，或使用公共托管的测试服务。
-* **受保护的路由 (Protected Routes)**：指定需要保护的路由。
-* **收款钱包地址 (Receiver Wallet Address)**：用于接收用户支付款项的 TRON 钱包地址。
+1.  **自部署促进者**：使用演示代码部署私有实例（推荐用于测试）。
+2.  **使用官方促进者**：_即将推出_ - 官方托管服务正在开发中。
 
+自部署促进者：
 
+```bash
+# 克隆演示仓库
+git clone https://github.com/open-aibank/x402-tron-demo.git
+cd x402-tron-demo/facilitator
 
+# 安装依赖
+pip install -r requirements.txt
+
+# 配置环境变量（复制 .env.example 到 .env 并设置您的密钥）
+cp .env.example .env
+
+# 启动促进者
+python main.py
+```
+
+这将在 `http://localhost:8001` 启动促进者服务实例，并包含以下 API 端点：
+
+* `GET /supported` - 查询支持的功能配置
+* `POST /verify` - 验证支付载荷有效性
+* `POST /settle` - 执行链上结算
+* `POST /fee/quote` - 获取当前的费用报价
+
+## 3. 集成支付中间件 (Add Payment Middleware)
+
+促进者运行后，将支付中间件集成至您的应用程序中。配置过程中需要提供以下关键参数：
+
+* **促进者服务地址**：步骤 2 中启动的促进者 URL
+* **受保护的路由**：指定需要保护的路由
+* **收款钱包地址**：用于接收用户支付款项的 TRON 钱包地址
 
 ```python
 from fastapi import FastAPI
@@ -56,13 +85,13 @@ from x402_tron.facilitator import FacilitatorClient
 
 app = FastAPI()
 
-# Your TRON receiving wallet address
+# 您的 TRON 收款钱包地址
 PAY_TO_ADDRESS = "<YOUR_TRON_ADDRESS>"
 
-# Facilitator URL (run locally or use hosted)
+# 促进者 URL（来自步骤 2）
 FACILITATOR_URL = "http://localhost:8001"
 
-# Initialize x402 server (TRON mechanisms auto-registered)
+# 初始化 x402 服务器（TRON 机制自动注册）
 server = X402Server()
 server.add_facilitator(FacilitatorClient(base_url=FACILITATOR_URL))
 
@@ -82,7 +111,6 @@ if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=8000)
 ```
 
-
 ### 路由配置详解 (Route Configuration)
 
 在配置受保护的路由规则时，您需要定义以下核心参数：
@@ -93,33 +121,6 @@ if __name__ == "__main__":
 
 **拦截机制**：
 当客户端尝试访问这些受保护路由但未携带有效支付凭证时，您的服务器将自动拦截请求，并响应 `HTTP 402 Payment Required` 状态码及包含上述参数的支付说明。
-
-
-
-## 3. 部署促进者服务 (Run a Facilitator)
-
-x402-tron 协议依赖**促进者 (Facilitator)** 来负责支付签名的验证与链上结算。您可以选择部署私有的促进者实例：
-
-```bash
-# Clone the demo repository first
-git clone https://github.com/open-aibank/x402-tron-demo.git
-cd x402-tron-demo/facilitator
-
-# Install dependencies
-pip install -r requirements.txt
-
-# Configure environment variables (copy .env.example to .env and set your keys)
-cp .env.example .env
-
-python main.py
-```
-
-这将在 `http://localhost:8001` 启动促进者服务实例，并包含以下 API 端点：
-
-* `GET /supported` - 查询支持的功能配置
-* `POST /verify` - 验证支付载荷有效性
-* `POST /settle` - 执行链上结算
-* `POST /fee/quote` - 获取当前的费用报价
 
 ## 4. 验证集成 (Verify Integration)
 
