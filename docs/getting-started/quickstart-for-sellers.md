@@ -37,8 +37,6 @@ Here are the key configuration items you'll need:
 | Item | Description | How to Get |
 |------|-------------|------------|
 | **TRON Wallet Address** | Your address to receive payments (starts with `T`) | Create via [TronLink](https://www.tronlink.org/) wallet |
-| **USDT Token Address** | Token contract address for payments | Nile Testnet: `TXYZopYRdj2D9XRtbG411XZZ3kM5VkAeBf` |
-| **TronGrid API Key** | Required for mainnet RPC access | Register at [TronGrid](https://www.trongrid.io/) (free) |
 | **Test TRX** | Gas fees for testnet transactions | [Nile Faucet](https://nileex.io/join/getJoinPage) |
 | **Test USDT** | Test tokens for payment testing | [Nile USDT Faucet](https://nileex.io/join/getJoinPage) or ask in community |
 
@@ -113,11 +111,6 @@ server.add_facilitator(FacilitatorClient(base_url=FACILITATOR_URL))
 async def protected_endpoint():
     return {"data": "This is premium content!"}
 
-# This endpoint is free (no decorator)
-@app.get("/free")
-async def free_endpoint():
-    return {"message": "This is free content"}
-
 
 if __name__ == "__main__":
     import uvicorn
@@ -169,9 +162,6 @@ cp .env.example .env
 # Facilitator wallet private key (for settling payments on-chain)
 TRON_PRIVATE_KEY=your_facilitator_private_key_here
 
-# Network: nile (testnet) or mainnet
-TRON_NETWORK=nile
-
 # TronGrid API Key (required for mainnet, optional for testnet)
 TRON_GRID_API_KEY=your_trongrid_api_key_here
 ```
@@ -216,15 +206,7 @@ curl http://localhost:8000/protected
 
 Expected: HTTP 402 response with payment instructions in the `PAYMENT-REQUIRED` header.
 
-**Test 2: Access free endpoint**
-
-```bash
-curl http://localhost:8000/free
-```
-
-Expected: `{"message": "This is free content"}`
-
-**Test 3: Complete payment flow**
+**Test 2: Complete payment flow**
 
 To test the full payment flow, you need a client that can sign payments. See:
 - [Quickstart for Human](/getting-started/quickstart-for-human) - For browser-based payments
@@ -250,22 +232,18 @@ To test the full payment flow, you need a client that can sign payments. See:
 
 Once you've tested your integration on testnet (Nile), you're ready to accept real payments on TRON mainnet.
 
-### 1. Update Network Configuration
+### 1. Update Server Configuration
 
-Change from testnet to mainnet:
-
-<Tabs>
-  <TabItem value="python" label="Python">
+In your `server.py`, change the `network` parameter in the `@x402_protected` decorator:
 
 ```python
-from x402.config import NetworkConfig
-
-# Testnet → Mainnet
-network=NetworkConfig.TRON_MAINNET  # was TRON_NILE
+@x402_protected(
+    server=server,
+    price="0.0001 USDT",
+    network="tron:mainnet",  # Change from "tron:nile" to "tron:mainnet"
+    pay_to=PAY_TO_ADDRESS,
+)
 ```
-
-  </TabItem>
-</Tabs>
 
 ### 2. Update Your Facilitator
 
