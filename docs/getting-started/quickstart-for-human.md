@@ -55,6 +55,12 @@ Or install directly from a release tag:
 pip install "git+https://github.com/open-aibank/x402-tron.git@v0.1.6#subdirectory=python/x402"
 ```
 
+Install the required dependency:
+
+```bash
+pip install eth_account
+```
+
   </TabItem>
   <TabItem value="typescript" label="TypeScript">
 Install the x402-tron TypeScript package:
@@ -66,7 +72,15 @@ npm install @open-aibank/x402-tron tronweb
   </TabItem>
 </Tabs>
 
-### 2. Make Paid Requests Automatically
+### 2. Configure Environment Variables
+
+Set your wallet private key as an environment variable:
+
+```bash
+export TRON_PRIVATE_KEY=your_private_key_here
+```
+
+### 3. Make Paid Requests Automatically
 
 <Tabs>
   <TabItem value="python" label="Python (httpx)">
@@ -83,7 +97,7 @@ from x402_tron.signers.client import TronClientSigner
 
 # ========== Configuration ==========
 # The x402-tron server URL you want to access
-SERVER_URL = "http://localhost:8000/protected"  # Replace with your target server
+SERVER_URL = "https://x402-tron-demo.aibank.io/protected-nile"  # Replace with your target server
 # ====================================
 
 
@@ -107,7 +121,7 @@ async def main():
         response = await client.get(SERVER_URL)
 
         print(f"Status: {response.status_code}")
-        print(f"Response: {response.json()}")
+        print("Headers:", response.headers)
 
 
 asyncio.run(main())
@@ -125,7 +139,7 @@ const TRON_PRIVATE_KEY = process.env.TRON_PRIVATE_KEY!
 
 // ========== Configuration ==========
 // The x402-tron server URL you want to access
-const SERVER_URL = 'http://localhost:8000/protected' // Replace with your target server
+const SERVER_URL = 'https://x402-tron-demo.aibank.io/protected-nile' // Replace with your target server
 // ====================================
 
 async function main(): Promise<void> {
@@ -170,7 +184,7 @@ main().catch(console.error)
   </TabItem>
 </Tabs>
 
-### 3. Handle Errors
+### 4. Handle Errors
 
 The SDK may throw errors during the payment process. Here's how to handle them:
 
@@ -188,11 +202,8 @@ from x402_tron.exceptions import (
 try:
     response = await client.get(SERVER_URL)
     
-    if response.status_code == 200:
-        print(f"Success: {response.json()}")
-    else:
-        print(f"Request failed: {response.status_code}")
-        print(response.text)
+    print(f"Status: {response.status_code}")
+    print("Headers:", response.headers)
 
 except UnsupportedNetworkError as e:
     # No mechanism registered for the network
