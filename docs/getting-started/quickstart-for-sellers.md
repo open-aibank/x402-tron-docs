@@ -90,7 +90,7 @@ app = FastAPI()
 
 # ========== Configuration ==========
 # Replace with YOUR TRON wallet address (this is where you receive payments)
-PAY_TO_ADDRESS = "TYourTronWalletAddressHere"
+PAY_TO_ADDRESS = "YourTronWalletAddressHere"
 
 # Facilitator URL (we'll start this in Step 3)
 FACILITATOR_URL = "http://localhost:8001"
