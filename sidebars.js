@@ -9,7 +9,26 @@ const sidebars = {
     {
       type: 'category',
       label: 'Getting Started',
-      items: ['getting-started/quickstart-for-sellers', 'getting-started/quickstart-for-buyers', 'getting-started/quickstart-for-agent'],
+      items: [
+        'getting-started/quickstart-for-sellers',
+        {
+          type: 'category',
+          label: 'Quickstart for Buyers',
+          collapsed: false,
+          items: [
+            {
+              type: 'doc',
+              id: 'getting-started/quickstart-for-human',
+              label: 'Human',
+            },
+            {
+              type: 'doc',
+              id: 'getting-started/quickstart-for-agent',
+              label: 'Agent',
+            },
+          ],
+        },
+      ],
     },
     {
       type: 'category',

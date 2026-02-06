@@ -111,6 +111,9 @@ To run your own facilitator:
 git clone https://github.com/open-aibank/x402-tron-demo.git
 cd x402-tron-demo/facilitator
 
+# Install dependencies
+pip install -r requirements.txt
+
 # Configure environment variables (copy .env.example to .env and set your keys)
 cp .env.example .env
 
@@ -130,7 +133,7 @@ To verify:
 
 1. Make a request to your endpoint (e.g., `curl http://localhost:8000/protected`).
 2. The server responds with a 402 Payment Required, including payment instructions in the `PAYMENT-REQUIRED` header.
-3. Complete the payment using a compatible client. This typically involves signing a TIP-712 payment payload, which is handled by the client SDK detailed in the [Quickstart for Buyers](/getting-started/quickstart-for-buyers) or [Quickstart for Agent](/getting-started/quickstart-for-agent).
+3. Complete the payment using a compatible client. This typically involves signing a TIP-712 payment payload, which is handled by the client SDK detailed in the [Quickstart for Human](/getting-started/quickstart-for-human) or [Quickstart for Agent](/getting-started/quickstart-for-agent).
 4. Retry the request with the `PAYMENT-SIGNATURE` header containing the signed payment payload.
 5. The server verifies the payment via the facilitator and, if valid, returns your actual API response.
 
@@ -205,7 +208,7 @@ See [Network Support](/core-concepts/network-and-token-support) for the full lis
 
 * Check out the [demo examples](https://github.com/open-aibank/x402-tron-demo/tree/main/server) for more complex payment flows
 * Explore [Core Concepts](/core-concepts/http-402) to understand how x402-tron works
-* Get started as a [buyer](/getting-started/quickstart-for-buyers) or set up an [AI agent](/getting-started/quickstart-for-agent)
+* Get started as a [human buyer](/getting-started/quickstart-for-human) or set up an [AI agent](/getting-started/quickstart-for-agent)
 
 ### Summary
 

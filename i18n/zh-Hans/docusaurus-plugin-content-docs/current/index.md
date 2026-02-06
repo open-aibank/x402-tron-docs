@@ -65,5 +65,5 @@ x402-tron 目前支持以下 TRON 网络环境：
 准备好开始构建了吗？请从这里入手：
 
 - [卖方快速入门](getting-started/quickstart-for-sellers)
-- [买方快速入门](getting-started/quickstart-for-buyers)
+- [人类用户快速入门](getting-started/quickstart-for-human)
 - [探索核心概念](core-concepts/http-402)
