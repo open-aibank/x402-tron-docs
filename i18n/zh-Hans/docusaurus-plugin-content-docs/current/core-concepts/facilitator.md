@@ -59,7 +59,6 @@ python main.py
 
 | 端点 | 方法 | 描述 |
 | :--- | :--- | :--- |
-| `/` | GET | 获取服务基础信息 |
 | `/supported` | GET | 查询支持的功能配置 |
 | `/fee/quote` | POST | 获取预估费用报价 |
 | `/verify` | POST | 验证支付载荷有效性 |

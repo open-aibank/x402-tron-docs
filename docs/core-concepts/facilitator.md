@@ -68,7 +68,6 @@ The facilitator requires:
 
 | Endpoint | Method | Description |
 |----------|--------|-------------|
-| `/` | GET | Service info |
 | `/supported` | GET | Supported capabilities |
 | `/fee/quote` | POST | Get fee quote for a payment |
 | `/verify` | POST | Verify a payment payload |

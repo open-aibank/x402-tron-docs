@@ -21,10 +21,21 @@ We have pre-configured [examples available in the demo repo](https://github.com/
 
 ### 1. Install Dependencies
 
-Install the x402-tron Python package with FastAPI support:
+The x402-tron Python package is not yet published to PyPI. Install from GitHub source:
 
 ```bash
-pip install x402-tron[fastapi]
+# Clone the repository
+git clone https://github.com/open-aibank/x402-tron.git
+cd x402-tron/python/x402
+
+# Install with FastAPI support
+pip install -e ".[fastapi]"
+```
+
+Or install directly from a release tag:
+
+```bash
+pip install "git+https://github.com/open-aibank/x402-tron.git@v0.1.6#subdirectory=python/x402[fastapi]"
 ```
 
 ### 2. Add Payment Middleware
@@ -108,7 +119,6 @@ python main.py
 
 This starts a facilitator on `http://localhost:8001` with endpoints:
 
-* `GET /` - Service info
 * `GET /supported` - Supported capabilities
 * `POST /verify` - Verify payment payload
 * `POST /settle` - Settle payment on-chain

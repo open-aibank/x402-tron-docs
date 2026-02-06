@@ -19,10 +19,21 @@ import TabItem from '@theme/TabItem';
 
 ## 1. 安装依赖 (Install Dependencies)
 
-安装集成了 FastAPI 支持的 `x402-tron` Python 包：
+x402-tron Python 包尚未发布到 PyPI，请从 GitHub 源码安装：
 
 ```bash
-pip install x402-tron[fastapi]
+# 克隆仓库
+git clone https://github.com/open-aibank/x402-tron.git
+cd x402-tron/python/x402
+
+# 安装（包含 FastAPI 支持）
+pip install -e ".[fastapi]"
+```
+
+或直接从 release tag 安装：
+
+```bash
+pip install "git+https://github.com/open-aibank/x402-tron.git@v0.1.6#subdirectory=python/x402[fastapi]"
 ```
 
 
@@ -103,7 +114,6 @@ python main.py
 
 这将在 `http://localhost:8001` 启动促进者服务实例，并包含以下 API 端点：
 
-* `GET /` - 获取服务基础信息
 * `GET /supported` - 查询支持的功能配置
 * `POST /verify` - 验证支付载荷有效性
 * `POST /settle` - 执行链上结算
