@@ -1,47 +1,93 @@
 # HTTP 402
-
 ## 什么是 HTTP 402？
 
-HTTP 402 是一个标准但很少使用的 HTTP 响应状态码，表示访问资源需要付款。
+[HTTP 402](https://datatracker.ietf.org/doc/html/rfc7231#section-6.5.2) 是一个标准但长期未被充分利用的 HTTP 响应状态码，意在表示“必须付费才能访问请求的资源”。
 
-在 x402-tron 中，此状态码用于：
+在 x402-tron 协议中，我们重新激活了此状态码，用于：
 
-- 通知客户端（买家或代理）需要付款
-- 传达支付详情，如金额、代币和目标 TRON 地址
-- 提供通过 TIP-712 签名以编程方式完成支付所需的信息
+* **告知**客户端（买方或代理）访问受限，需要支付。
+* **传达**详细的支付要求，包括金额、代币类型及目标 TRON 地址。
+* **提供**构建程序化付款所需的必要元数据（用于构造待签名的 TIP-712 载荷）。
 
-## 为什么 x402-tron 使用 HTTP 402
+## 为什么要使用 HTTP 402？
 
-HTTP 402 的主要目的是为访问 Web 资源启用无摩擦的、API 原生的支付，特别适用于：
+x402-tron 采用 HTTP 402 的核心旨在为网络资源实现**无摩擦、API 原生**的支付体验，尤其适用于：
 
-- 机器对机器 (M2M) 支付（例如 AI 代理）
-- 按使用付费模型，如 API 调用或付费内容
-- 无需账户创建或传统支付渠道的小额支付
-- 基于 TRON 的稳定币 (USDT) 支付，实现全球可访问性
+* **机器对机器 (M2M) 支付**：如 AI 代理 (AI Agents) 之间的自主交易。
+* **按量付费 (Pay-per-use)**：如 API 调用计费或付费墙内容解锁。
+* **微支付 (Micropayments)**：无需账户注册或绑定传统法币支付渠道的小额支付。
+* **全球支付**：基于 TRON 网络的稳定币 (USDT) 结算，消除地域限制。
 
-使用 402 状态码使 x402-tron 协议保持原生 Web 兼容性，并易于集成到任何基于 HTTP 的服务中。
+通过复用标准的 402 状态码，x402-tron 保持了与原生 Web 协议的高度兼容性，能够轻松集成至任何基于 HTTP 的服务架构中。
 
-## 支付头
+## 支付标头 
 
-x402-tron 使用标准化的头进行支付通信：
+x402-tron 定义了一组标准化 HTTP 标头用于支付通信：
 
-- **PAYMENT-REQUIRED**：包含来自服务器的 Base64 编码的支付要求
-- **PAYMENT-SIGNATURE**：包含来自客户端的 Base64 编码的支付负载
-- **PAYMENT-RESPONSE**：包含来自服务器的 Base64 编码的结算响应
+
+
+* **`PAYMENT-REQUIRED`**：包含服务端生成的**支付要求**（Base64 编码）。此标头随 `402` 响应返回，明确告知客户端支付的详细参数。
+* **`PAYMENT-SIGNATURE`**：包含客户端生成的**支付载荷**（Base64 编码）。客户端在收到 402 响应后，携带此标头重试请求，作为已授权支付的加密证明。
+* **`PAYMENT-RESPONSE`**：包含服务端返回的**结算响应**（Base64 编码）。此标头随成功响应（如 `200 OK`）返回，内含 TRON 交易哈希等结算凭证。
+
+> **技术说明**：上述标头的值必须是**有效的 Base64 编码 JSON 字符串**。这种编码方式确保了跨不同 HTTP 实现的兼容性，并有效防止了 JSON 载荷中的特殊字符引发解析错误。
 
 ## 支付要求结构
 
-当服务器返回 402 响应时，PAYMENT-REQUIRED 头包含支付详情，包括方案、网络、金额、资产、payTo 地址和费用信息。
+当服务端返回 `402 Payment Required` 响应时，其 `PAYMENT-REQUIRED` 标头解码后包含以下结构数据：
 
-## 支付签名结构
 
-客户端在 PAYMENT-SIGNATURE 头中使用 TIP-712 签名的负载进行响应，包含签名和授权详情。
+```json
+{
+  "x402Version": 1,
+  "accepts": [
+    {
+      "scheme": "upto",
+      "network": "tron:nile",
+      "amount": "1000000",
+      "asset": "TXYZopYRdj2D9XRtbG411XZZ3kM5VkAeBf",
+      "payTo": "TDhj8uX7SVJwvhCUrMaiQHqPgrB6wRb3eG",
+      "extra": {
+        "fee": {
+          "feeAmount": "100000",
+          "feeTo": "TFacilitatorAddress..."
+        }
+      }
+    }
+  ]
+}
+```
+## 支付签名结构 
 
-## 总结
+客户端在 `PAYMENT-SIGNATURE` 标头中以 TIP-712 签名载荷进行响应：
 
-HTTP 402 是 x402-tron 协议的基础，使服务能够直接在 HTTP 响应中声明支付要求。它：
+```json
+{
+  "x402Version": 1,
+  "scheme": "upto",
+  "network": "tron:nile",
+  "payload": {
+    "signature": "0x...",
+    "authorization": {
+      "from": "TClientAddress...",
+      "to": "TSellerAddress...",
+      "value": "1000000",
+      "validAfter": 0,
+      "validBefore": 1738678164,
+      "nonce": "0x..."
+    }
+  }
+}
 
-- 发出需要付款的信号
-- 传达必要的支付详情（金额、代币、TRON 地址）
-- 与标准 HTTP 工作流无缝集成
-- 在 TRON 区块链上启用程序化支付
+```
+
+## 总结 
+
+HTTP 402 是 x402-tron 协议的基石，它赋能服务端直接在 HTTP 响应层面对接支付逻辑。通过这一标准状态码，协议实现了：
+
+
+
+* **发出支付信号**：明确标记资源为“付费访问”状态。
+* **传递支付参数**：精准传达金额、代币合约及接收方 TRON 地址等关键元数据。
+* **无缝集成**：完全兼容现有的标准 HTTP 工作流（无状态、RESTful）。
+* **程序化结算**：在 TRON 区块链上实现全自动、无需人工干预的支付流程。

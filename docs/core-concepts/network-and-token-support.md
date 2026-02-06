@@ -145,8 +145,6 @@ See the [Facilitator](facilitator) documentation for more details.
 | Signing   | TIP-712 structured data signing                  |
 | Schemes   | `exact`                                          |
 
-> > > > > > > origin/main
-
 ### Adding Custom Tokens
 
 To add support for custom TRC-20 tokens:
@@ -178,7 +176,7 @@ x402-tron's network support is designed specifically for TRON blockchain with na
 - TRON Nile testnet is recommended for development
 - USDT is the primary supported token with pre-configured addresses
 - TIP-712 provides secure, trust-minimizing payment authorization
-- # Custom TRC-20 tokens can be added via TokenRegistry
+- Custom TRC-20 tokens can be added via TokenRegistry
 
 Next, explore:
 
