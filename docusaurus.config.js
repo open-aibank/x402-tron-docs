@@ -8,18 +8,18 @@ module.exports = {
   url: 'https://docs.x402-tron.org/',
   baseUrl: '/',
   trailingSlash: true,
-  i18n: {
-    defaultLocale: 'en',
-    locales: ['en', 'zh-Hans'],
-    localeConfigs: {
-      en: {
-        label: 'English',
-      },
-      'zh-Hans': {
-        label: '中文',
-      },
-    },
-  },
+  // i18n: {
+  //   defaultLocale: 'en',
+  //   locales: ['en', 'zh-Hans'],
+  //   localeConfigs: {
+  //     en: {
+  //       label: 'English',
+  //     },
+  //     'zh-Hans': {
+  //       label: '中文',
+  //     },
+  //   },
+  // },
   onBrokenLinks: 'warn',
   onBrokenMarkdownLinks: 'ignore',
   favicon: 'img/logo.png',
@@ -41,10 +41,11 @@ module.exports = {
         href: '/',
       },
       items: [
-        {
-          type: 'localeDropdown',
-          position: 'right',
-        },
+        // 多语言选项
+        // {
+        //   type: 'localeDropdown',
+        //   position: 'right',
+        // },
         {
           label: 'GitHub',
           href: 'https://github.com/open-aibank/x402-tron',
