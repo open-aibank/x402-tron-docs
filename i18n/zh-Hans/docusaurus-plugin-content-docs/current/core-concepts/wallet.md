@@ -34,7 +34,7 @@ import TabItem from '@theme/TabItem';
 ## TRON 地址格式
 
 TRON 网络使用 **Base58** 编码格式的地址，且固定以字符 `T` 开头。
-- `TDhj8uX7SVJwvhCUrMaiQHqPgrB6wRb3eG`
+- 示例：`TXxx...xxxX`（Base58 编码，以 `T` 开头）
 
 ## 创建钱包签名器
 

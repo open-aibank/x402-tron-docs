@@ -13,28 +13,19 @@ import TabItem from '@theme/TabItem';
 Before you begin, ensure you have:
 
 * A TRON wallet to receive funds (any TRON-compatible wallet)
-* Python 3.10+ and pip installed (for Python SDK)
-* Node.js 18+ and npm installed (for TypeScript SDK)
-* An existing API or server
+* Python 3.10+ and pip installed
+* An existing API or server (FastAPI recommended)
+
+**Note:**
+We have pre-configured [examples available in the demo repo](https://github.com/open-aibank/x402-tron-demo), including examples for Python (FastAPI server) and facilitator setup.
 
 ### 1. Install Dependencies
 
-<Tabs>
-  <TabItem value="python" label="Python (FastAPI)">
 Install the x402-tron Python package with FastAPI support:
 
 ```bash
 pip install x402-tron[fastapi]
 ```
-  </TabItem>
-  <TabItem value="typescript" label="TypeScript">
-Install the x402-tron TypeScript package:
-
-```bash
-npm install @open-aibank/x402-tron tronweb
-```
-  </TabItem>
-</Tabs>
 
 ### 2. Add Payment Middleware
 
@@ -49,31 +40,28 @@ Integrate the payment middleware into your application. You will need to provide
 Full example in the demo repo [here](https://github.com/open-aibank/x402-tron-demo/tree/main/python/server).
 
 ```python
-import os
 from fastapi import FastAPI
-from x402.server import X402Server
-from x402.fastapi import x402_protected
-from x402.facilitator import FacilitatorClient
-from x402.config import NetworkConfig
+from x402_tron.server import X402Server
+from x402_tron.fastapi import x402_protected
+from x402_tron.facilitator import FacilitatorClient
 
 app = FastAPI()
 
 # Your TRON receiving wallet address
-PAY_TO_ADDRESS = "TDhj8uX7SVJwvhCUrMaiQHqPgrB6wRb3eG"
+PAY_TO_ADDRESS = "<YOUR_TRON_ADDRESS>"
 
 # Facilitator URL (run locally or use hosted)
 FACILITATOR_URL = "http://localhost:8001"
 
 # Initialize x402 server (TRON mechanisms auto-registered)
 server = X402Server()
-facilitator = FacilitatorClient(base_url=FACILITATOR_URL)
-server.add_facilitator(facilitator)
+server.add_facilitator(FacilitatorClient(base_url=FACILITATOR_URL))
 
 @app.get("/protected")
 @x402_protected(
     server=server,
-    price="1 USDT",  # 1 USDT = 1000000 (6 decimals)
-    network=NetworkConfig.TRON_NILE,
+    price="0.0001 USDT",
+    network="tron:nile",
     pay_to=PAY_TO_ADDRESS,
 )
 async def protected_endpoint():
@@ -92,7 +80,7 @@ if __name__ == "__main__":
 
 When configuring protected routes, you specify:
 
-* **price**: Payment amount (e.g., "1 USDT", or raw amount like "1000000")
+* **price**: Payment amount (e.g., "0.0001 USDT", or raw amount like "100")
 * **network**: TRON network identifier (e.g., `tron:nile`, `tron:mainnet`)
 * **pay_to**: Your TRON wallet address to receive payments
 
@@ -132,7 +120,7 @@ To verify:
 
 1. Make a request to your endpoint (e.g., `curl http://localhost:8000/protected`).
 2. The server responds with a 402 Payment Required, including payment instructions in the `PAYMENT-REQUIRED` header.
-3. Complete the payment using a compatible client. This typically involves signing a TIP-712 payment payload, which is handled by the client SDK detailed in the [Quickstart for Buyers](quickstart-for-buyers).
+3. Complete the payment using a compatible client. This typically involves signing a TIP-712 payment payload, which is handled by the client SDK detailed in the [Quickstart for Buyers](quickstart-for-buyers) or [Quickstart for Agent](quickstart-for-agent).
 4. Retry the request with the `PAYMENT-SIGNATURE` header containing the signed payment payload.
 5. The server verifies the payment via the facilitator and, if valid, returns your actual API response.
 
@@ -167,11 +155,12 @@ network=NetworkConfig.TRON_MAINNET  # was TRON_NILE
 
 ### 2. Update Your Facilitator
 
-If running your own facilitator:
+If running your own facilitator on mainnet:
 
-1. Update environment variables to use mainnet credentials
-2. Ensure the facilitator wallet has TRX for energy/bandwidth fees
-3. Update the facilitator network configuration
+1. **Apply for a TronGrid API Key**: Register at [TronGrid](https://www.trongrid.io/) and create an API key. This is required for reliable mainnet RPC access.
+2. Update environment variables to use mainnet credentials (including `TRON_GRID_API_KEY`)
+3. Ensure the facilitator wallet has TRX for energy/bandwidth fees
+4. Update the facilitator network configuration to `mainnet`
 
 ### 3. Update Your Wallet
 
@@ -206,7 +195,7 @@ See [Network Support](../core-concepts/network-and-token-support) for the full l
 
 * Check out the [demo examples](https://github.com/open-aibank/x402-tron-demo) for more complex payment flows
 * Explore [Core Concepts](../core-concepts/http-402) to understand how x402-tron works
-* Get started as a [buyer](quickstart-for-buyers)
+* Get started as a [buyer](quickstart-for-buyers) or set up an [AI agent](quickstart-for-agent)
 
 ### Summary
 

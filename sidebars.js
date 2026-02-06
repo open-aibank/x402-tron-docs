@@ -9,7 +9,7 @@ const sidebars = {
     {
       type: 'category',
       label: 'Getting Started',
-      items: ['getting-started/quickstart-for-buyers', 'getting-started/quickstart-for-sellers'],
+      items: ['getting-started/quickstart-for-sellers', 'getting-started/quickstart-for-buyers', 'getting-started/quickstart-for-agent'],
     },
     {
       type: 'category',

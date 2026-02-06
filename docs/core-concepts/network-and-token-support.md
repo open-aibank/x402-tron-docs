@@ -78,7 +78,7 @@ server = X402Server()
     server=server,
     price="1 USDT",  # 1 USDT = 1000000 (6 decimals)
     network=NetworkConfig.TRON_NILE,
-    pay_to="TDhj8uX7SVJwvhCUrMaiQHqPgrB6wRb3eG",
+    pay_to="<YOUR_TRON_ADDRESS>",
 )
 async def protected_endpoint():
     return {"data": "secret content"}

@@ -11,21 +11,18 @@ import TabItem from '@theme/TabItem';
 在开始集成之前，请确保您的开发环境满足以下条件：
 
 * **收款钱包**：一个用于接收资金的 TRON 钱包地址（支持任意兼容 TRON 协议的钱包）。
-* **Python 环境**：Python 3.10+ 及 pip（仅 Python SDK 需安装）。
-* **Node.js 环境**：Node.js 18+ 及 npm（仅 TypeScript SDK 需安装）。
-* **目标服务**：一个现有的 API 服务或后端应用程序。
+* **Python 环境**：Python 3.10+ 及 pip。
+* **目标服务**：一个现有的 API 服务或后端应用程序（推荐 FastAPI）。
+
+**注意：**
+我们在 [演示仓库](https://github.com/open-aibank/x402-tron-demo) 中提供了预配置的示例，包括 Python (FastAPI 服务器) 和促进者设置。
 
 ## 1. 安装依赖 (Install Dependencies)
 
 安装集成了 FastAPI 支持的 `x402-tron` Python 包：
 
-
 ```bash
 pip install x402-tron[fastapi]
-```
-安装 x402-tron TypeScript 包：
-```bash
-npm install @open-aibank/x402-tron tronweb
 ```
 
 
@@ -42,31 +39,28 @@ npm install @open-aibank/x402-tron tronweb
 
 
 ```python
-import os
 from fastapi import FastAPI
-from x402.server import X402Server
-from x402.fastapi import x402_protected
-from x402.facilitator import FacilitatorClient
-from x402.config import NetworkConfig
+from x402_tron.server import X402Server
+from x402_tron.fastapi import x402_protected
+from x402_tron.facilitator import FacilitatorClient
 
 app = FastAPI()
 
 # Your TRON receiving wallet address
-PAY_TO_ADDRESS = "TDhj8uX7SVJwvhCUrMaiQHqPgrB6wRb3eG"
+PAY_TO_ADDRESS = "<YOUR_TRON_ADDRESS>"
 
 # Facilitator URL (run locally or use hosted)
 FACILITATOR_URL = "http://localhost:8001"
 
 # Initialize x402 server (TRON mechanisms auto-registered)
 server = X402Server()
-facilitator = FacilitatorClient(base_url=FACILITATOR_URL)
-server.add_facilitator(facilitator)
+server.add_facilitator(FacilitatorClient(base_url=FACILITATOR_URL))
 
 @app.get("/protected")
 @x402_protected(
     server=server,
-    price="1 USDT",  # 1 USDT = 1000000 (6 decimals)
-    network=NetworkConfig.TRON_NILE,
+    price="0.0001 USDT",
+    network="tron:nile",
     pay_to=PAY_TO_ADDRESS,
 )
 async def protected_endpoint():
@@ -83,7 +77,7 @@ if __name__ == "__main__":
 
 在配置受保护的路由规则时，您需要定义以下核心参数：
 
-* **`price` (价格)**：设定支付金额。支持人类可读格式（如 `"1 USDT"`）或链上最小单位整数（如 `"1000000"`，对应 1 USDT）。
+* **`price` (价格)**：设定支付金额。支持人类可读格式（如 `"0.0001 USDT"`）或链上最小单位整数（如 `"100"`，对应 0.0001 USDT）。
 * **`network` (网络)**：指定 TRON 网络标识符（例如 `tron:nile` 用于测试网，`tron:mainnet` 用于主网）。
 * **`pay_to` (收款地址)**：指定用于最终接收资金的卖方 TRON 钱包地址。
 
@@ -149,19 +143,18 @@ python main.py
 将代码中的网络配置从测试网更改为主网：
 
 ```python
-from x402.config import NetworkConfig
-
 # Testnet → Mainnet
-network=NetworkConfig.TRON_MAINNET  # was TRON_NILE
+network="tron:mainnet"  # was "tron:nile"
 ```
 
 ### 2. 更新促进者配置 (Update Facilitator)
 
-若您运行的是自托管的促进者服务 (Self-hosted Facilitator)，需执行以下变更：
+若您在主网运行自托管的促进者服务，需执行以下变更：
 
-1.  **切换环境凭证**：更新环境变量，将 RPC 端点指向主网（例如 `https://api.trongrid.io`）。
-2.  **储备资源费用**：确保促进者钱包持有充足的 **TRX**。
-3.  **更新网络参数**：将促进者的配置文件或启动参数中的网络设置更新为 `mainnet`。
+1.  **申请 TronGrid API Key**：在 [TronGrid](https://www.trongrid.io/) 注册并创建 API Key。这是主网 RPC 访问的必要条件。
+2.  **更新环境变量**：配置主网凭证（包括 `TRON_GRID_API_KEY`）。
+3.  **储备资源费用**：确保促进者钱包持有充足的 **TRX** 用于能量/带宽费用。
+4.  **更新网络参数**：将促进者的网络配置更新为 `mainnet`。
 
 ### 3. 确认收款钱包 (Verify Receiving Wallet)
 
@@ -199,7 +192,7 @@ x402-tron 使用标准化的标识符字符串来区分不同的 TRON 网络环�
 
 * **参考示例**：查看 [演示代码仓库](https://github.com/open-aibank/x402-tron-demo) 以了解更复杂的支付流程与最佳实践。
 * **深入原理**：探索 [核心概念](../core-concepts/http-402) 以全面理解 x402-tron 的协议设计。
-* **客户端集成**：阅读 [买方快速入门](quickstart-for-buyers)，从客户端视角体验支付流程。
+* **客户端集成**：阅读 [买家快速入门](quickstart-for-buyers) 或 [AI 代理快速入门](quickstart-for-agent)，从客户端视角体验支付流程。
 
 ## 总结 (Summary)
 

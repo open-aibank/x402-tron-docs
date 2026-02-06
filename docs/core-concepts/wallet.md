@@ -33,7 +33,7 @@ A seller's TRON wallet address is included in the payment requirements provided 
 ### TRON Wallet Addresses
 
 TRON uses base58-encoded addresses that start with 'T'. For example:
-- `TDhj8uX7SVJwvhCUrMaiQHqPgrB6wRb3eG`
+- Example: `TXxx...xxxX` (Base58 encoded, starts with `T`)
 
 ### Creating a Wallet Signer
 

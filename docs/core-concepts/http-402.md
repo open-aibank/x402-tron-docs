@@ -47,7 +47,7 @@ When a server returns a 402 response, the `PAYMENT-REQUIRED` header contains:
       "network": "tron:nile",
       "amount": "1000000",
       "asset": "TXYZopYRdj2D9XRtbG411XZZ3kM5VkAeBf",
-      "payTo": "TDhj8uX7SVJwvhCUrMaiQHqPgrB6wRb3eG",
+      "payTo": "<SELLER_TRON_ADDRESS>",
       "extra": {
         "fee": {
           "feeAmount": "100000",

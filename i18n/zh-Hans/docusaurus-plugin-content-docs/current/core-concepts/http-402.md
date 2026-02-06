@@ -46,7 +46,7 @@ x402-tron 定义了一组标准化 HTTP 标头用于支付通信：
       "network": "tron:nile",
       "amount": "1000000",
       "asset": "TXYZopYRdj2D9XRtbG411XZZ3kM5VkAeBf",
-      "payTo": "TDhj8uX7SVJwvhCUrMaiQHqPgrB6wRb3eG",
+      "payTo": "<SELLER_TRON_ADDRESS>",
       "extra": {
         "fee": {
           "feeAmount": "100000",
