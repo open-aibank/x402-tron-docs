@@ -15,7 +15,7 @@ import TabItem from '@theme/TabItem';
 * **目标服务**：一个现有的 API 服务或后端应用程序（推荐 FastAPI）。
 
 **注意：**
-我们在 [演示仓库](https://github.com/open-aibank/x402-tron-demo) 中提供了预配置的示例，包括 Python (FastAPI 服务器) 和促进者设置。
+我们在演示仓库中提供了预配置的示例：[服务器示例](https://github.com/open-aibank/x402-tron-demo/tree/main/server) 和 [促进者示例](https://github.com/open-aibank/x402-tron-demo/tree/main/facilitator)。
 
 ## 1. 安装依赖 (Install Dependencies)
 
@@ -45,7 +45,6 @@ pip install "git+https://github.com/open-aibank/x402-tron.git@v0.1.6#subdirector
 * **受保护的路由 (Protected Routes)**：指定需要保护的路由。
 * **收款钱包地址 (Receiver Wallet Address)**：用于接收用户支付款项的 TRON 钱包地址。
 
-> **示例参考**：您可以访问演示仓库查看完整的 [服务器端集成示例](https://github.com/open-aibank/x402-tron-demo/tree/main/python/server)。
 
 
 
@@ -104,7 +103,7 @@ x402-tron 协议依赖**促进者 (Facilitator)** 来负责支付签名的验证
 ```bash
 # Clone the demo repository first
 git clone https://github.com/open-aibank/x402-tron-demo.git
-cd x402-tron-demo/python/facilitator
+cd x402-tron-demo/facilitator
 
 # Configure environment variables (copy .env.example to .env and set your keys)
 cp .env.example .env
@@ -135,7 +134,7 @@ python main.py
 
 若在集成过程中遇到问题，请检查以下要点：
 
-* **参考示例**：查看 [演示仓库](https://github.com/open-aibank/x402-tron-demo) 中的完整代码实现，对比配置差异。
+* **参考示例**：查看 [服务器示例](https://github.com/open-aibank/x402-tron-demo/tree/main/server) 和 [促进者示例](https://github.com/open-aibank/x402-tron-demo/tree/main/facilitator) 中的完整代码实现。
 * **服务状态**：确保**促进者服务 (Facilitator)** 已启动且您的服务器能够正常访问该地址。
 * **地址校验**：检查配置的 TRON 收款钱包地址是否符合 Base58 格式且有效。
 
@@ -200,7 +199,7 @@ x402-tron 使用标准化的标识符字符串来区分不同的 TRON 网络环�
 
 ## 下一步 (Next Steps)
 
-* **参考示例**：查看 [演示代码仓库](https://github.com/open-aibank/x402-tron-demo) 以了解更复杂的支付流程与最佳实践。
+* **参考示例**：查看 [服务器示例](https://github.com/open-aibank/x402-tron-demo/tree/main/server) 以了解更复杂的支付流程与最佳实践。
 * **深入原理**：探索 [核心概念](../core-concepts/http-402) 以全面理解 x402-tron 的协议设计。
 * **客户端集成**：阅读 [买家快速入门](quickstart-for-buyers) 或 [AI 代理快速入门](quickstart-for-agent)，从客户端视角体验支付流程。
 

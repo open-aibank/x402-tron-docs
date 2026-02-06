@@ -48,7 +48,7 @@ Integrate the payment middleware into your application. You will need to provide
 
 <Tabs>
   <TabItem value="python" label="Python (FastAPI)">
-Full example in the demo repo [here](https://github.com/open-aibank/x402-tron-demo/tree/main/python/server).
+Full example in the [demo repo](https://github.com/open-aibank/x402-tron-demo/tree/main/server).
 
 ```python
 from fastapi import FastAPI
@@ -109,7 +109,7 @@ To run your own facilitator:
 ```bash
 # Clone the demo repository first
 git clone https://github.com/open-aibank/x402-tron-demo.git
-cd x402-tron-demo/python/facilitator
+cd x402-tron-demo/facilitator
 
 # Configure environment variables (copy .env.example to .env and set your keys)
 cp .env.example .env
@@ -136,7 +136,7 @@ To verify:
 
 ### 5. Error Handling
 
-* If you run into trouble, check out the examples in the [demo repo](https://github.com/open-aibank/x402-tron-demo) for more context and full code.
+* If you run into trouble, check out the [server example](https://github.com/open-aibank/x402-tron-demo/tree/main/server) and [facilitator example](https://github.com/open-aibank/x402-tron-demo/tree/main/facilitator) for more context.
 * Ensure the facilitator is running and accessible
 * Check that your TRON wallet address is valid
 
@@ -203,7 +203,7 @@ See [Network Support](../core-concepts/network-and-token-support) for the full l
 
 ### Next Steps
 
-* Check out the [demo examples](https://github.com/open-aibank/x402-tron-demo) for more complex payment flows
+* Check out the [demo examples](https://github.com/open-aibank/x402-tron-demo/tree/main/server) for more complex payment flows
 * Explore [Core Concepts](../core-concepts/http-402) to understand how x402-tron works
 * Get started as a [buyer](quickstart-for-buyers) or set up an [AI agent](quickstart-for-agent)
 
