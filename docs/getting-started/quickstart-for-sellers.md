@@ -1,6 +1,6 @@
 ---
-title: "Quickstart for Sellers"
-description: "This guide walks you through integrating with **x402-tron** to enable payments for your API or service on TRON blockchain. By the end, your API will be able to charge buyers and AI agents for access."
+title: 'Quickstart for Sellers'
+description: 'This guide walks you through integrating with **x402-tron** to enable payments for your API or service on TRON blockchain. By the end, your API will be able to charge buyers and AI agents for access.'
 ---
 
 import Tabs from '@theme/Tabs';
@@ -12,9 +12,9 @@ import TabItem from '@theme/TabItem';
 
 Before you begin, ensure you have:
 
-* A TRON wallet to receive funds (any TRON-compatible wallet)
-* Python 3.10+ and pip installed
-* An existing API or server (FastAPI recommended)
+- A TRON wallet to receive funds (any TRON-compatible wallet)
+- Python 3.10+ and pip installed
+- An existing API or server (FastAPI recommended)
 
 **Note:**
 We have pre-configured examples: [server example](https://github.com/open-aibank/x402-tron-demo/tree/main/server) and [facilitator example](https://github.com/open-aibank/x402-tron-demo/tree/main/facilitator).
@@ -124,9 +124,9 @@ if __name__ == "__main__":
 
 When configuring protected routes, you specify:
 
-* **price**: Payment amount (e.g., "0.0001 USDT", or raw amount like "100")
-* **network**: TRON network identifier (e.g., `tron:nile`, `tron:mainnet`)
-* **pay_to**: Your TRON wallet address to receive payments
+- **price**: Payment amount (e.g., "0.0001 USDT", or raw amount like "100")
+- **network**: TRON network identifier (e.g., `tron:nile`, `tron:mainnet`)
+- **pay_to**: Your TRON wallet address to receive payments
 
 When a request is made to these routes without payment, your server will respond with the HTTP 402 Payment Required code and payment instructions.
 

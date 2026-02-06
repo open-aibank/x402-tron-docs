@@ -71,5 +71,5 @@ x402-tron supports the following TRON networks:
 Ready to build? Start here:
 
 - [Quickstart for Sellers](getting-started/quickstart-for-sellers)
-- [Quickstart for Human](getting-started/quickstart-for-human)
+- [Quickstart for Agent](getting-started/quickstart-for-agent)
 - [Explore Core Concepts](core-concepts/http-402)
