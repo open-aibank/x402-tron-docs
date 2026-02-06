@@ -92,7 +92,7 @@ The signing flow:
 
 ### Token Allowances
 
-For the `exact` payment scheme, clients must approve the facilitator to spend tokens on their behalf. This is done via the standard TRC-20 `approve` function.
+For the `exact` payment scheme, clients must approve the PaymentPermit contract to transfer tokens from their wallet for payment settlement. This is done via the standard TRC-20 `approve` function.
 
 The x402-tron client SDK handles this automatically, but you can also manage allowances manually:
 

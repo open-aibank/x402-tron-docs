@@ -36,49 +36,74 @@ x402-tron 定义了一组标准化 HTTP 标头用于支付通信：
 
 当服务端返回 `402 Payment Required` 响应时，其 `PAYMENT-REQUIRED` 标头解码后包含以下结构数据：
 
-
 ```json
 {
-  "x402Version": 1,
+  "x402Version": 2,
+  "error": "Payment required",
+  "resource": {
+    "url": "http://example.com/protected",
+    "description": null,
+    "mimeType": null
+  },
   "accepts": [
     {
-      "scheme": "upto",
+      "scheme": "exact",
       "network": "tron:nile",
-      "amount": "1000000",
+      "amount": "100",
       "asset": "TXYZopYRdj2D9XRtbG411XZZ3kM5VkAeBf",
       "payTo": "<SELLER_TRON_ADDRESS>",
+      "maxTimeoutSeconds": 3600,
       "extra": {
+        "name": "Tether USD",
+        "version": "1",
         "fee": {
-          "feeAmount": "100000",
-          "feeTo": "TFacilitatorAddress..."
+          "facilitatorId": "http://localhost:8001",
+          "feeTo": "<FACILITATOR_TRON_ADDRESS>",
+          "feeAmount": "100"
         }
       }
     }
   ]
 }
 ```
+
+**关键字段说明：**
+
+| 字段 | 描述 |
+|------|------|
+| `x402Version` | 协议版本（当前为 2） |
+| `error` | 人类可读的错误信息 |
+| `resource` | 请求资源的相关信息 |
+| `accepts` | 接受的支付选项数组 |
+| `scheme` | 支付方案（`exact` 表示固定金额） |
+| `network` | TRON 网络标识符（`tron:nile`、`tron:mainnet`） |
+| `amount` | 支付金额（最小单位，如 100 = 0.0001 USDT） |
+| `asset` | TRC-20 代币合约地址 |
+| `payTo` | 卖方的 TRON 钱包地址 |
+| `maxTimeoutSeconds` | 支付有效期的最大时长 |
+| `extra.fee` | 促进者费用信息 |
+
 ## 支付签名结构 
 
 客户端在 `PAYMENT-SIGNATURE` 标头中以 TIP-712 签名载荷进行响应：
 
 ```json
 {
-  "x402Version": 1,
-  "scheme": "upto",
+  "x402Version": 2,
+  "scheme": "exact",
   "network": "tron:nile",
   "payload": {
     "signature": "0x...",
     "authorization": {
-      "from": "TClientAddress...",
-      "to": "TSellerAddress...",
-      "value": "1000000",
-      "validAfter": 0,
-      "validBefore": 1738678164,
-      "nonce": "0x..."
+      "from": "<CLIENT_TRON_ADDRESS>",
+      "to": "<SELLER_TRON_ADDRESS>",
+      "value": "100",
+      "validAfter": 1770364361,
+      "validBefore": 1770367961,
+      "nonce": "238244758379819673006209461499601971084"
     }
   }
 }
-
 ```
 
 ## 总结 

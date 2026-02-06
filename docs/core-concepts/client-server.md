@@ -25,7 +25,7 @@ Clients can include:
 
 - **Initiate requests:** Send an HTTP request to the resource server.
 - **Handle payment requirements:** Read the `402 Payment Required` response and extract payment details.
-- **Manage token allowances:** Ensure the facilitator is approved to spend tokens on behalf of the client.
+- **Manage token allowances:** Approve the PaymentPermit contract to transfer tokens from the client's wallet for payment settlement.
 - **Prepare payment payload:** Use the provided payment requirements to construct a TIP-712 signed payment payload.
 - **Resubmit request with payment:** Retry the request with the `PAYMENT-SIGNATURE` header containing the signed payment payload.
 
