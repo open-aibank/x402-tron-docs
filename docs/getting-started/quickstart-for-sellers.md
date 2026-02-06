@@ -17,7 +17,7 @@ Before you begin, ensure you have:
 * An existing API or server (FastAPI recommended)
 
 **Note:**
-We have pre-configured [examples available in the demo repo](https://github.com/open-aibank/x402-tron-demo), including examples for Python (FastAPI server) and facilitator setup.
+We have pre-configured examples: [server example](https://github.com/open-aibank/x402-tron-demo/tree/main/server) and [facilitator example](https://github.com/open-aibank/x402-tron-demo/tree/main/facilitator).
 
 ### 1. Install Dependencies
 
@@ -130,7 +130,7 @@ To verify:
 
 1. Make a request to your endpoint (e.g., `curl http://localhost:8000/protected`).
 2. The server responds with a 402 Payment Required, including payment instructions in the `PAYMENT-REQUIRED` header.
-3. Complete the payment using a compatible client. This typically involves signing a TIP-712 payment payload, which is handled by the client SDK detailed in the [Quickstart for Buyers](quickstart-for-buyers) or [Quickstart for Agent](quickstart-for-agent).
+3. Complete the payment using a compatible client. This typically involves signing a TIP-712 payment payload, which is handled by the client SDK detailed in the [Quickstart for Buyers](/getting-started/quickstart-for-buyers) or [Quickstart for Agent](/getting-started/quickstart-for-agent).
 4. Retry the request with the `PAYMENT-SIGNATURE` header containing the signed payment payload.
 5. The server verifies the payment via the facilitator and, if valid, returns your actual API response.
 
@@ -197,15 +197,15 @@ x402-tron uses simple network identifiers:
 | TRON Nile Testnet | `tron:nile` |
 | TRON Shasta Testnet | `tron:shasta` |
 
-See [Network Support](../core-concepts/network-and-token-support) for the full list.
+See [Network Support](/core-concepts/network-and-token-support) for the full list.
 
 ---
 
 ### Next Steps
 
 * Check out the [demo examples](https://github.com/open-aibank/x402-tron-demo/tree/main/server) for more complex payment flows
-* Explore [Core Concepts](../core-concepts/http-402) to understand how x402-tron works
-* Get started as a [buyer](quickstart-for-buyers) or set up an [AI agent](quickstart-for-agent)
+* Explore [Core Concepts](/core-concepts/http-402) to understand how x402-tron works
+* Get started as a [buyer](/getting-started/quickstart-for-buyers) or set up an [AI agent](/getting-started/quickstart-for-agent)
 
 ### Summary
 

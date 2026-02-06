@@ -99,9 +99,9 @@ curl -fsSL https://raw.githubusercontent.com/open-aibank/openclaw-extension/refs
 
 **下一步：**
 
-- 设置您自己的[付费 API](quickstart-for-sellers) 供代理使用
-- 了解 [HTTP 402](../core-concepts/http-402) 支付协议
-- 探索[网络支持](../core-concepts/network-and-token-support)了解代币详情
+- 设置您自己的[付费 API](/getting-started/quickstart-for-sellers) 供代理使用
+- 了解 [HTTP 402](/core-concepts/http-402) 支付协议
+- 探索[网络支持](/core-concepts/network-and-token-support)了解代币详情
 
 **参考资料：**
 

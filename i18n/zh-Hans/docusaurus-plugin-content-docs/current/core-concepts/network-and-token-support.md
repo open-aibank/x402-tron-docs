@@ -139,7 +139,7 @@ const client = new X402Client().register('tron:*', new UptoTronClientMechanism(s
 - **Gas 资源储备**：一个持有充足 **TRX** 的钱包，用于支付链上交易产生的**能量 (Energy)** 和**带宽 (Bandwidth)** 费用。
 - **代码部署**：拉取并配置 x402-tron 促进者服务代码。
 
-> **深入了解**：请查阅 [促进者 (Facilitator)](facilitator) 文档以获取详细的配置指南与 API 参考。
+> **深入了解**：请查阅 [促进者 (Facilitator)](/core-concepts/facilitator) 文档以获取详细的配置指南与 API 参考。
 
 ### 快速参考
 
@@ -181,6 +181,6 @@ x402-tron 专为 TRON 区块链架构深度定制，提供了原生的 TRC-20 �
 
 ### 下一步探索
 
-- [卖方快速入门](../getting-started/quickstart-for-sellers) — 快速搭建服务端，开始接收 TRON 链上支付。
-- [核心概念](http-402) — 深入理解 x402-tron 协议的底层运行机制。
-- [促进者](facilitator) — 掌握促进者 (Facilitator) 在结算体系中的核心作用。
+- [卖方快速入门](/getting-started/quickstart-for-sellers) — 快速搭建服务端，开始接收 TRON 链上支付。
+- [核心概念](/core-concepts/http-402) — 深入理解 x402-tron 协议的底层运行机制。
+- [促进者](/core-concepts/facilitator) — 掌握促进者 (Facilitator) 在结算体系中的核心作用。

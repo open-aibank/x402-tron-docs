@@ -271,8 +271,8 @@ if response.status_code == 200:
 
 **Next Steps:**
 
-- Explore [Core Concepts](../core-concepts/http-402) to understand the protocol
-- Check out [Network Support](../core-concepts/network-and-token-support) for token details
+- Explore [Core Concepts](/core-concepts/http-402) to understand the protocol
+- Check out [Network Support](/core-concepts/network-and-token-support) for token details
 
 **References:**
 

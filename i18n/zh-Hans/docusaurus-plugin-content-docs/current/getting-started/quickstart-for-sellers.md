@@ -126,7 +126,7 @@ python main.py
 
 1.  **发起请求**：向受保护的端点发送请求（例如：`curl -v http://localhost:8000/protected`）。
 2.  **接收挑战**：服务器应响应 `402 Payment Required` 状态码，并在响应头 `PAYMENT-REQUIRED` 中包含 Base64 编码的支付说明。
-3.  **客户端签名**：使用兼容的客户端完成支付动作。这涉及解析支付说明并签署 TIP-712 载荷（详情请参阅 [买方快速入门](quickstart-for-buyers) 中的 SDK 用法）。
+3.  **客户端签名**：使用兼容的客户端完成支付动作。这涉及解析支付说明并签署 TIP-712 载荷（详情请参阅 [买方快速入门](/getting-started/quickstart-for-buyers) 中的 SDK 用法）。
 4.  **重试请求**：客户端携带包含已签名载荷的 `PAYMENT-SIGNATURE` 标头，再次发起请求。
 5.  **验证通过**：服务器通过促进者验证签名及结算状态。若验证成功，服务器将返回 `200 OK` 及实际的 API 响应数据。
 
@@ -195,13 +195,13 @@ x402-tron 使用标准化的标识符字符串来区分不同的 TRON 网络环�
 | **TRON Nile** (测试网) | `tron:nile` |
 | **TRON Shasta** (测试网) | `tron:shasta` |
 
-如需查看支持的代币与网络完整列表，请参阅 [网络支持](../core-concepts/network-and-token-support)。
+如需查看支持的代币与网络完整列表，请参阅 [网络支持](/core-concepts/network-and-token-support)。
 
 ## 下一步 (Next Steps)
 
 * **参考示例**：查看 [服务器示例](https://github.com/open-aibank/x402-tron-demo/tree/main/server) 以了解更复杂的支付流程与最佳实践。
-* **深入原理**：探索 [核心概念](../core-concepts/http-402) 以全面理解 x402-tron 的协议设计。
-* **客户端集成**：阅读 [买家快速入门](quickstart-for-buyers) 或 [AI 代理快速入门](quickstart-for-agent)，从客户端视角体验支付流程。
+* **深入原理**：探索 [核心概念](/core-concepts/http-402) 以全面理解 x402-tron 的协议设计。
+* **客户端集成**：阅读 [买家快速入门](/getting-started/quickstart-for-buyers) 或 [AI 代理快速入门](/getting-started/quickstart-for-agent)，从客户端视角体验支付流程。
 
 ## 总结 (Summary)
 

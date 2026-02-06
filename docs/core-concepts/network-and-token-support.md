@@ -134,7 +134,7 @@ You can run your own facilitator to verify and settle payments on TRON. The faci
 2. A wallet with TRX for gas/energy fees
 3. The x402-tron facilitator code
 
-See the [Facilitator](facilitator) documentation for more details.
+See the [Facilitator](/core-concepts/facilitator) documentation for more details.
 
 ### Quick Reference
 
@@ -180,6 +180,6 @@ x402-tron's network support is designed specifically for TRON blockchain with na
 
 Next, explore:
 
-- [Quickstart for Sellers](../getting-started/quickstart-for-sellers) — Start accepting payments on TRON
-- [Core Concepts](http-402) — Learn how x402-tron works under the hood
-- [Facilitator](facilitator) — Understand the role of facilitators
+- [Quickstart for Sellers](/getting-started/quickstart-for-sellers) — Start accepting payments on TRON
+- [Core Concepts](/core-concepts/http-402) — Learn how x402-tron works under the hood
+- [Facilitator](/core-concepts/facilitator) — Understand the role of facilitators

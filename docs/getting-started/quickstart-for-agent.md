@@ -102,9 +102,9 @@ When deploying agents with payment capabilities:
 
 **Next Steps:**
 
-- Set up your own [paid API](quickstart-for-sellers) for agents to consume
-- Learn about [HTTP 402](../core-concepts/http-402) payment protocol
-- Explore [Network Support](../core-concepts/network-and-token-support) for token details
+- Set up your own [paid API](/getting-started/quickstart-for-sellers) for agents to consume
+- Learn about [HTTP 402](/core-concepts/http-402) payment protocol
+- Explore [Network Support](/core-concepts/network-and-token-support) for token details
 
 **References:**
 
