@@ -61,49 +61,6 @@ When configuring payment requirements, you specify:
 2. **Asset**: The TRC-20 token contract address
 3. **Amount**: The payment amount in the token's smallest unit (e.g., 1 USDT = 1000000 with 6 decimals)
 
-#### Example Configuration
-
-<Tabs>
-  <TabItem value="python" label="Python (FastAPI)">
-
-```python
-from x402.server import X402Server
-from x402.fastapi import x402_protected
-from x402.config import NetworkConfig
-
-server = X402Server()
-
-@app.get("/protected")
-@x402_protected(
-    server=server,
-    price="1 USDT",  # 1 USDT = 1000000 (6 decimals)
-    network=NetworkConfig.TRON_NILE,
-    pay_to="<YOUR_TRON_ADDRESS>",
-)
-async def protected_endpoint():
-    return {"data": "secret content"}
-```
-
-  </TabItem>
-  <TabItem value="typescript" label="TypeScript">
-
-```typescript
-import { X402Client, ExactTronClientMechanism, TronClientSigner } from '@open-aibank/x402-tron'
-import { TronWeb } from 'tronweb'
-
-const tronWeb = new TronWeb({
-  fullHost: 'https://nile.trongrid.io',
-  privateKey: 'your-private-key',
-})
-
-const signer = TronClientSigner.withPrivateKey(tronWeb, 'your-private-key', 'nile')
-
-const client = new X402Client().register('tron:*', new ExactTronClientMechanism(signer))
-```
-
-  </TabItem>
-</Tabs>
-
 ### Payment Schemes
 
 #### Exact Scheme
@@ -147,27 +104,7 @@ See the [Facilitator](/core-concepts/facilitator) documentation for more details
 
 ### Adding Custom Tokens
 
-To add support for custom TRC-20 tokens:
-
-<Tabs>
-  <TabItem value="python" label="Python">
-
-```python
-from x402.tokens import TokenRegistry, TokenInfo
-
-# Register a custom token
-TokenRegistry.register_token(
-    network="tron:nile",
-    symbol="MYTOKEN",
-    info=TokenInfo(
-        address="TYourTokenContractAddress",
-        decimals=18,
-    )
-)
-```
-
-  </TabItem>
-</Tabs>
+Custom TRC-20 tokens can be supported by registering them in the TokenRegistry. See the [Quickstart for Sellers](/getting-started/quickstart-for-sellers) for implementation details.
 
 ### Summary
 

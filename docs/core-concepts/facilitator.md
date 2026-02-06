@@ -45,26 +45,9 @@ To use x402-tron, you need access to a facilitator service. You have two options
 1. **Run Your Own Facilitator (Self-Hosted):** You can deploy and manage your own facilitator instance. This gives you full control over fees and energy management.
 2. **Use Official Facilitator (Coming Soon):** We are working on a hosted, official facilitator service that you can use without managing infrastructure. Stay tuned for updates!
 
-### Running Your Own Facilitator
+### Facilitator Endpoints
 
-x402-tron includes a ready-to-use facilitator implementation in the [demo repository](https://github.com/open-aibank/x402-tron-demo):
-
-```bash
-git clone https://github.com/open-aibank/x402-tron-demo.git
-cd x402-tron-demo/facilitator
-
-# Configure environment variables (copy .env.example to .env and set your keys)
-cp .env.example .env
-
-python main.py
-```
-
-The facilitator requires:
-
-* **TRON_PRIVATE_KEY**: Private key for the facilitator wallet
-* **TRX balance**: For energy and bandwidth costs
-
-#### Facilitator Endpoints
+A facilitator exposes the following API endpoints:
 
 | Endpoint | Method | Description |
 |----------|--------|-------------|
@@ -73,46 +56,7 @@ The facilitator requires:
 | `/verify` | POST | Verify a payment payload |
 | `/settle` | POST | Settle payment on-chain |
 
-### Interaction Flow
-
-1. `Client` makes an HTTP request to a `resource server`
-2. `Resource server` responds with a `402 Payment Required` status and payment requirements.
-3. `Client` creates a TIP-712 signed `Payment Payload` based on the requirements.
-4. `Client` sends the HTTP request with the `PAYMENT-SIGNATURE` header to the `resource server`.
-5. `Resource server` verifies the `Payment Payload` by POSTing to the `/verify` endpoint of the `facilitator server`.
-6. `Facilitator server` verifies the TIP-712 signature and returns a `Verification Response`.
-7. If valid, the resource server performs the work to fulfill the request.
-8. `Resource server` settles the payment by POSTing to the `/settle` endpoint of the `facilitator server`.
-9. `Facilitator server` calls `permitTransferFrom` on the PaymentPermit contract to execute the token transfer on the TRON blockchain.
-10. `Facilitator server` waits for the transaction to be confirmed.
-11. `Facilitator server` returns a `Settlement Response` with the transaction hash.
-12. `Resource server` returns a `200 OK` response with the content and `PAYMENT-RESPONSE` header.
-
-### Facilitator Configuration
-
-<Tabs>
-  <TabItem value="python" label="Python">
-
-```python
-from x402.mechanisms.facilitator import ExactTronFacilitatorMechanism
-from x402.signers.facilitator import TronFacilitatorSigner
-
-# Initialize facilitator signer
-facilitator_signer = TronFacilitatorSigner.from_private_key(
-    "your-private-key",
-    network="nile",  # or "mainnet"
-)
-
-# Initialize facilitator mechanism
-facilitator_mechanism = ExactTronFacilitatorMechanism(
-    facilitator_signer,
-    fee_to=facilitator_signer.get_address(),
-    base_fee=1_000_000,  # 1 USDT fee
-)
-```
-
-  </TabItem>
-</Tabs>
+For implementation details, see [Quickstart for Sellers](/getting-started/quickstart-for-sellers).
 
 ### Fee Structure
 
