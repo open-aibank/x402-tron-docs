@@ -1,34 +1,53 @@
 ---
 title: 'Quickstart for Agent'
-description: 'This guide introduces how AI agents can make autonomous payments using x402-tron on TRON blockchain via OpenClaw skills.'
+description: 'Enable AI agents to make autonomous payments on TRON blockchain using the tron_x402_payment skill.'
 ---
 
-AI agents can use x402-tron to autonomously pay for services and APIs via [OpenClaw](https://github.com/open-aibank/openclaw-extension) skills.
+x402-tron is designed for the Agentic Web. AI agents can autonomously negotiate and pay for resources using the `tron_x402_payment` skill.
 
-## tron-x402-payment Skill
+This skill enables agents to:
 
-**Get the skill on ClawHub:**
+- Detect `402 Payment Required` responses
+- Sign TIP-712 payment authorizations automatically
+- Manage wallet balances and handle the payment flow
 
-| Skill | Description |
-|-------|-------------|
-| [tron-x402-payment](https://clawhub.ai/wzc1206/tron-x402-payment) | Production skill for x402 payments on TRON |
-| [tron-x402-payment-demo](https://clawhub.ai/wzc1206/tron-x402-payment-demo) | Demo skill for testing on TRON Nile testnet |
+---
 
-## Security Considerations
+## Configuration
 
-When deploying agents with payment capabilities:
+Configure your agent's wallet credentials via environment variables:
 
-- **Limit wallet balance**: Only fund the agent wallet with what it needs
-- **Use testnet first**: Always test on TRON Nile before mainnet
-- **Monitor transactions**: Track agent spending on [TronScan](https://tronscan.org)
-- **Secure private keys**: Store credentials securely
+```bash
+export TRON_PRIVATE_KEY="your_private_key_here"
+export TRON_GRID_API_KEY="your_trongrid_api_key_here"  # Recommended to avoid RPC rate limits
+```
+
+## Installation
+
+Add the [tron_x402_payment](https://github.com/open-aibank/openclaw-extension/tree/main/skills/tron_x402_payment) skill to your agentic tools:
+
+| Tool | Installation |
+|------|--------------|
+| **OpenClaw** | `npx clawhub install tron-x402-payment` |
+| **opencode** | Copy the skill to `.opencode/skill/` directory |
+
+## Try It Out
+
+Instruct your agent to access `https://x402-tron-demo.aibank.io/protected-nile`. The agent will automatically detect the payment requirement, sign the authorization, and retrieve the protected resource.
+
+## Security Best Practices
+
+- **Limit wallet balance** — Only fund the agent wallet with what it needs for operations
+- **Test on Nile first** — Validate your integration on testnet before mainnet deployment
+- **Monitor transactions** — Track agent spending on [TronScan](https://tronscan.org)
+- **Secure credentials** — Store private keys using secure environment management
 
 ---
 
 ## Next Steps
 
-- Set up your own [paid API](/getting-started/quickstart-for-sellers) for agents to consume
-- Learn about [HTTP 402](/core-concepts/http-402) payment protocol
+- [Set up a paid API](/getting-started/quickstart-for-sellers) for agents to consume
+- [Learn about HTTP 402](/core-concepts/http-402) payment protocol
 
 ## References
 

@@ -84,6 +84,12 @@ from x402_tron.mechanisms.client import ExactTronClientMechanism
 from x402_tron.signers.client import TronClientSigner
 
 
+# ========== Configuration ==========
+# The x402-tron server URL you want to access
+SERVER_URL = "http://localhost:8000/protected"  # Replace with your target server
+# ====================================
+
+
 async def main():
     # Configure signer
     signer = TronClientSigner.from_private_key(
@@ -101,7 +107,7 @@ async def main():
         client = X402HttpClient(http_client, x402_client)
 
         # Make request - payment is handled automatically
-        response = await client.get("http://localhost:8000/protected")
+        response = await client.get(SERVER_URL)
 
         print(f"Status: {response.status_code}")
         print(f"Response: {response.json()}")
@@ -120,6 +126,11 @@ import { X402Client, X402FetchClient, ExactTronClientMechanism, TronClientSigner
 
 const TRON_PRIVATE_KEY = process.env.TRON_PRIVATE_KEY!
 
+// ========== Configuration ==========
+// The x402-tron server URL you want to access
+const SERVER_URL = 'http://localhost:8000/protected' // Replace with your target server
+// ====================================
+
 async function main(): Promise<void> {
   // Configure TronWeb
   const tronWeb = new TronWeb({
@@ -136,7 +147,7 @@ async function main(): Promise<void> {
   const client = new X402FetchClient(x402Client)
 
   // Make request - payment is handled automatically
-  const response = await client.get('http://localhost:8000/protected')
+  const response = await client.get(SERVER_URL)
 
   console.log(`Status: ${response.status}`)
 
