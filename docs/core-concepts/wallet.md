@@ -3,9 +3,6 @@ title: "Wallet"
 description: "This page explains the role of the **wallet** in the x402-tron protocol."
 ---
 
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
-
 In x402-tron, a TRON wallet is both a payment mechanism and a form of unique identity for buyers and sellers. Wallet addresses are used to send, receive, and verify payments, while also serving as identifiers within the protocol.
 
 ### Role of the Wallet
@@ -35,47 +32,6 @@ A seller's TRON wallet address is included in the payment requirements provided 
 TRON uses base58-encoded addresses that start with 'T'. For example:
 - Example: `TXxx...xxxX` (Base58 encoded, starts with `T`)
 
-### Creating a Wallet Signer
-
-<Tabs>
-  <TabItem value="python" label="Python">
-
-```python
-from x402.signers.client import TronClientSigner
-
-# From private key
-signer = TronClientSigner.from_private_key(
-    private_key="your-private-key",
-    network="nile"  # or "mainnet", "shasta"
-)
-
-print(f"Address: {signer.get_address()}")
-```
-
-  </TabItem>
-  <TabItem value="typescript" label="TypeScript">
-
-```typescript
-import { TronWeb } from 'tronweb';
-import { TronClientSigner } from '@open-aibank/x402-tron';
-
-const tronWeb = new TronWeb({
-  fullHost: 'https://nile.trongrid.io',
-  privateKey: 'your-private-key',
-});
-
-const signer = TronClientSigner.withPrivateKey(
-  tronWeb,
-  'your-private-key',
-  'nile'
-);
-
-console.log(`Address: ${signer.getAddress()}`);
-```
-
-  </TabItem>
-</Tabs>
-
 ### TIP-712 Signing
 
 x402-tron uses TIP-712 (TRON's implementation of EIP-712) for structured data signing. This provides:
@@ -94,41 +50,7 @@ The signing flow:
 
 For the `exact` payment scheme, clients must approve the PaymentPermit contract to transfer tokens from their wallet for payment settlement. This is done via the standard TRC-20 `approve` function.
 
-The x402-tron client SDK handles this automatically, but you can also manage allowances manually:
-
-<Tabs>
-  <TabItem value="python" label="Python">
-
-```python
-async def check_my_allowance():
-    # Check if approval is needed
-    allowance = await signer.check_allowance(
-        token_address="TXYZopYRdj2D9XRtbG411XZZ3kM5VkAeBf",
-        required_amount=1000000,
-        network="nile"  # or "mainnet", "shasta"
-    )
-
-    if allowance < required_amount:
-        # SDK will auto-approve when needed
-        pass
-```
-
-  </TabItem>
-  <TabItem value="typescript" label="TypeScript">
-
-```typescript
-// Check if approval is needed
-const allowance = await signer.checkAllowance(
-  'TXYZopYRdj2D9XRtbG411XZZ3kM5VkAeBf',
-  BigInt(1000000),
-  'nile'  // or 'mainnet', 'shasta'
-);
-
-// SDK will auto-approve when needed
-```
-
-  </TabItem>
-</Tabs>
+The x402-tron client SDK handles this automatically.
 
 ### Network-Specific Endpoints
 

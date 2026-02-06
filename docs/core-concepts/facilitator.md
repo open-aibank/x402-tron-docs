@@ -14,7 +14,7 @@ The facilitator is a service that:
 
 * Verifies payment payloads (TIP-712 signatures) submitted by clients.
 * Settles payments on the TRON blockchain on behalf of servers.
-* Manages token transfers using the `transferFrom` mechanism.
+* Executes token transfers by calling the `permitTransferFrom` method of the PaymentPermit contract.
 
 By using a facilitator, servers do not need to maintain direct TRON blockchain connectivity or implement payment verification logic themselves. This reduces operational complexity and ensures accurate, real-time validation of transactions.
 
@@ -83,7 +83,7 @@ The facilitator requires:
 6. `Facilitator server` verifies the TIP-712 signature and returns a `Verification Response`.
 7. If valid, the resource server performs the work to fulfill the request.
 8. `Resource server` settles the payment by POSTing to the `/settle` endpoint of the `facilitator server`.
-9. `Facilitator server` executes `transferFrom` on the TRON blockchain.
+9. `Facilitator server` calls `permitTransferFrom` on the PaymentPermit contract to execute the token transfer on the TRON blockchain.
 10. `Facilitator server` waits for the transaction to be confirmed.
 11. `Facilitator server` returns a `Settlement Response` with the transaction hash.
 12. `Resource server` returns a `200 OK` response with the content and `PAYMENT-RESPONSE` header.

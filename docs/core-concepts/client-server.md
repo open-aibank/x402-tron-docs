@@ -61,43 +61,6 @@ The typical flow between a client and a server in the x402-tron protocol is as f
 5. **Server settles the payment** via the facilitator which submits the transaction to TRON blockchain.
 6. **Server responds with the requested resource**, including a `PAYMENT-RESPONSE` header (Base64-encoded) with settlement confirmation including the TRON transaction hash.
 
-### Example Flow
-
-```
-Client                    Server                  Facilitator            TRON
-  |                         |                         |                    |
-  |   GET /protected        |                         |                    |
-  |------------------------>|                         |                    |
-  |                         |                         |                    |
-  |   402 Payment Required  |                         |                    |
-  |   PAYMENT-REQUIRED: ... |                         |                    |
-  |<------------------------|                         |                    |
-  |                         |                         |                    |
-  |  [Sign TIP-712 payload] |                         |                    |
-  |                         |                         |                    |
-  |   GET /protected        |                         |                    |
-  |   PAYMENT-SIGNATURE:... |                         |                    |
-  |------------------------>|                         |                    |
-  |                         |   POST /verify          |                    |
-  |                         |------------------------>|                    |
-  |                         |   {valid: true}         |                    |
-  |                         |<------------------------|                    |
-  |                         |                         |                    |
-  |                         |   [Do work]             |                    |
-  |                         |                         |                    |
-  |                         |   POST /settle          |                    |
-  |                         |------------------------>|                    |
-  |                         |                         |  transferFrom      |
-  |                         |                         |===================>|
-  |                         |                         |  tx confirmed      |
-  |                         |   {tx_hash: ...}        |<==================|
-  |                         |<------------------------|                    |
-  |   200 OK                |                         |                    |
-  |   PAYMENT-RESPONSE: ... |                         |                    |
-  |   [content]             |                         |                    |
-  |<------------------------|                         |                    |
-```
-
 ### Summary
 
 In the x402-tron protocol:

@@ -1,6 +1,3 @@
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
-
 # 钱包
 
 在 x402-tron 协议中，TRON 钱包不仅是资金的容器，更是买方（客户端）和卖方（服务端）在去中心化网络中的**核心身份标识**。
@@ -36,40 +33,6 @@ import TabItem from '@theme/TabItem';
 TRON 网络使用 **Base58** 编码格式的地址，且固定以字符 `T` 开头。
 - 示例：`TXxx...xxxX`（Base58 编码，以 `T` 开头）
 
-## 创建钱包签名器
-
-```python
-from x402.signers.client import TronClientSigner
-
-# 从私钥创建
-signer = TronClientSigner.from_private_key(
-    private_key="your-private-key",
-    network="nile"  # 或 "mainnet", "shasta"
-)
-
-print(f"Address: {signer.get_address()}")
-```
-
-
-```typescript
-import { TronWeb } from 'tronweb';
-import { TronClientSigner } from '@open-aibank/x402-tron';
-
-const tronWeb = new TronWeb({
-  fullHost: 'https://nile.trongrid.io',
-  privateKey: 'your-private-key',
-});
-
-const signer = TronClientSigner.withPrivateKey(
-  tronWeb,
-  'your-private-key',
-  'nile'
-);
-
-console.log(`Address: ${signer.getAddress()}`);
-```
-
-
 ## TIP-712 结构化签名
 
 x402-tron 协议采用 **TIP-712** 标准（即 TRON 网络对 EIP-712 的实现）来执行结构化数据签名。
@@ -89,35 +52,9 @@ x402-tron 协议采用 **TIP-712** 标准（即 TRON 网络对 EIP-712 的实现
 
 ## 代币授权 
 
-在使用 `upto` 支付方案时，客户端必须预先**授权**促进者 (Facilitator) 代表其扣除代币。该操作通过调用标准的 TRC-20 `approve` 函数实现。
+对于 `exact` 支付方案，客户端必须授权 PaymentPermit 合约从其钱包转移代币以完成支付结算。该操作通过调用标准的 TRC-20 `approve` 函数实现。
 
-x402-tron 客户端 SDK 通常会自动处理此授权逻辑，但您也可以根据需要手动管理额度：
-
-
-```python
-async def check_my_allowance():
-    # 检查是否需要批准
-    allowance = await signer.check_allowance(
-        token_address="TXYZopYRdj2D9XRtbG411XZZ3kM5VkAeBf",
-        required_amount=1000000,
-        network="nile"  # 或 "mainnet", "shasta"
-    )
-
-    if allowance < required_amount:
-        # SDK 将在需要时自动批准
-        pass
-```
-
-```typescript
-// Check if approval is needed
-const allowance = await signer.checkAllowance(
-  'TXYZopYRdj2D9XRtbG411XZZ3kM5VkAeBf',
-  BigInt(1000000),
-  'nile'  // or 'mainnet', 'shasta'
-);
-
-// SDK will auto-approve when needed
-```
+x402-tron 客户端 SDK 会自动处理此授权逻辑。
 
 ## 网络节点端点 
 

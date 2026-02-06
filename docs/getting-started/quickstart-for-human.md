@@ -14,10 +14,27 @@ Before you begin, ensure you have:
 - Python 3.10+ and pip, or Node.js 18+ and npm
 - A service that requires payment via x402-tron
 
-**Note:**
-We have pre-configured [client examples in the demo repo](https://github.com/open-aibank/x402-tron-demo/tree/main/client/terminal).
+**Pre-configured Examples:** We have ready-to-run [client examples in the demo repo](https://github.com/open-aibank/x402-tron-demo/tree/main/client/terminal).
 
-### 1. Install Dependencies
+---
+
+### Configuration Reference
+
+Here are the key configuration items you'll need:
+
+| Item | Description | How to Get |
+|------|-------------|------------|
+| **TRON Private Key** | Your wallet's private key for signing payments | Export from [TronLink](https://www.tronlink.org/) wallet |
+| **Test TRX** | Gas fees for testnet transactions | [Nile Faucet](https://nileex.io/join/getJoinPage) |
+| **Test USDT** | Test tokens for making payments | [Nile USDT Faucet](https://nileex.io/join/getJoinPage) or ask in community |
+
+**Security:** Never share your private key! Store it securely in environment variables, not in code.
+
+```bash
+export TRON_PRIVATE_KEY=your_private_key_here
+```
+
+### 1. Install x402-tron SDK
 
 <Tabs>
   <TabItem value="python" label="Python">
@@ -145,77 +162,73 @@ main().catch(console.error)
   </TabItem>
 </Tabs>
 
-### 3. Understanding the Payment Flow
+### 3. Handle Errors
 
-When you make a request to a protected endpoint:
-
-1. **Initial Request**: Client sends GET/POST to the protected endpoint
-2. **402 Response**: Server returns `402 Payment Required` with payment details
-3. **Payment Creation**: Client SDK reads payment requirements and creates a TIP-712 signed payload
-4. **Retry with Payment**: Client retries request with `PAYMENT-SIGNATURE` header
-5. **Verification & Settlement**: Server verifies payment via facilitator and settles on TRON
-6. **Response**: Server returns the protected content with `PAYMENT-RESPONSE` header
-
-### 4. Token Allowance Management
-
-For the `exact` scheme, clients need to approve the PaymentPermit contract to transfer tokens from their wallet for payment settlement. The x402-tron client SDK handles this automatically, but you can also manage allowances manually:
+The SDK may throw errors during the payment process. Here's how to handle them:
 
 <Tabs>
   <TabItem value="python" label="Python">
 
 ```python
-# Check current allowance (SDK handles this automatically)
-allowance = await signer.check_allowance(
-    token="TXYZopYRdj2D9XRtbG411XZZ3kM5VkAeBf",  # USDT on Nile
-    amount=100,  # 0.0001 USDT
-    network="tron:nile"
+from x402_tron.exceptions import (
+    X402Error,
+    InsufficientAllowanceError,
+    SignatureCreationError,
+    UnsupportedNetworkError,
 )
-print(f"Current allowance: {allowance}")
 
-# Ensure sufficient allowance (auto-approves if needed)
-await signer.ensure_allowance(
-    token="TXYZopYRdj2D9XRtbG411XZZ3kM5VkAeBf",
-    amount=100,
-    network="tron:nile"
-)
+try:
+    response = await client.get("http://localhost:8000/protected")
+    
+    if response.status_code == 200:
+        print(f"Success: {response.json()}")
+    else:
+        print(f"Request failed: {response.status_code}")
+        print(response.text)
+
+except UnsupportedNetworkError as e:
+    # No mechanism registered for the network
+    print(f"Network not supported: {e}")
+
+except InsufficientAllowanceError as e:
+    # Token allowance insufficient
+    print(f"Insufficient allowance: {e}")
+
+except SignatureCreationError as e:
+    # Failed to sign payment
+    print(f"Signature failed: {e}")
+
+except X402Error as e:
+    # Other x402 errors
+    print(f"Payment error: {e}")
 ```
 
   </TabItem>
   <TabItem value="typescript" label="TypeScript">
 
 ```typescript
-// Check current allowance
-const allowance = await signer.checkAllowance(
-  'TXYZopYRdj2D9XRtbG411XZZ3kM5VkAeBf', // USDT on Nile
-  BigInt(100), // 0.0001 USDT
-  'tron:nile'
-)
-console.log(`Current allowance: ${allowance.toString()}`)
+try {
+  const response = await client.get('http://localhost:8000/protected')
+
+  if (response.status === 200) {
+    console.log('Success:', await response.json())
+  } else {
+    console.error(`Request failed: ${response.status}`)
+    console.error(await response.text())
+  }
+} catch (error) {
+  if (error.message.includes('No mechanism registered')) {
+    console.error('Network not supported - register the appropriate mechanism')
+  } else if (error.message.includes('allowance')) {
+    console.error('Insufficient token allowance')
+  } else {
+    console.error('Payment error:', error.message)
+  }
+}
 ```
 
   </TabItem>
 </Tabs>
-
-### 5. Result Handling
-
-After a successful payment, the server returns the protected content along with payment confirmation in the `PAYMENT-RESPONSE` header:
-
-```python
-response = await client.get("http://localhost:8000/protected")
-
-if response.status_code == 200:
-    # Access the protected content
-    data = response.json()
-    print(f"Response: {data}")
-    
-    # Check payment confirmation
-    payment_response = response.headers.get('payment-response')
-    if payment_response:
-        from x402_tron.encoding import decode_payment_payload
-        from x402_tron.types import SettleResponse
-        settle = decode_payment_payload(payment_response, SettleResponse)
-        print(f"Transaction: {settle.transaction}")
-```
 
 ### Summary
 

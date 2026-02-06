@@ -130,7 +130,7 @@ const client = new X402Client().register('tron:*', new UptoTronClientMechanism(s
 促进者作为协议的中间件，承担以下核心职责：
 
 1.  **验证载荷 (Verify)**：校验 TIP-712 签名的加密有效性及参数完整性。
-2.  **提交交易 (Submit)**：构建并向 TRON 区块链广播 `transferFrom` 交易。
+2.  **提交交易 (Submit)**：调用 PaymentPermit 合约的 `permitTransferFrom` 方法，向 TRON 区块链广播转账交易。
 3.  **监控确认 (Monitor)**：追踪交易在链上的确认状态，确保资金最终到账。
 
 **部署先决条件**
