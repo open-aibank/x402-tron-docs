@@ -83,7 +83,7 @@ from x402_tron.signers.client import TronClientSigner
 
 # ========== Configuration ==========
 # The x402-tron server URL you want to access
-SERVER_URL = "http://localhost:8000/protected"  # Replace with your target server
+SERVER_URL = "https://x402-tron-demo.aibank.io/protected-nile"  # Replace with your target server
 # ====================================
 
 
@@ -125,7 +125,7 @@ const TRON_PRIVATE_KEY = process.env.TRON_PRIVATE_KEY!
 
 // ========== Configuration ==========
 // The x402-tron server URL you want to access
-const SERVER_URL = 'http://localhost:8000/protected' // Replace with your target server
+const SERVER_URL = 'https://x402-tron-demo.aibank.io/protected-nile' // Replace with your target server
 // ====================================
 
 async function main(): Promise<void> {
