@@ -110,4 +110,4 @@ This interaction is stateless, HTTP-native, and compatible with both human appli
 Next, explore:
 
 - [Facilitator](/core-concepts/facilitator) — how servers verify and settle payments
-- [HTTP 402](/core-concepts/http-402) — how servers communicate payment requirements to clients
+- [Wallet](/core-concepts/wallet) — how to manage TRON wallets for payments

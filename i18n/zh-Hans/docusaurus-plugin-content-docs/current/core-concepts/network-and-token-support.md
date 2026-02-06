@@ -179,8 +179,3 @@ x402-tron 专为 TRON 区块链架构深度定制，提供了原生的 TRC-20 �
 - **安全机制**：**TIP-712** 机制确保了安全且最小化信任 (Trust-minimized) 的支付授权流程。
 - **扩展能力**：可通过 `TokenRegistry` 接口灵活扩展支持任意自定义的 **TRC-20 代币**。
 
-### 下一步探索
-
-- [卖方快速入门](/getting-started/quickstart-for-sellers) — 快速搭建服务端，开始接收 TRON 链上支付。
-- [核心概念](/core-concepts/http-402) — 深入理解 x402-tron 协议的底层运行机制。
-- [促进者](/core-concepts/facilitator) — 掌握促进者 (Facilitator) 在结算体系中的核心作用。

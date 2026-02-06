@@ -111,4 +111,4 @@ Client                    Server                  Facilitator            TRON
 接下来，请深入探索：
 
 - [促进者 (Facilitator)](/core-concepts/facilitator) — 了解服务端如何验证与结算支付
-- [HTTP 402](/core-concepts/http-402) — 详解服务端如何向客户端传达支付要求
+- [钱包 (Wallet)](/core-concepts/wallet) — 了解如何管理 TRON 钱包进行支付

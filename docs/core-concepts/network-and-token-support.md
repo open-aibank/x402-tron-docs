@@ -178,8 +178,3 @@ x402-tron's network support is designed specifically for TRON blockchain with na
 - TIP-712 provides secure, trust-minimizing payment authorization
 - Custom TRC-20 tokens can be added via TokenRegistry
 
-Next, explore:
-
-- [Quickstart for Sellers](/getting-started/quickstart-for-sellers) — Start accepting payments on TRON
-- [Core Concepts](/core-concepts/http-402) — Learn how x402-tron works under the hood
-- [Facilitator](/core-concepts/facilitator) — Understand the role of facilitators

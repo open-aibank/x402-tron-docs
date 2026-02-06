@@ -143,3 +143,10 @@ const allowance = await signer.checkAllowance(
 * **卖方接收**：卖方利用钱包地址作为接收资金的终端。
 * **身份标识**：钱包地址同时充当协议交互中的唯一身份 ID。
 * **自动化支持**：SDK 内置了代币授权额度的自动处理逻辑，简化了开发流程。
+
+## 下一步
+
+接下来，请深入探索：
+
+- [网络与代币支持](/core-concepts/network-and-token-support) — 查看支持的 TRON 网络环境及代币列表
+- [SDK 功能](/sdk-features) — 探索 x402-tron SDK 的完整功能

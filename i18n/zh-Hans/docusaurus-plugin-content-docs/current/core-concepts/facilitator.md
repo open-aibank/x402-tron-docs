@@ -133,6 +133,5 @@ x402-tron 协议的设计核心在于**最小化信任假设**：
 
 接下来，建议您深入了解：
 
-* [客户端 / 服务端](/core-concepts/client-server) — 详解双方在协议中的角色与职责。
-* [HTTP 402](/core-concepts/http-402) — 学习如何标准化地传递支付要求。
-* [网络支持](/core-concepts/network-and-token-support) — 查看支持的 TRON 网络环境及代币列表。
+* [钱包](/core-concepts/wallet) — 了解如何管理 TRON 钱包进行支付
+* [网络与代币支持](/core-concepts/network-and-token-support) — 查看支持的 TRON 网络环境及代币列表

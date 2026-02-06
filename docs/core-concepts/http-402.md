@@ -116,3 +116,8 @@ HTTP 402 is the foundation of the x402-tron protocol, enabling services to decla
 * Communicates necessary payment details (amount, token, TRON addresses)
 * Integrates seamlessly with standard HTTP workflows
 * Enables programmatic payments on TRON blockchain
+
+Next, explore:
+
+- [Client / Server](/core-concepts/client-server) — understand the roles and responsibilities of clients and servers
+- [Facilitator](/core-concepts/facilitator) — how servers verify and settle payments

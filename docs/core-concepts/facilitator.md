@@ -143,6 +143,5 @@ The facilitator acts as an independent verification and settlement layer within 
 
 Next, explore:
 
-* [Client / Server](/core-concepts/client-server) — understand the roles and responsibilities of clients and servers
-* [HTTP 402](/core-concepts/http-402) — understand how payment requirements are communicated to clients
-* [Network Support](/core-concepts/network-and-token-support) — see supported TRON networks and tokens
+* [Wallet](/core-concepts/wallet) — how to manage TRON wallets for payments
+* [Network and Token Support](/core-concepts/network-and-token-support) — supported networks and tokens

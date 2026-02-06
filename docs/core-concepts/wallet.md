@@ -154,3 +154,8 @@ TRON full nodes / API endpoints for each network:
 * Sellers use wallets to receive payments.
 * Wallet addresses also act as unique identifiers within the protocol.
 * The SDK handles token allowances automatically.
+
+Next, explore:
+
+- [Network and Token Support](/core-concepts/network-and-token-support) — supported networks and tokens
+- [SDK Features](/sdk-features) — explore the full capabilities of x402-tron SDKs
