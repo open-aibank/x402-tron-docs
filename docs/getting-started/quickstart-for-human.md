@@ -70,9 +70,6 @@ npm install @open-aibank/x402-tron tronweb
 
 <Tabs>
   <TabItem value="python" label="Python (httpx)">
-<b>x402-tron</b> provides async HTTP client support with automatic 402 payment handling.
-
-[Full example here](https://github.com/open-aibank/x402-tron-demo/tree/main/client/terminal)
 
 ```python
 import asyncio
@@ -118,7 +115,7 @@ asyncio.run(main())
 
   </TabItem>
   <TabItem value="typescript" label="TypeScript">
-[Full example here](https://github.com/open-aibank/x402-tron-demo/tree/main/client/ts)
+  
 
 ```typescript
 import { TronWeb } from 'tronweb'
@@ -189,7 +186,7 @@ from x402_tron.exceptions import (
 )
 
 try:
-    response = await client.get("http://localhost:8000/protected")
+    response = await client.get(SERVER_URL)
     
     if response.status_code == 200:
         print(f"Success: {response.json()}")
@@ -219,7 +216,7 @@ except X402Error as e:
 
 ```typescript
 try {
-  const response = await client.get('http://localhost:8000/protected')
+  const response = await client.get(SERVER_URL)
 
   if (response.status === 200) {
     console.log('Success:', await response.json())

@@ -147,13 +147,13 @@ Open a **new terminal window** and run:
 ```bash
 # Clone the demo repository
 git clone https://github.com/open-aibank/x402-tron-demo.git
-cd x402-tron-demo/facilitator
+cd x402-tron-demo
 
 # Install dependencies
 pip install -r requirements.txt
 
 # Copy and configure environment variables
-cp .env.example .env
+cp .env.sample .env
 ```
 
 **Configure `.env` file:**
@@ -171,7 +171,7 @@ TRON_GRID_API_KEY=your_trongrid_api_key_here
 **Start the facilitator:**
 
 ```bash
-python main.py
+./start.sh facilitator
 ```
 
 **Facilitator Endpoints:** Once running, the facilitator provides these endpoints on `http://localhost:8001`:
