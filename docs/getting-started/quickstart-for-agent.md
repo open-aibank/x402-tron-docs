@@ -1,9 +1,9 @@
 ---
 title: 'Quickstart for Agent'
-description: 'Enable AI agents to make autonomous payments on TRON blockchain using the tron_x402_payment skill.'
+description: 'Enable AI agents to make autonomous payments on TRON blockchain using the x402-payment-tron skill.'
 ---
 
-x402-tron is designed for the Agentic Web. AI agents can autonomously negotiate and pay for resources using the `tron_x402_payment` skill.
+x402-tron is designed for the Agentic Web. AI agents can autonomously negotiate and pay for resources using the `x402-payment-tron` skill.
 
 This skill enables agents to:
 
@@ -24,11 +24,11 @@ export TRON_GRID_API_KEY="your_trongrid_api_key_here"  # Recommended to avoid RP
 
 ## Installation
 
-Add the [tron_x402_payment](https://github.com/open-aibank/openclaw-extension/tree/main/skills/tron_x402_payment) skill to your agentic tools:
+Add the [x402-payment-tron](https://clawhub.ai/Hades-Ye/x402-payment-tron) skill to your agentic tools:
 
-| Tool | Installation |
-|------|--------------|
-| **OpenClaw** | `npx clawhub install tron-x402-payment` |
+| Tool         | Installation                                   |
+| ------------ | ---------------------------------------------- |
+| **OpenClaw** | `npx clawhub install tron-x402-payment`        |
 | **opencode** | Copy the skill to `.opencode/skill/` directory |
 
 ## Try It Out
