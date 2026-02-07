@@ -45,5 +45,5 @@ export TRON_GRID_API_KEY="your_trongrid_api_key_here"  # Recommended to avoid RP
 ## 参考资料
 
 - [OpenClaw 扩展库](https://github.com/open-aibank/openclaw-extension)
-- [ClawHub 上的 x402-payment-tron](https://clawhub.ai/wzc1206/x402-payment-tron)
-- [x402-tron 演示项目](https://clawhub.ai/Hades-Ye/x402-payment-tron)
+- [ClawHub 上的 x402-payment-tron](https://clawhub.ai/Hades-Ye/x402-payment-tron)
+- [x402-tron 演示项目](https://github.com/open-aibank/x402-tron-demo)
