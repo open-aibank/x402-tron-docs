@@ -10,7 +10,7 @@ import TabItem from '@theme/TabItem';
 
 * **验证载荷**：校验客户端提交的支付载荷（TIP-712 签名）的有效性。
 * **执行结算**：代表服务端将交易提交至 TRON 区块链进行结算。
-* **代币转移**：调用 PaymentPermit 合约的 `permitTransferFrom` 方法执行代币转账。
+* **代币转移**：通过调用 `PaymentPermit` 合约的 `permitTransferFrom` 方法来执行代币转移。
 
 通过引入促进者，服务端无需维护与 TRON 节点的直连，也无需自行实现复杂的签名验证逻辑。这不仅降低了运维复杂度，还能确保交易验证的准确性与实时性。
 
@@ -34,71 +34,27 @@ import TabItem from '@theme/TabItem';
 
 虽然开发者可以选择在本地自行实现验证与结算逻辑，但使用促进者能显著加速开发周期并确保协议实现的规范性。
 
-## 运行你自己的促进者
+### 促进者选项
 
-x402-tron 在 [演示仓库](https://github.com/open-aibank/x402-tron-demo) 中提供了一个**开箱即用**的促进者参考实现：
+要使用 x402-tron，您需要接入促进者服务（Facilitator）。目前有两种方案可供选择：
 
-
-```bash
-git clone https://github.com/open-aibank/x402-tron-demo.git
-cd x402-tron-demo/facilitator
-
-# 配置环境变量（复制 .env.example 到 .env 并设置你的密钥）
-cp .env.example .env
-
-python main.py
-```
-
-运行促进者服务需要具备以下条件：
-
-* **`TRON_PRIVATE_KEY`**：促进者钱包的私钥（用于签署并广播交易）。
-* **TRX 余额**：钱包中需持有足够的 TRX，用于支付交易执行时产生的**能量 (Energy)** 和 **带宽 (Bandwidth)** 费用。
+1. **运行您自己的促进者（自托管）：** 您可以部署并管理自己的促进者实例。这种方式让您能够完全掌控费用和能量（Energy）管理策略。
+2. **使用官方促进者（即将推出）：** 我们正在开发官方托管的促进者服务，届时您无需自行维护基础设施即可直接使用。敬请关注后续更新！
 
 
 ### 促进者 API 端点
+促进者提供以下 API 端点：
 
 | 端点 | 方法 | 描述 |
 | :--- | :--- | :--- |
+| `/` | GET | 获取服务基础信息 |
 | `/supported` | GET | 查询支持的功能配置 |
 | `/fee/quote` | POST | 获取预估费用报价 |
 | `/verify` | POST | 验证支付载荷有效性 |
 | `/settle` | POST | 执行链上结算 |
 
 
-## 交互流程 (Interaction Flow)
-
-1.  **初始请求**：`客户端 (Client)` 向 `资源服务器 (Resource Server)` 发起 HTTP 请求。
-2.  **支付要求**：`资源服务器` 返回 `402 Payment Required` 状态码，并附带支付要求详情。
-3.  **签名构建**：`客户端` 根据支付要求，构建并签署 TIP-712 `支付载荷 (Payment Payload)`。
-4.  **重试请求**：`客户端` 再次向 `资源服务器` 发送请求，并在 HTTP 头中包含 `PAYMENT-SIGNATURE`。
-5.  **验证请求**：`资源服务器` 调用 `促进者服务器 (Facilitator Server)` 的 `/verify` 端点，提交 `支付载荷` 进行验证。
-6.  **签名校验**：`促进者服务器` 校验 TIP-712 签名的有效性，并返回验证结果。
-7.  **业务处理**：若验证通过，`资源服务器` 执行请求的业务逻辑。
-8.  **发起结算**：`资源服务器` 调用 `促进者服务器` 的 `/settle` 端点请求结算支付。
-9.  **链上执行**：`促进者服务器` 调用 PaymentPermit 合约的 `permitTransferFrom` 方法在 TRON 区块链上执行代币转账。
-10. **交易确认**：`促进者服务器` 监控并等待交易在链上确认。
-11. **结算响应**：`促进者服务器` 返回包含交易哈希 (Tx Hash) 的结算结果。
-12. **最终响应**：`资源服务器` 向客户端返回 `200 OK` 响应及请求的内容，并在头中附带 `PAYMENT-RESPONSE`（包含结算凭证）。
-
-## 促进者配置
-
-```python
-from x402.mechanisms.facilitator import UptoTronFacilitatorMechanism
-from x402.signers.facilitator import TronFacilitatorSigner
-
-# 初始化促进者签名器
-facilitator_signer = TronFacilitatorSigner.from_private_key(
-    "your-private-key",
-    network="nile",  # 或 "mainnet" (主网)
-)
-
-# 初始化促进者机制
-facilitator_mechanism = UptoTronFacilitatorMechanism(
-    facilitator_signer,
-    fee_to=facilitator_signer.get_address(),
-    base_fee=1_000_000,  # 1 USDT 费用
-)
-```
+关于具体实现细节，请参阅 [卖家快速入门](/getting-started/quickstart-for-sellers)。
 
 ## 费用结构 (Fee Structure)
 
@@ -133,5 +89,5 @@ x402-tron 协议的设计核心在于**最小化信任假设**：
 
 接下来，建议您深入了解：
 
-* [钱包](/core-concepts/wallet) — 了解如何管理 TRON 钱包进行支付
-* [网络与代币支持](/core-concepts/network-and-token-support) — 查看支持的 TRON 网络环境及代币列表
+* [钱包](/core-concepts/wallet) — 了解如何管理用于支付的 TRON 钱包
+* [网络与代币支持](/core-concepts/network-and-token-support) — 了解支持的网络和代币

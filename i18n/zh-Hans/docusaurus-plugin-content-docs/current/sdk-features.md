@@ -29,7 +29,7 @@
 
 | 机制 | Python | TypeScript |
 |-----------|--------|------------|
-| upto/tron (TIP-712) | ✅ | ✅ |
+| exact/tron (TIP-712) | ✅ | ✅ |
 
 ## 签名器 
 
