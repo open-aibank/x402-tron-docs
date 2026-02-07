@@ -23,7 +23,7 @@ export TRON_GRID_API_KEY="your_trongrid_api_key_here"  # Recommended to avoid RP
 
 | 工具平台     | 安装方法                                   |
 | ------------ | ------------------------------------------ |
-| **OpenClaw** | `npx clawhub install tron-x402-payment`    |
+| **OpenClaw** | `npx clawhub install x402-payment-tron`    |
 | **opencode** | 将技能文件复制到 `.opencode/skill/` 目录中 |
 
 ## 快速体验
@@ -45,5 +45,5 @@ export TRON_GRID_API_KEY="your_trongrid_api_key_here"  # Recommended to avoid RP
 ## 参考资料
 
 - [OpenClaw 扩展库](https://github.com/open-aibank/openclaw-extension)
-- [ClawHub 上的 tron-x402-payment](https://clawhub.ai/wzc1206/tron-x402-payment)
-- [x402-tron 演示项目](https://github.com/open-aibank/x402-tron-demo)
+- [ClawHub 上的 x402-payment-tron](https://clawhub.ai/wzc1206/x402-payment-tron)
+- [x402-tron 演示项目](https://clawhub.ai/Hades-Ye/x402-payment-tron)

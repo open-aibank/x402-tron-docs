@@ -28,7 +28,7 @@ Add the [x402-payment-tron](https://clawhub.ai/Hades-Ye/x402-payment-tron) skill
 
 | Tool         | Installation                                   |
 | ------------ | ---------------------------------------------- |
-| **OpenClaw** | `npx clawhub install tron-x402-payment`        |
+| **OpenClaw** | `npx clawhub install x402-payment-tron`        |
 | **opencode** | Copy the skill to `.opencode/skill/` directory |
 
 ## Try It Out
@@ -52,5 +52,5 @@ Instruct your agent to access `https://x402-tron-demo.aibank.io/protected-nile`.
 ## References
 
 - [OpenClaw Extension](https://github.com/open-aibank/openclaw-extension)
-- [tron-x402-payment on ClawHub](https://clawhub.ai/wzc1206/tron-x402-payment)
+- [x402-payment-tron on ClawHub](https://clawhub.ai/Hades-Ye/x402-payment-tron)
 - [x402-tron Demo](https://github.com/open-aibank/x402-tron-demo)
