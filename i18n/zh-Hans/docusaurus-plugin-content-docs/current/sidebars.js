@@ -19,12 +19,12 @@ const sidebars = {
             {
               type: 'doc',
               id: 'getting-started/quickstart-for-human',
-              label: '人类用户',
+              label: '人类用户快速入门',
             },
             {
               type: 'doc',
               id: 'getting-started/quickstart-for-agent',
-              label: 'AI 代理',
+              label: 'AI 代理快速入门',
             },
           ],
         },

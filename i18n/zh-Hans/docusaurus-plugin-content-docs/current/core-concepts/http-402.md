@@ -36,6 +36,7 @@ x402-tron 定义了一组标准化 HTTP 标头用于支付通信：
 
 当服务端返回 `402 Payment Required` 响应时，其 `PAYMENT-REQUIRED` 标头解码后包含以下结构数据：
 
+
 ```json
 {
   "x402Version": 2,
@@ -66,22 +67,21 @@ x402-tron 定义了一组标准化 HTTP 标头用于支付通信：
   ]
 }
 ```
-
-**关键字段说明：**
+**关键字段：**
 
 | 字段 | 描述 |
-|------|------|
+|-------|-------------|
 | `x402Version` | 协议版本（当前为 2） |
-| `error` | 人类可读的错误信息 |
-| `resource` | 请求资源的相关信息 |
+| `error` | 人类可读的错误提示 |
+| `resource` | 关于请求资源的信息 |
 | `accepts` | 接受的支付选项数组 |
 | `scheme` | 支付方案（`exact` 表示固定金额） |
-| `network` | TRON 网络标识符（`tron:nile`、`tron:mainnet`） |
-| `amount` | 支付金额（最小单位，如 100 = 0.0001 USDT） |
+| `network` | TRON 网络标识符（`tron:nile`, `tron:mainnet`） |
+| `amount` | 支付金额，以最小单位计（例如：100 = 0.0001 USDT） |
 | `asset` | TRC-20 代币合约地址 |
-| `payTo` | 卖方的 TRON 钱包地址 |
+| `payTo` | 卖家的 TRON 钱包地址 |
 | `maxTimeoutSeconds` | 支付有效期的最大时长 |
-| `extra.fee` | 促进者费用信息 |
+| `extra.fee` | Facilitator 费用信息 |
 
 ## 支付签名结构 
 
@@ -104,20 +104,22 @@ x402-tron 定义了一组标准化 HTTP 标头用于支付通信：
     }
   }
 }
+
 ```
 
 ## 总结 
 
 HTTP 402 是 x402-tron 协议的基石，它赋能服务端直接在 HTTP 响应层面对接支付逻辑。通过这一标准状态码，协议实现了：
 
-* **发出支付信号**：明确标记资源为"付费访问"状态。
+
+
+* **发出支付信号**：明确标记资源为“付费访问”状态。
 * **传递支付参数**：精准传达金额、代币合约及接收方 TRON 地址等关键元数据。
 * **无缝集成**：完全兼容现有的标准 HTTP 工作流（无状态、RESTful）。
 * **程序化结算**：在 TRON 区块链上实现全自动、无需人工干预的支付流程。
 
 ## 下一步
-
 接下来，请深入探索：
 
-- [客户端 / 服务端](/core-concepts/client-server) — 了解双方在协议中的角色与职责
-- [促进者](/core-concepts/facilitator) — 了解服务端如何验证与结算支付
+- [客户端 / 服务器](/core-concepts/client-server) — 了解客户端和服务器的角色与职责
+- [Facilitator](/core-concepts/facilitator) — 了解服务器如何验证并结算支付
