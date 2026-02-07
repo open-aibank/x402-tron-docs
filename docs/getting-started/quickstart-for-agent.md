@@ -1,9 +1,9 @@
 ---
 title: 'Quickstart for Agent'
-description: 'Enable AI agents to make autonomous payments on TRON blockchain using the tron_x402_payment skill.'
+description: 'Enable AI agents to make autonomous payments on TRON blockchain using the x402-payment-tron skill.'
 ---
 
-x402-tron is designed for the Agentic Web. AI agents can autonomously negotiate and pay for resources using the `tron_x402_payment` skill.
+x402-tron is designed for the Agentic Web. AI agents can autonomously negotiate and pay for resources using the `x402-payment-tron` skill.
 
 This skill enables agents to:
 
@@ -24,11 +24,11 @@ export TRON_GRID_API_KEY="your_trongrid_api_key_here"  # Recommended to avoid RP
 
 ## Installation
 
-Add the [tron_x402_payment](https://github.com/open-aibank/openclaw-extension/tree/main/skills/tron_x402_payment) skill to your agentic tools:
+Add the [x402-payment-tron](https://clawhub.ai/Hades-Ye/x402-payment-tron) skill to your agentic tools:
 
-| Tool | Installation |
-|------|--------------|
-| **OpenClaw** | `npx clawhub install tron-x402-payment` |
+| Tool         | Installation                                   |
+| ------------ | ---------------------------------------------- |
+| **OpenClaw** | `npx clawhub install x402-payment-tron`        |
 | **opencode** | Copy the skill to `.opencode/skill/` directory |
 
 ## Try It Out
@@ -52,5 +52,5 @@ Instruct your agent to access `https://x402-tron-demo.aibank.io/protected-nile`.
 ## References
 
 - [OpenClaw Extension](https://github.com/open-aibank/openclaw-extension)
-- [tron-x402-payment on ClawHub](https://clawhub.ai/wzc1206/tron-x402-payment)
+- [x402-payment-tron on ClawHub](https://clawhub.ai/Hades-Ye/x402-payment-tron)
 - [x402-tron Demo](https://github.com/open-aibank/x402-tron-demo)
