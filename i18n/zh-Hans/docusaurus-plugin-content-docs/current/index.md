@@ -41,13 +41,13 @@ x402-tron 支持广泛的应用场景，包括：
 1. **发起请求**：买方向服务端请求受保护的资源。
 2. **支付要求**：若该资源需要付费，服务端返回 `402 Payment Required` 状态码及支付指引。
 3. **提交支付**：买方生成并提交支付载荷（基于 TIP-712 签名）。
-4. **验证结算**：服务端调用 x402 促进者 (Facilitator) 的 `/verify` 和 `/settle` 接口，完成支付的验证与结算。
+4. **验证结算**：服务端调用 x402 Facilitator 的 `/verify` 和 `/settle` 接口，完成支付的验证与结算。
 5. **交付资源**：支付验证通过后，服务端交付请求的资源。
 
 如需深入了解，请参考：
 
 - [客户端 / 服务端](core-concepts/client-server)
-- [促进者 (Facilitator)](core-concepts/facilitator)
+- [Facilitator](core-concepts/facilitator)
 - [HTTP 402](core-concepts/http-402)
 
 我们的目标是：在 TRON 区块链上打造一个低门槛、无许可且开发者友好的程序化商业层。
