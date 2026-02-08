@@ -4,9 +4,9 @@ x402-tron 是 x402 开放支付标准在 TRON 网络上的实现，旨在支持�
 
 借助 x402-tron，任何 Web 服务均可建立“先付费后响应”的机制，充分利用 TRON 区块链在速度、隐私及效率方面的优势。
 
-**有意参与文档共建？** 欢迎在 [GitHub 仓库](https://github.com/open-aibank/x402-tron-docs)提交 PR！我们唯一的原则是保持文档的中立性：除必要的资源链接外，请避免包含任何品牌推广内容。
+**有意参与文档共建？** 欢迎在 [GitHub 仓库](https://github.com/bankofai/x402-tron-docs)提交 PR！我们唯一的原则是保持文档的中立性：除必要的资源链接外，请避免包含任何品牌推广内容。
 
-**寻找实战代码？** 请访问 [x402-tron-demo 仓库](https://github.com/open-aibank/x402-tron-demo) 获取完整且可直接运行的示例项目。
+**寻找实战代码？** 请访问 [x402-tron-demo 仓库](https://github.com/bankofai/x402-tron-demo) 获取完整且可直接运行的示例项目。
 
 ## 为什么要使用 x402-tron？
 

@@ -33,7 +33,7 @@ Add the [x402-payment-tron](https://clawhub.ai/Hades-Ye/x402-payment-tron) skill
 
 ## Try It Out
 
-Instruct your agent to access `https://x402-tron-demo.aibank.io/protected-nile`. The agent will automatically detect the payment requirement, sign the authorization, and retrieve the protected resource.
+Instruct your agent to access `https://x402-tron-demo.bankofai.io/protected-nile`. The agent will automatically detect the payment requirement, sign the authorization, and retrieve the protected resource.
 
 ## Security Best Practices
 
@@ -51,6 +51,6 @@ Instruct your agent to access `https://x402-tron-demo.aibank.io/protected-nile`.
 
 ## References
 
-- [OpenClaw Extension](https://github.com/open-aibank/openclaw-extension)
+- [OpenClaw Extension](https://github.com/bankofai/openclaw-extension)
 - [x402-payment-tron on ClawHub](https://clawhub.ai/Hades-Ye/x402-payment-tron)
-- [x402-tron Demo](https://github.com/open-aibank/x402-tron-demo)
+- [x402-tron Demo](https://github.com/bankofai/x402-tron-demo)

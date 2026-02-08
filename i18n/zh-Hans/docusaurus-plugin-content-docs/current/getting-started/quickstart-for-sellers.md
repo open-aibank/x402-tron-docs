@@ -21,7 +21,7 @@ import TabItem from '@theme/TabItem';
 - 一个用于接收款项的 **TRON 钱包地址**（例如，来自 [TronLink](https://www.tronlink.org/)）
 - Python Web 开发的基础知识（本教程将使用 FastAPI）
 
-**预配置示例：** 我们提供了开箱即用的示例代码：[服务器示例](https://github.com/open-aibank/x402-tron-demo/tree/main/server) 和 [Facilitator 示例](https://github.com/open-aibank/x402-tron-demo/tree/main/facilitator)。您可以克隆仓库并直接运行它们！
+**预配置示例：** 我们提供了开箱即用的示例代码：[服务器示例](https://github.com/bankofai/x402-tron-demo/tree/main/server) 和 [Facilitator 示例](https://github.com/bankofai/x402-tron-demo/tree/main/facilitator)。您可以克隆仓库并直接运行它们！
 
 
 ### 配置参考
@@ -45,13 +45,13 @@ x402-tron SDK 提供了为 API 添加支付保护所需的一切功能。
 
 **选项 A：从 GitHub 安装（推荐）**
 ```bash
-pip install "git+https://github.com/open-aibank/x402-tron.git@v0.1.6#subdirectory=python/x402[fastapi]"
+pip install "git+https://github.com/bankofai/x402-tron.git@v0.1.6#subdirectory=python/x402[fastapi]"
 ```
 
 **选项 B：从源码安装（用于开发）**
 ```bash
 # Clone the repository
-git clone https://github.com/open-aibank/x402-tron.git
+git clone https://github.com/bankofai/x402-tron.git
 cd x402-tron/python/x402
 
 # Install with FastAPI support
@@ -125,7 +125,7 @@ Facilitator 是一项用于在链上验证并结算支付的服务。在启动�
 打开一个 **新的终端窗口** 并运行以下命令：
 ```bash
 # Clone the demo repository
-git clone https://github.com/open-aibank/x402-tron-demo.git
+git clone https://github.com/bankofai/x402-tron-demo.git
 cd x402-tron-demo
 
 # Install dependencies
@@ -189,12 +189,12 @@ curl http://localhost:8000/protected
 | 问题 | 解决方案 |
 |---------|----------|
 | 连接 Facilitator 时 `Connection refused` | 确保 Facilitator 运行在端口 8001 上 |
-| `ModuleNotFoundError: x402_tron` | 运行 `pip install "git+https://github.com/open-aibank/x402-tron.git@v0.1.6#subdirectory=python/x402[fastapi]"` |
+| `ModuleNotFoundError: x402_tron` | 运行 `pip install "git+https://github.com/bankofai/x402-tron.git@v0.1.6#subdirectory=python/x402[fastapi]"` |
 | 无效钱包地址错误 | 确保您的 TRON 地址以 `T` 开头且长度为 34 个字符 |
 
 **需要帮助？** 查看完整示例：
-- [服务器示例](https://github.com/open-aibank/x402-tron-demo/tree/main/server)
-- [ Facilitator 示例](https://github.com/open-aibank/x402-tron-demo/tree/main/facilitator)
+- [服务器示例](https://github.com/bankofai/x402-tron-demo/tree/main/server)
+- [ Facilitator 示例](https://github.com/bankofai/x402-tron-demo/tree/main/facilitator)
 
 
 ## 在主网运行
@@ -252,7 +252,7 @@ x402-tron 使用简明的网络标识符：
 
 ### 下一步
 
-* 查看 [演示示例](https://github.com/open-aibank/x402-tron-demo/tree/main/server)，了解更复杂的支付流程。
+* 查看 [演示示例](https://github.com/bankofai/x402-tron-demo/tree/main/server)，了解更复杂的支付流程。
 * 深入了解 [核心概念](/core-concepts/http-402)，掌握 x402-tron 的运作机制。
 * 作为 [用户买家](/getting-started/quickstart-for-human) 开始体验，或配置一个 [AI Agent](/getting-started/quickstart-for-agent)。
 
